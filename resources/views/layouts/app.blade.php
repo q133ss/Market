@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/assets/style/main.css">
     <link rel="stylesheet" href="/assets/style/swiper9.css">
     <title>@yield('title') - Redionselect</title>
+    @yield('meta')
 </head>
 
 <body>
@@ -177,7 +178,7 @@
                 </svg>
                 <div class="user-controls-hidden-items register-items">
                     <button onclick="location.href = 'templates/login.html';">Войти по Email</button>
-                    <a href="#" onclick="location.href = 'templates/register.html';">Создать аккаунт</a>
+                    <a href="#" onclick="location.href = '{{route('register')}}';">Создать аккаунт</a>
                     <a href="#" onclick="location.href = 'templates/personal-account.html';" style="line-height: 12px;">Личный кабинет</a>
                     <a href="#" onclick="location.href = 'templates/personal-seller-account.html';" style="line-height: 12px;">Личный кабинет продавца</a>
                     <a href="#" onclick="location.href = 'templates/personal-admin-account.html';" style="line-height: 12px;">Личный кабинет администратора</a>
@@ -242,6 +243,7 @@
 <script src="/assets/script/main.js"></script>
 <script src="/assets/script/swiper9.js"></script>
 <script src="/assets/script/slider.js"></script>
+@yield('scripts')
 </body>
 
 </html>
