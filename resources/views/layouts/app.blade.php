@@ -177,7 +177,7 @@
                         fill="#929292" />
                 </svg>
                 <div class="user-controls-hidden-items register-items">
-                    <button onclick="location.href = 'templates/login.html';">Войти по Email</button>
+                    <button onclick="location.href = '{{route('login')}}';">Войти по Email</button>
                     <a href="#" onclick="location.href = '{{route('register')}}';">Создать аккаунт</a>
                     <a href="#" onclick="location.href = 'templates/personal-account.html';" style="line-height: 12px;">Личный кабинет</a>
                     <a href="#" onclick="location.href = 'templates/personal-seller-account.html';" style="line-height: 12px;">Личный кабинет продавца</a>
