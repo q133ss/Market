@@ -28,7 +28,7 @@
                     <span></span>
                 </div>
             </div>
-            <div class="logo" onclick="location.href = 'index.html';">
+            <div class="logo" onclick="location.href = '/';">
                 <img src="/assets/images/logo.png" alt="">
             </div>
             <div class="mega-menu">

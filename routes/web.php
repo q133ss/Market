@@ -21,3 +21,9 @@ Route::get('/register', [App\Http\Controllers\AuthController::class, 'register']
 Route::post('/register', [App\Http\Controllers\AuthController::class, 'sendMail']);
 Route::get('/login', [App\Http\Controllers\AuthController::class, 'login'])->name('login');
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'auth'])->name('auth');
+
+Route::middleware('auth')->group(function(){
+    Route::prefix('account')->group(function(){
+        Route::get('/', [App\Http\Controllers\AccountController::class, 'index'])->name('account');
+    });
+});

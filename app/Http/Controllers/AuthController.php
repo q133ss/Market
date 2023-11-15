@@ -42,7 +42,6 @@ class AuthController extends Controller
     {
         $user = User::where('email', $request->email)->first();
         Auth::login($user);
-
-        dd(Auth()->user());
+        return to_route('account');
     }
 }
