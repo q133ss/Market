@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('index');
 
 Route::get('/register', [App\Http\Controllers\AuthController::class, 'register'])->name('register');
 Route::post('/register', [App\Http\Controllers\AuthController::class, 'sendMail']);

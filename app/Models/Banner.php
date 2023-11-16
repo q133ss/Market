@@ -5,14 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Banner extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
-
-    public function children()
+    public function img()
     {
-        return $this->hasMany(Category::class ,'parent_id', 'id');
+        return $this->morphOne(File::class, 'fileable')->where('category','banner');
     }
 }

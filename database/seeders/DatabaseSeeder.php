@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Banner;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\File;
@@ -148,6 +149,21 @@ class DatabaseSeeder extends Seeder
                     }
                 }
             }
+        }
+
+        for ($i = 0; $i < 3; $i++){
+            $banner = Banner::create([
+                'link' => 'google.com',
+                'title' => 'Хочешь одеваться стильно, тогда тебе к нам!',
+                'text' => 'Лучшая одежда по лучшим ценам'
+            ]);
+
+            File::create([
+                'src' => '/assets/images/slide.png',
+                'category' => 'banner',
+                'fileable_type' => 'App\Models\Banner',
+                'fileable_id' => $banner->id
+            ]);
         }
     }
 }

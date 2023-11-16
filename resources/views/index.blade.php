@@ -4,27 +4,15 @@
     <div class="slider">
         <div class="swiper banner-slider">
             <div class="swiper-wrapper">
-                <div class="slide-item swiper-slide">
+                @foreach($banners as $banner)
+                <div class="slide-item swiper-slide" style="background-image: url('{{$banner->img->src}}')">
                     <div class="slider-content">
-                        <h2>Хочешь одеваться стильно, тогда тебе к нам!</h2>
-                        <p>Лучшая одежда по лучшим ценам <br> только в магазине <span>WILL</span></p>
-                        <button>Перейти</button>
+                        <h2>{{$banner->title}}</h2>
+                        <p>{{$banner->text}}</p>
+                        <button onclick="location.href='{{$banner->link}}'">Перейти</button>
                     </div>
                 </div>
-                <div class="slide-item swiper-slide">
-                    <div class="slider-content">
-                        <h2>Хочешь одеваться стильно, тогда тебе к нам!</h2>
-                        <p>Лучшая одежда по лучшим ценам <br> только в магазине <span>WILL</span></p>
-                        <button>Перейти</button>
-                    </div>
-                </div>
-                <div class="slide-item swiper-slide">
-                    <div class="slider-content">
-                        <h2>Хочешь одеваться стильно, тогда тебе к нам!</h2>
-                        <p>Лучшая одежда по лучшим ценам <br> только в магазине <span>WILL</span></p>
-                        <button>Перейти</button>
-                    </div>
-                </div>
+                @endforeach
             </div>
             <span class="swiper-pagination"></span>
         </div>

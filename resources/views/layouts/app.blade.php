@@ -33,102 +33,15 @@
             </div>
             <div class="mega-menu">
                 <div class="mega-menu-items">
+                    @foreach($main_categories as $category)
                     <div class="mega-menu-item">
-                        <span class="cataloge-title">Категория</span>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
+                        <span class="cataloge-title">{{$category->name}}</span>
+                        @foreach($category->children as $child)
+                        <a href="#">{{$child->name}}</a>
+                        @endforeach
                         <a href="#">Ещё..</a>
                     </div>
-                    <div class="mega-menu-item">
-                        <span class="cataloge-title">Категория</span>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Ещё..</a>
-                    </div>
-                    <div class="mega-menu-item">
-                        <span class="cataloge-title">Категория</span>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Ещё..</a>
-                    </div>
-                    <div class="mega-menu-item">
-                        <span class="cataloge-title">Категория</span>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Ещё..</a>
-                    </div>
-                    <div class="mega-menu-item">
-                        <span class="cataloge-title">Категория</span>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Ещё..</a>
-                    </div>
-                    <div class="mega-menu-item">
-                        <span class="cataloge-title">Категория</span>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Ещё..</a>
-                    </div>
-                    <div class="mega-menu-item">
-                        <span class="cataloge-title">Категория</span>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Ещё..</a>
-                    </div>
-                    <div class="mega-menu-item">
-                        <span class="cataloge-title">Категория</span>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Ещё..</a>
-                    </div>
-                    <div class="mega-menu-item">
-                        <span class="cataloge-title">Категория</span>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Ещё..</a>
-                    </div>
-                    <div class="mega-menu-item">
-                        <span class="cataloge-title">Категория</span>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Ещё..</a>
-                    </div>
-                    <div class="mega-menu-item">
-                        <span class="cataloge-title">Категория</span>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Ещё..</a>
-                    </div>
-                    <div class="mega-menu-item">
-                        <span class="cataloge-title">Категория</span>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Подкатегория</a>
-                        <a href="#">Ещё..</a>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
