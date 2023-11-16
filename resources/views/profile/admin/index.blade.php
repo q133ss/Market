@@ -42,11 +42,13 @@
                                 <span>Магазин</span>
                                 <span>Статус</span>
                             </div>
+{{--                            тут foreacg--}}
+                            @foreach($sellers as $seller)
                             <div class="personal-content-table-content">
                                 <div class="personal-content-table-content-item">
                                     <p>ID12</p>
                                     <span class="vertical-line"></span>
-                                    <p>фамилия имя отчество</p>
+                                    <p>{{$name ?? '---'}}</p>
                                     <span class="vertical-line"></span>
                                     <p>Название магазина</p>
                                     <span class="vertical-line"></span>
@@ -302,60 +304,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="personal-content-table-content-item">
-                                    <p>ID12</p>
-                                    <span class="vertical-line"></span>
-                                    <p>фамилия имя отчество</p>
-                                    <span class="vertical-line"></span>
-                                    <p>Название магазина</p>
-                                    <span class="vertical-line"></span>
-                                    <p class="green">Активный</p>
-                                    <span class="vertical-line"></span>
-                                    <span class="product-action show-card-products">Товары</span>
-                                    <span class="product-action">Деактивировать</span>
-                                    <span class="seller-products-btn"></span>
-                                </div>
-                                <div class="add-product-items-content admin-edit-product">
-                                    <div class="add-product-img-content">
-                                        <div class="add-product-img-swiper">
-                                            <div class="product-imaage">
-                                                <img src="../images/product.png" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="file-input">
-                                            <input type="file" name="file-input" id="write-review-file-input"
-                                                   class="file-input__input" />
-                                            <label class="file-input__label"
-                                                   for="write-review-file-input"><span>Загрузить
-                                                    фото</span></label>
-                                        </div>
-                                    </div>
-                                    <div class="add-characteristics-form">
-                                        <label>ФИО продавца:</label>
-                                        <input type="text">
-
-                                        <label>Email для входа:</label>
-                                        <input type="email">
-
-                                        <label>Название магазина:</label>
-                                        <input type="email">
-
-                                        <label>Описание:</label>
-                                        <textarea cols="30" rows="10"></textarea>
-
-                                        <label>Информация о доставке:</label>
-                                        <textarea cols="30" rows="6"></textarea>
-
-                                        <label>Информация о связи с продавцом:</label>
-                                        <textarea cols="30" rows="6"></textarea>
-
-                                        <label>Место на карте:</label>
-                                        <div class="map"></div>
-
-                                        <button>СОХРАНИТЬ</button>
-                                    </div>
-                                </div>
                             </div>
+                            @endforeach
                         </div>
                     </div>
                     <div class="personal-account-content-item" id="personal-content-moder-reviews">

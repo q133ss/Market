@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('role_id');
-            $table->boolean('status')->default(false);
+        Schema::create('files', function (Blueprint $table) {
+            $table->id();
+            $table->string('src');
+            $table->string('category');
+            $table->morphs('fileable');
+            $table->timestamps();
         });
     }
 
@@ -22,9 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('role_id');
-            $table->dropColumn('status');
-        });
+        Schema::dropIfExists('files');
     }
 };
