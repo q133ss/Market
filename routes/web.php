@@ -13,6 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/*
+ * TODO
+ * Закончить деталку товара
+ * Сделать поиск
+ * ЛК
+ * Корзина и избранное
+ * Товары магазина страница
+ */
+
 Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('index');
 
 Route::get('/register', [App\Http\Controllers\AuthController::class, 'register'])->name('register');
@@ -21,6 +30,7 @@ Route::get('/login', [App\Http\Controllers\AuthController::class, 'login'])->nam
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'auth'])->name('auth');
 
 Route::get('/products/{id}', [App\Http\Controllers\ProductController::class, 'show'])->name('products.show');
+Route::post('/send/review', [App\Http\Controllers\ProductController::class, 'createReview'])->name('products.review.store');
 
 Route::middleware('auth')->group(function(){
     Route::prefix('account')->group(function(){

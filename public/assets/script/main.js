@@ -48,9 +48,9 @@ dropdowns.forEach((dropdown) => {
     option.addEventListener("click", (event) => {
       console.log(5555, event.currentTarget.id);
       input.value = event.currentTarget.textContent;
-      
+
       if (event.currentTarget.id !== '') {
-        showPersonalMobileContent(event.currentTarget.id)        
+        showPersonalMobileContent(event.currentTarget.id)
       }
     });
   });
@@ -102,20 +102,20 @@ if (reviewBtn && questionsBtn && writeReviewBtn) {
     }
   });
 
-  document
-    .getElementById("write-review-submit")
-    .addEventListener("click", (e) => {
-      if (fileInput.value) {
-        console.log(1111);
-        error.style.display = "none";
-      } else {
-        console.log(222);
-        error.style.display = "block";
-        return;
-      }
-      writeReviewForm.style.display = "none";
-      tanksForm.style.display = "flex";
-    });
+  // document
+  //   .getElementById("write-review-submit")
+  //   .addEventListener("click", (e) => {
+  //     if (fileInput.value) {
+  //       console.log(1111);
+  //       error.style.display = "none";
+  //     } else {
+  //       console.log(222);
+  //       error.style.display = "block";
+  //       return;
+  //     }
+  //     writeReviewForm.style.display = "none";
+  //     tanksForm.style.display = "flex";
+  //   });
 }
 
 if (thanks) {
@@ -145,9 +145,9 @@ if (addRowBtns) {
         addCharacteristicModal.querySelector('#size-or-characteristic-div-id').value = btn.parentElement.querySelector('div').id
       } else {
         addSizeModal.querySelector('#size-or-characteristic-div-id').value = btn.parentElement.parentElement.id
-        addSizeModal.style.display = "block";        
+        addSizeModal.style.display = "block";
       }
-    })    
+    })
   });
 }
 
@@ -191,7 +191,7 @@ function addRemoveBtnClick(klass) {
       console.log();
       btn.parentElement.remove()
     })
-  });  
+  });
 }
 
 window.onclick = function(event) {
@@ -232,81 +232,81 @@ function showPersonalMobileContent(id) {
   const parent = document.getElementById(id)
   switch (id) {
      /**--------SELLER-------- */
-    case "seller-products-page":      
-    document.getElementById('personal-content-products').style.display = 'block' 
+    case "seller-products-page":
+    document.getElementById('personal-content-products').style.display = 'block'
     document.getElementById('add-product').style.display = 'flex'
     break;
 
-    case "seller-questions-page":      
-    document.getElementById('personal-content-questions').style.display = 'block' 
+    case "seller-questions-page":
+    document.getElementById('personal-content-questions').style.display = 'block'
     document.getElementById('add-product').style.display = 'flex'
     break;
 
-    case "seller-statistic-page":      
-    document.getElementById('personal-content-statistics').style.display = 'block' 
+    case "seller-statistic-page":
+    document.getElementById('personal-content-statistics').style.display = 'block'
     document.getElementById('add-product').style.display = 'flex'
     break;
 
-    case "seller-store-page":      
-    document.getElementById('personal-content-stores').style.display = 'block' 
+    case "seller-store-page":
+    document.getElementById('personal-content-stores').style.display = 'block'
     document.getElementById('add-product').style.display = 'none'
     break;
 
-    case "seller-reviews-page":      
-    document.getElementById('personal-content-reviews').style.display = 'block' 
+    case "seller-reviews-page":
+    document.getElementById('personal-content-reviews').style.display = 'block'
     document.getElementById('add-product').style.display = 'flex'
     break;
-    
-    case "seller-waiting-list-page":      
-    document.getElementById('personal-content-waiting-list').style.display = 'block' 
+
+    case "seller-waiting-list-page":
+    document.getElementById('personal-content-waiting-list').style.display = 'block'
     document.getElementById('add-product').style.display = 'none'
     break;
 
     /**--------MY PROFILE-------- */
-    case "my-profile-settings-page":      
+    case "my-profile-settings-page":
     document.getElementById('personal-content-profile').style.display = 'block'
     parent.parentElement.parentElement.parentElement.nextElementSibling.classList.add('my-profile-content')
     break;
-    
-    case "my-search-history-page":      
-    document.getElementById('personal-content-request-history').style.display = 'block' 
+
+    case "my-search-history-page":
+    document.getElementById('personal-content-request-history').style.display = 'block'
     parent.parentElement.parentElement.parentElement.nextElementSibling.classList.add('my-profile-content')
     break;
-    
-    case "my-reviews-page":      
-    document.getElementById('personal-content-my-reviews').style.display = 'block' 
+
+    case "my-reviews-page":
+    document.getElementById('personal-content-my-reviews').style.display = 'block'
     parent.parentElement.parentElement.parentElement.nextElementSibling.classList.remove('my-profile-content')
     break;
-    
-    case "my-questions-page":      
-    document.getElementById('personal-content-my-questions').style.display = 'block' 
+
+    case "my-questions-page":
+    document.getElementById('personal-content-my-questions').style.display = 'block'
     parent.parentElement.parentElement.parentElement.nextElementSibling.classList.remove('my-profile-content')
     break;
-    
-    case "my-waiting-list-page":      
-    document.getElementById('personal-content-my-waiting-list').style.display = 'block' 
+
+    case "my-waiting-list-page":
+    document.getElementById('personal-content-my-waiting-list').style.display = 'block'
     parent.parentElement.parentElement.parentElement.nextElementSibling.classList.add('my-profile-content')
     break;
 
     /**--------ADMIN PROFILE-------- */
-    case "admin-sellers-page":      
-    document.getElementById('personal-content-sellers').style.display = 'block' 
+    case "admin-sellers-page":
+    document.getElementById('personal-content-sellers').style.display = 'block'
     break;
 
-    case "admin-moder-reviews-page":      
-    document.getElementById('personal-content-moder-reviews').style.display = 'block' 
+    case "admin-moder-reviews-page":
+    document.getElementById('personal-content-moder-reviews').style.display = 'block'
     break;
 
-    case "admin-rating-page":      
-    document.getElementById('personal-content-rating').style.display = 'block' 
+    case "admin-rating-page":
+    document.getElementById('personal-content-rating').style.display = 'block'
     break;
 
-    case "admin-adds-page":      
-    document.getElementById('personal-content-adds').style.display = 'block' 
+    case "admin-adds-page":
+    document.getElementById('personal-content-adds').style.display = 'block'
     break;
 
-    case "admin-store-reviews-page":      
-    document.getElementById('personal-content-store-reviews').style.display = 'block' 
+    case "admin-store-reviews-page":
+    document.getElementById('personal-content-store-reviews').style.display = 'block'
     break;
   }
 }

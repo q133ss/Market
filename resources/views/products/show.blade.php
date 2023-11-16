@@ -2,6 +2,7 @@
 @section('title', '222')
 @section('meta')
     <link rel="stylesheet" href="/assets/style/templates.css">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endsection
 @section('content')
     <div class="container">
@@ -454,24 +455,31 @@
                 </div>
 
                 <div class="write-review-content" id="write-review-content">
-                    <div class="write-review-form" id="write-review-form">
-                        <input type="text" placeholder="Ваше имя" class="querstion-form-name">
-                        <textarea placeholder="Напишите свой отзыв" class="write-review-form-email" cols="30"
+                    @if(Auth()->check())
+                    <form action="{{route('products.review.store')}}" method="POST" class="write-review-form" id="write-review-form" enctype="multipart/form-data">
+                        @csrf
+                        <input type="text" placeholder="Ваше имя" value="{{Auth()->user()->name}}" name="name" id="reviewName" class="querstion-form-name">
+                        <textarea placeholder="Напишите свой отзыв" name="review" id="reviewText" class="write-review-form-email" cols="30"
                                   rows="10"></textarea>
+                        <input type="hidden" value="{{$product->id}}" name="id">
                         <div class="write-review-btns">
                             <div class="write-review-photo-input">
                                 <div class="file-input">
-                                    <input type="file" name="file-input" id="write-review-file-input"
+                                    <input type="file" name="file_input[]" multiple id="write-review-file-input"
                                            class="file-input__input" />
                                     <label class="file-input__label" for="write-review-file-input"><span>Загрузить
                                             фото</span></label>
                                 </div>
                                 <span class="write-review-photo-error">*Добавьте фото</span>
                             </div>
-                            <button id="write-review-submit">Отправить</button>
+                            <button id="write-review-submit" type="button">Отправить</button>
                         </div>
-                    </div>
-
+                    </form>
+                    @else
+                        <div class="thenks-for-review" id="thenks-for-review" style="display:block;">
+                            <h1>Войдите в аккаунт, что бы оставить отзыв</h1>
+                        </div>
+                    @endif
                     <div class="thenks-for-review" id="thenks-for-review">
                         <span>
                             <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
@@ -678,4 +686,66 @@
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+
+        $(document).ready(function() {
+            $('#write-review-submit').click(function(e) {
+                e.preventDefault();
+
+                var form = $('#write-review-form')[0];
+                var formData = new FormData(form);
+
+                let err = $('.write-review-photo-error');
+                let err_status = false;
+
+                if($('#write-review-file-input').val() == ''){
+                    err.text('*Добавьте фото');
+                    err.css('display', 'block');
+                    err_status = true;
+                    return;
+                }
+
+                if($('#reviewName').val() == ''){
+                    err.text('*Введите имя');
+                    err.css('display', 'block');
+                    err_status = true;
+                    return;
+                }else{
+                    err.css('display', 'none');
+                    err_status = false;
+                }
+
+                if($('#reviewText').val() == ''){
+                    err.text('*Введите отзыв');
+                    err.css('display', 'block');
+                    err_status = true;
+                    return;
+                }else{
+                    err.css('display', 'none');
+                    err_status = false;
+                }
+
+                if(!err_status) {
+                    $.ajax({
+                        url: "{{route('products.review.store')}}",
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (response) {
+                            // Обработка успешного ответа
+                            console.log(response);
+                        },
+                        error: function (xhr, status, error) {
+                            // Обработка ошибки
+                            console.log(error);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 @endsection
