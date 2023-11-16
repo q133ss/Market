@@ -165,5 +165,68 @@ class DatabaseSeeder extends Seeder
                 'fileable_id' => $banner->id
             ]);
         }
+
+        $sellers = [
+            [
+                'name' => 'Продавец с рейтингом +2',
+                'email' => 'new_seller2@email.net',
+                'password' => Hash::make('password'),
+                'status' => 1,
+                'rating' => 2,
+                'role_id' => 2
+            ],
+            [
+                'name' => 'Продавец с рейтингом +1',
+                'email' => 'new_seller1@email.net',
+                'password' => Hash::make('password'),
+                'status' => 1,
+                'rating' => 1,
+                'role_id' => 2
+            ],
+            [
+                'name' => 'Продавец с рейтингом 0',
+                'email' => 'new_seller0@email.net',
+                'password' => Hash::make('password'),
+                'status' => 1,
+                'rating' => 0,
+                'role_id' => 2
+            ],
+            [
+                'name' => 'Продавец с рейтингом -1',
+                'email' => 'new_seller-1@email.net',
+                'password' => Hash::make('password'),
+                'status' => 1,
+                'rating' => -1,
+                'role_id' => 2
+            ]
+        ];
+
+        foreach ($sellers as $seller){
+            $user = User::create($seller);
+            $shop = Shop::create([
+                'title' => 'Магазин продавца '.$user->id,
+                'user_id' => $user->id
+            ]);
+
+            for ($i = 0; $i < rand(3,5); $i++){
+                $price = rand(999, 10999);
+                $product = Product::create([
+                    'name' => 'Товар продавца с рейтингом '.$user->rating,
+                    'category_id' => rand(6,9),
+                    'price' => $price,
+                    'old_price' => null,
+                    'description' => 'Описание товара',
+                    'in_stock' => 1,
+                    'shop_id' => $shop->id,
+                    'city_id' => City::inRandomOrder()->pluck('id')->first()
+                ]);
+                File::create([
+                    'src' => '/assets/images/product.png',
+                    'category' => 'product',
+                    'fileable_type' => 'App\Models\Product',
+                    'fileable_id' => $product->id
+                ]);
+            }
+        }
     }
 }
