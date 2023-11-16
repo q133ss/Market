@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('category_id');
             $table->foreignId('shop_id');
             $table->string('compound')->nullable()->comment('Состав');
+            $table->string('color')->nullable()->comment('цвет');
             $table->unsignedInteger('price');
             $table->unsignedInteger('old_price')->nullable();
             $table->string('phone')->nullable();

@@ -20,4 +20,19 @@ class Product extends Model
             ->where('files.category', 'product')
             ->orderBy('users.rating', 'DESC')->select('products.*', 'files.src')->get();
     }
+
+    public function shop()
+    {
+        return $this->hasOne(Shop::class, 'id', 'shop_id');
+    }
+
+    public function photos()
+    {
+        return $this->morphMany(File::class, 'fileable')->where('category', 'product');
+    }
+
+    public function reviews()
+    {
+        return $this->morphMany(Review::class, 'reviewable');
+    }
 }

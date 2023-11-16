@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\City;
 use App\Models\File;
 use App\Models\Product;
+use App\Models\Review;
 use App\Models\Shop;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -125,29 +126,29 @@ class DatabaseSeeder extends Seeder
                     'status' => rand(0,1)
                 ]);
 
-                if($key == 'seller'){
-                    $shop = Shop::create([
-                        'user_id' => $user->id
-                    ]);
-
-                    for($i = 1; $i < 10; $i++) {
-                        $product = Product::create([
-                            'name' => $user->name . ' Товар ' . $i,
-                            'shop_id' => $shop->id,
-                            'category_id' => $cats[rand(0, 8)],
-                            'price' => rand(999, 2019),
-                            'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci culpa dolor eaque eos esse exercitationem, illum laudantium magni odit officiis praesentium quod reiciendis reprehenderit sit, suscipit temporibus ullam vel vitae.',
-                            'city_id' => City::inRandomOrder()->pluck('id')->first(),
-                        ]);
-
-                        File::create([
-                            'src' => '/assets/images/product.png',
-                            'category' => 'product',
-                            'fileable_type' => 'App\Models\Product',
-                            'fileable_id' => $product->id
-                        ]);
-                    }
-                }
+//                if($key == 'seller'){
+//                    $shop = Shop::create([
+//                        'user_id' => $user->id
+//                    ]);
+//
+//                    for($i = 1; $i < 10; $i++) {
+//                        $product = Product::create([
+//                            'name' => $user->name . ' Товар ' . $i,
+//                            'shop_id' => $shop->id,
+//                            'category_id' => $cats[rand(0, 8)],
+//                            'price' => rand(999, 2019),
+//                            'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci culpa dolor eaque eos esse exercitationem, illum laudantium magni odit officiis praesentium quod reiciendis reprehenderit sit, suscipit temporibus ullam vel vitae.',
+//                            'city_id' => City::inRandomOrder()->pluck('id')->first(),
+//                        ]);
+//
+//                        File::create([
+//                            'src' => '/assets/images/product.png',
+//                            'category' => 'product',
+//                            'fileable_type' => 'App\Models\Product',
+//                            'fileable_id' => $product->id
+//                        ]);
+//                    }
+//                }
             }
         }
 
@@ -201,6 +202,28 @@ class DatabaseSeeder extends Seeder
             ]
         ];
 
+        $reviewTitles = [
+            'Хороший товар',
+            'Рекомендую!',
+            'Отличное качество!',
+            'Плохое качество',
+            'Все хорошо',
+            'Не соответсвует описанию',
+            'Хороший материал',
+            'Все пришло быстро и отлично упаковано',
+            'все нормально',
+            'Доставка быстрая!'
+        ];
+
+        for($i = 0; $i<10; $i++){
+            User::create([
+                'name' => 'Покупатель '.$i,
+                'email' => 'cust'.$i.'email.net',
+                'role_id' => 2,
+                'password' => '---'
+            ]);
+        }
+
         foreach ($sellers as $seller){
             $user = User::create($seller);
             $shop = Shop::create([
@@ -211,7 +234,7 @@ class DatabaseSeeder extends Seeder
             for ($i = 0; $i < rand(3,5); $i++){
                 $price = rand(999, 10999);
                 $product = Product::create([
-                    'name' => 'Товар продавца с рейтингом '.$user->rating,
+                    'name' => 'Рейтинг продавца '.$user->rating,
                     'category_id' => rand(6,9),
                     'price' => $price,
                     'old_price' => null,
@@ -225,6 +248,30 @@ class DatabaseSeeder extends Seeder
                     'category' => 'product',
                     'fileable_type' => 'App\Models\Product',
                     'fileable_id' => $product->id
+                ]);
+            }
+        }
+
+        foreach(Product::get() as $product){
+
+            for($r = 0; $r < rand(5,10); $r++){
+                $review = Review::create([
+                    'user_id' => User::where('role_id', 2)->inRandomOrder()->pluck('id')->first(),
+                    'reviewable_id' => $product->id,
+                    'reviewable_type' => 'App\Models\Product',
+                    'title' => $reviewTitles[rand(0,9)],
+                    'rating' => rand(1,5)
+                ]);
+            }
+        }
+
+        foreach (Review::get() as $review) {
+            for ($i = 0; $i < rand(1, 3); $i++) {
+                File::create([
+                    'src' => '/assets/images/product.png',
+                    'fileable_type' => 'App\Models\Review',
+                    'fileable_id' => $review->id,
+                    'category' => 'review'
                 ]);
             }
         }

@@ -21,7 +21,7 @@
     <div class="container">
         <div class="main-products">
             @foreach($products as $product)
-            <div class="product-item">
+            <div class="product-item" onclick="location.href='{{route('products.show', $product->id)}}'">
                 <div class="add-to-favorite-icon">
                     <svg width="20" height="18" viewBox="0 0 25 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
