@@ -124,7 +124,7 @@
                                             d="M14.4323 11.5928L12.17 11.3184C11.904 11.2852 11.6343 11.3165 11.3813 11.4099C11.1283 11.5034 10.8986 11.6565 10.7093 11.8578L9.07041 13.5991C6.54193 12.2328 4.48677 10.0492 3.20082 7.36264L4.84858 5.61188C5.23157 5.20495 5.41862 4.63714 5.35627 4.05986L5.09797 1.67505C5.04747 1.21339 4.83895 0.787591 4.51211 0.478712C4.18527 0.169833 3.76293 -0.00055102 3.32551 1.3388e-06H1.78464C0.778165 1.3388e-06 -0.0590758 0.889574 0.0032719 1.95895C0.475333 10.0408 6.55869 16.495 14.1562 16.9965C15.1627 17.0628 15.9999 16.1732 15.9999 15.1038V13.4666C16.0088 12.5108 15.3319 11.7064 14.4323 11.5928Z"
                                             fill="#FD8002" />
                                     </svg>
-                                    <p>+7 (999) 999-99-99</p>
+                                    <p>{{$product->phone == null ? $product->shop->phone : $product->phone}}</p>
                                 </div>
                             </div>
                         </div>
@@ -140,13 +140,7 @@
                                 </svg>
                             </div>
                             <div class="select-info delivery-times">
-                                <p>— Время доставки: 09:00 - 18:00</p>
-                                <p>— Время доставки: 09:00 - 18:00</p>
-                                <p>— Время доставки: 09:00 - 18:00</p>
-                                <p>— Время доставки: 09:00 - 18:00</p>
-                                <p>— Время доставки: 09:00 - 18:00</p>
-                                <p>— Время доставки: 09:00 - 18:00</p>
-                                <p>— Время доставки: 09:00 - 18:00</p>
+                                <p>{{$product->shipping == null ? $product->shop->shipping_info : $product->shipping}}</p>
                             </div>
                         </div>
                     </div>
@@ -208,7 +202,7 @@
                             <div class="swiper-slide">
                                 <span class="review-btn" id="questions">
                                     <p>Вопросы</p>
-                                    <div>13+</div>
+                                    <div>{{$product->questions->count() < 20 ? $product->questions->count() : "20+"}}</div>
                                 </span>
                             </div>
                             <div class="swiper-slide">
@@ -259,120 +253,39 @@
                 </div>
 
                 <div class="questions-content" id="questions-content">
+                    @if(Auth()->check())
                     <div class="question-form">
-                        <input type="text" placeholder="Ваше имя" class="querstion-form-name">
+                        <input type="text" id="quest_name" placeholder="Ваше имя" value="{{Auth()->user()->name}}" class="querstion-form-name">
                         <div class="querstion-form-email">
-                            <input type="text" placeholder="Задайте свой вопрос" class="querstion-form-email">
-                            <button>ЗАДАТЬ</button>
+                            <input type="text" id="question" placeholder="Задайте свой вопрос" class="querstion-form-email">
+                            <button onclick="questionSend()">ЗАДАТЬ</button>
                         </div>
                     </div>
+                    @else
+                        <div class="thenks-for-review" id="thenks-for-review" style="display:block;">
+                            <h1>Войдите в аккаунт, что бы задать вопрос</h1>
+                        </div>
+                    @endif
                     <div class="swiper review-response-slider">
-                        <div class="swiper-wrapper">
+                        <div class="swiper-wrapper" id="questionSlider">
+                            @foreach($product->questions as $question)
                             <div class="swiper-slide">
                                 <div class="review-questions-item review-response-item">
                                     <div class="review-questions-header">
-                                        <h3>Алина</h3>
-                                        <p>Прекрасный товар!</p>
+                                        <h3>{{$question->user->name}}</h3>
+                                        <p>{{$question->question}}</p>
                                     </div>
+                                    @if($question->answer != null)
                                     <div class="review-response-content">
                                         <h3>Продавец:</h3>
-                                        <p>Мы вынуждены отталкиваться от того, что базовый
-                                            вектор развития прекрасно подходит для
-                                            реализации новых предложений.
+                                        <p>
+                                            {{$question->answer}}
                                         </p>
                                     </div>
+                                    @endif
                                 </div>
                             </div>
-                            <div class="swiper-slide">
-                                <div class="review-questions-item review-response-item">
-                                    <div class="review-questions-header">
-                                        <h3>Алина</h3>
-                                        <p>Прекрасный товар!</p>
-                                    </div>
-                                    <div class="review-response-content">
-                                        <h3>Продавец:</h3>
-                                        <p>Мы вынуждены отталкиваться от того, что базовый
-                                            вектор развития прекрасно подходит для
-                                            реализации новых предложений.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="review-questions-item review-response-item">
-                                    <div class="review-questions-header">
-                                        <h3>Алина</h3>
-                                        <p>Прекрасный товар!</p>
-                                    </div>
-                                    <div class="review-response-content">
-                                        <h3>Продавец:</h3>
-                                        <p>Мы вынуждены отталкиваться от того, что базовый
-                                            вектор развития прекрасно подходит для
-                                            реализации новых предложений.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="review-questions-item review-response-item">
-                                    <div class="review-questions-header">
-                                        <h3>Алина</h3>
-                                        <p>Прекрасный товар!</p>
-                                    </div>
-                                    <div class="review-response-content">
-                                        <h3>Продавец:</h3>
-                                        <p>Мы вынуждены отталкиваться от того, что базовый
-                                            вектор развития прекрасно подходит для
-                                            реализации новых предложений.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="review-questions-item review-response-item">
-                                    <div class="review-questions-header">
-                                        <h3>Алина</h3>
-                                        <p>Прекрасный товар!</p>
-                                    </div>
-                                    <div class="review-response-content">
-                                        <h3>Продавец:</h3>
-                                        <p>Мы вынуждены отталкиваться от того, что базовый
-                                            вектор развития прекрасно подходит для
-                                            реализации новых предложений.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="review-questions-item review-response-item">
-                                    <div class="review-questions-header">
-                                        <h3>Алина</h3>
-                                        <p>Прекрасный товар!</p>
-                                    </div>
-                                    <div class="review-response-content">
-                                        <h3>Продавец:</h3>
-                                        <p>Мы вынуждены отталкиваться от того, что базовый
-                                            вектор развития прекрасно подходит для
-                                            реализации новых предложений.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="review-questions-item review-response-item">
-                                    <div class="review-questions-header">
-                                        <h3>Алина</h3>
-                                        <p>Прекрасный товар!</p>
-                                    </div>
-                                    <div class="review-response-content">
-                                        <h3>Продавец:</h3>
-                                        <p>Мы вынуждены отталкиваться от того, что базовый
-                                            вектор развития прекрасно подходит для
-                                            реализации новых предложений.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                         <span class="swiper-button-prev"></span>
                         <span class="swiper-button-next"></span>
@@ -737,7 +650,8 @@
                         contentType: false,
                         success: function (response) {
                             // Обработка успешного ответа
-                            console.log(response);
+                            writeReviewForm.style.display = "none";
+                            tanksForm.style.display = "flex";
                         },
                         error: function (xhr, status, error) {
                             // Обработка ошибки
@@ -747,5 +661,50 @@
                 }
             });
         });
+
+        function questionSend(){
+            let quest = $('#question').val();
+
+            @if(Auth()->check())
+            if(quest != ''){
+                $.ajax({
+                    url: "{{route('products.question.store')}}",
+                    type: 'POST',
+                    data: {
+                        'question': quest,
+                        'product_id': '{{$product->id}}'
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (response) {
+                        // Обработка успешного ответа
+
+                        $('#quest_name').val('');
+                        $('#question').val('');
+
+                        $('#questionSlider').append(
+                            '<div class="swiper-slide">'+
+                            '<div class="review-questions-item review-response-item">'+
+                            '<div class="review-questions-header">'+
+                                '<h3>{{Auth()->user()->name}}</h3>'+
+                                '<p>'+response.question+'</p>'+
+                            '</div>'+
+                            '</div>'+
+                            '</div>'
+                        );
+
+
+                        updateSlider();
+
+                    },
+                    error: function (xhr, status, error) {
+                        // Обработка ошибки
+                        console.log(error);
+                    }
+                });
+            }
+            @endif
+        }
     </script>
 @endsection

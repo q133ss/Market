@@ -22,6 +22,11 @@ use Illuminate\Support\Facades\Route;
  * Товары магазина страница
  */
 
+/*
+ * ВОПРОСЫ
+ * При добавлении отзыва нет рейтинга
+ */
+
 Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('index');
 
 Route::get('/register', [App\Http\Controllers\AuthController::class, 'register'])->name('register');
@@ -31,6 +36,7 @@ Route::post('/login', [App\Http\Controllers\AuthController::class, 'auth'])->nam
 
 Route::get('/products/{id}', [App\Http\Controllers\ProductController::class, 'show'])->name('products.show');
 Route::post('/send/review', [App\Http\Controllers\ProductController::class, 'createReview'])->name('products.review.store');
+Route::post('/send/question', [App\Http\Controllers\ProductController::class, 'createQuestion'])->name('products.question.store');
 
 Route::middleware('auth')->group(function(){
     Route::prefix('account')->group(function(){

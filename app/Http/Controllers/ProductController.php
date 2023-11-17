@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\File;
 use App\Models\Product;
+use App\Models\Question;
 use App\Models\Review;
 use Illuminate\Http\Request;
 
@@ -35,5 +36,16 @@ class ProductController extends Controller
                 ]
             );
         }
+    }
+
+    public function createQuestion(Request $request)
+    {
+        $question = Question::create([
+            'product_id' => $request->product_id,
+            'question' => $request->question,
+            'user_id' => Auth()->id()
+        ]);
+
+        return $question;
     }
 }

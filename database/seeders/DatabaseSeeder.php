@@ -260,7 +260,8 @@ class DatabaseSeeder extends Seeder
                     'reviewable_id' => $product->id,
                     'reviewable_type' => 'App\Models\Product',
                     'title' => $reviewTitles[rand(0,9)],
-                    'rating' => rand(1,5)
+                    'rating' => rand(1,5),
+                    'approved' => true
                 ]);
             }
         }

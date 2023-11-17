@@ -229,6 +229,10 @@ const reviewResponseSwiper = new Swiper(".review-response-slider", {
   },
 });
 
+function updateSlider(){
+    reviewResponseSwiper.update();
+}
+
 const reviewResponseFullscreenSwiper = new Swiper(".review-question-fullscreen-slider", {
   centeredSlides: false,
   slidesPerView: 1,
@@ -270,7 +274,7 @@ const closeFull = document.querySelector('.close-full')
 if (closeFull) {
   closeFull.addEventListener('click', () => {
     document.querySelector('.question-fullscreen').style.display = 'none';
-  }) 
+  })
 }
-  
+
 
