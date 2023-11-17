@@ -46,8 +46,16 @@ Route::post('add-to/{id}/{type}', [App\Http\Controllers\CartController::class, '
 Route::get('favorite', [App\Http\Controllers\CartController::class, 'favorite'])->name('favorite');
 Route::get('favorite/shops', [App\Http\Controllers\CartController::class, 'favoriteShop'])->name('favorite.shop');
 
+Route::get('/search/{query}', [App\Http\Controllers\SearchController::class, 'search'])->name('search');
+
 Route::middleware('auth')->group(function(){
     Route::prefix('account')->group(function(){
         Route::get('/', [App\Http\Controllers\AccountController::class, 'index'])->name('account');
+
+        Route::middleware('is.admin')->name('admin.')->group(function(){
+            Route::get('/user/{id}/status/change/{status}', [App\Http\Controllers\Admin\UsersController::class, 'status'])->name('status.change');
+            Route::post('/user/update/{id}', [App\Http\Controllers\Admin\UsersController::class, 'update'])->name('user.update');
+        });
+
     });
 });

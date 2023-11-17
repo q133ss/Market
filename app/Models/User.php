@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'status'
     ];
 
     /**
@@ -51,5 +52,10 @@ class User extends Authenticatable
     public function shop()
     {
         return $this->hasOne(Shop::class, 'user_id', 'id');
+    }
+
+    public function photos()
+    {
+        return $this->morphMany(File::class, 'fileable');
     }
 }

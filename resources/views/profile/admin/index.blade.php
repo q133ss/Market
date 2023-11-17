@@ -46,28 +46,37 @@
                             @foreach($sellers as $seller)
                             <div class="personal-content-table-content">
                                 <div class="personal-content-table-content-item">
-                                    <p>ID12</p>
+                                    <p>ID{{$seller->id}}</p>
                                     <span class="vertical-line"></span>
-                                    <p>{{$name ?? '---'}}</p>
+                                    <p>{{$seller->name}}</p>
                                     <span class="vertical-line"></span>
-                                    <p>Название магазина</p>
+                                    <p>{{$seller->shop->title ?? ''}}</p>
                                     <span class="vertical-line"></span>
-                                    <p class="green">Активный</p>
+                                    @if($seller->status == 1)
+                                        <p class="green">Активный</p>
+                                    @else
+                                        <p>Не активный</p>
+                                    @endif
                                     <span class="vertical-line"></span>
                                     <span class="product-action show-card-products">Товары</span>
-                                    <span class="product-action">Деактивировать</span>
+                                    @if($seller->status == 1)
+                                    <span class="product-action" onclick="location.href='{{route('admin.status.change', [$seller->id, 0])}}'">Деактивировать</span>
+                                    @else
+                                    <span class="product-action" onclick="location.href='{{route('admin.status.change', [$seller->id, 1])}}'">Активировать</span>
+                                    @endif
                                     <span class="seller-products-btn"></span>
                                 </div>
-                                <div class="add-product-items-content admin-edit-product" id="admin-edit-product-1">
+                                <form class="add-product-items-content edit_usr admin-edit-product" action="{{route('admin.user.update', $seller->id)}}" method="POST" id="admin-edit-product-1" enctype="multipart/form-data">
+                                    @csrf
                                     <div class="add-product-img-content">
                                         <div class="add-product-img-swiper">
                                             <div class="product-imaage">
-                                                <img src="../images/product.png" alt="">
+                                                <img style="max-width: 125px;" src="{{$seller->photos->pluck('src')->first() ?? ''}}" alt="">
                                             </div>
                                         </div>
                                         <div class="file-input">
-                                            <input type="file" name="file-input" id="write-review-file-input"
-                                                   class="file-input__input" />
+                                            <input type="file" name="file_input[]" id="write-review-file-input"
+                                                   class="file-input__input" multiple />
                                             <label class="file-input__label"
                                                    for="write-review-file-input"><span>Загрузить
                                                     фото</span></label>
@@ -75,30 +84,32 @@
                                     </div>
                                     <div class="add-characteristics-form">
                                         <label>ФИО продавца:</label>
-                                        <input type="text">
+                                        <input type="text" name="name" value="{{$seller->name}}">
 
                                         <label>Email для входа:</label>
-                                        <input type="email">
+                                        <input type="email" name="email" value="{{$seller->email}}">
 
                                         <label>Название магазина:</label>
-                                        <input type="email">
+                                        <input type="text" name="shop_name" value="{{$seller->shop->title ?? ''}}">
 
                                         <label>Описание:</label>
-                                        <textarea cols="30" rows="10"></textarea>
+                                        <textarea cols="30" name="shop_description" rows="10">{{$seller->shop->description ?? ''}}</textarea>
 
                                         <label>Информация о доставке:</label>
-                                        <textarea cols="30" rows="6"></textarea>
+                                        <textarea cols="30" name="shop_shipping" rows="6">{{$seller->shop->shipping_info ?? ''}}</textarea>
 
                                         <label>Информация о связи с продавцом:</label>
-                                        <textarea cols="30" rows="6"></textarea>
+                                        <textarea cols="30" name="shop_communication_info" rows="6">{{$seller->shop->communication_info ?? ''}}</textarea>
 
                                         <label>Место на карте:</label>
                                         <div class="map"></div>
 
-                                        <button>СОХРАНИТЬ</button>
+                                        <button type="submit">СОХРАНИТЬ</button>
                                     </div>
-                                </div>
+                                </form>
                                 <div class="card-products" id="show-card-product-1">
+                                    @if($seller->shop)
+                                    @foreach($seller->shop->products as $product)
                                     <div class="product-item">
                                         <div class="add-to-favorite-icon">
                                             <svg width="20" height="18" viewBox="0 0 25 22" fill="none"
@@ -109,20 +120,20 @@
                                             </svg>
                                         </div>
                                         <div class="product-item-header">
-                                            <img src="../images/product.png" alt="">
+                                            <img src="{{$product->photos != null ? $product->photos->pluck('src')->first() : ''}}" alt="">
                                         </div>
                                         <div class="product-item-content">
-                                            <h3 class="item-title">Крем для рук amway ''G&H NOURISH'' 30 мл</h3>
+                                            <h3 class="item-title">{{$product->name}}</h3>
                                             <div class="product-item-bottom">
                                                 <div class="price-info">
-                                                    <h2 class="item-price"><span class="price-value">3 000</span> ₽</h2>
+                                                    <h2 class="item-price"><span class="price-value">{{$product->price}}</span> ₽</h2>
                                                     <div class="in-store">
                                                         <p>В наличии: </p>
                                                         <p class="in-store-value"><span>3</span> шт.</p>
                                                     </div>
                                                 </div>
                                                 <div class="go-to-product-page"
-                                                     onclick="location.href = 'product-page.html';">
+                                                     onclick="location.href = '{{route('products.show', $product->id)}}';">
                                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
                                                          xmlns="http://www.w3.org/2000/svg">
                                                         <path
@@ -133,176 +144,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="product-item">
-                                        <div class="add-to-favorite-icon">
-                                            <svg width="20" height="18" viewBox="0 0 25 22" fill="none"
-                                                 xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M18.033 0C15.6511 0 13.6159 1.70992 12.4977 2.88877C11.3795 1.70992 9.34886 0 6.96818 0C2.86477 0 0 2.88076 0 7.00447C0 11.5482 3.55795 14.4851 7 17.3258C8.625 18.6683 10.3068 20.0555 11.5966 21.5937C11.8136 21.8512 12.1318 22 12.4659 22H12.5318C12.867 22 13.1841 21.8501 13.4 21.5937C14.692 20.0555 16.3727 18.6672 17.9989 17.3258C21.4398 14.4862 25 11.5494 25 7.00447C25 2.88076 22.1352 0 18.033 0Z"
-                                                    fill="#ffffff" />
-                                            </svg>
-                                        </div>
-                                        <div class="product-item-header">
-                                            <img src="../images/product.png" alt="">
-                                        </div>
-                                        <div class="product-item-content">
-                                            <h3 class="item-title">Крем для рук amway ''G&H NOURISH'' 30 мл</h3>
-                                            <div class="product-item-bottom">
-                                                <div class="price-info">
-                                                    <h2 class="item-price"><span class="price-value">3 000</span> ₽</h2>
-                                                    <div class="in-store">
-                                                        <p>В наличии: </p>
-                                                        <p class="in-store-value"><span>3</span> шт.</p>
-                                                    </div>
-                                                </div>
-                                                <div class="go-to-product-page"
-                                                     onclick="location.href = 'product-page.html';">
-                                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
-                                                         xmlns="http://www.w3.org/2000/svg">
-                                                        <path
-                                                            d="M9.37313 1.16481C9.37313 0.888666 9.14927 0.664808 8.87313 0.664808L4.37313 0.664808C4.09698 0.664808 3.87313 0.888666 3.87313 1.16481C3.87313 1.44095 4.09698 1.66481 4.37313 1.66481L8.37313 1.66481L8.37313 5.66481C8.37313 5.94095 8.59698 6.16481 8.87313 6.16481C9.14927 6.16481 9.37313 5.94095 9.37313 5.66481L9.37313 1.16481ZM0.802009 9.94303L9.22668 1.51836L8.51957 0.811255L0.0949024 9.23592L0.802009 9.94303Z"
-                                                            fill="#FD8002" />
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-item">
-                                        <div class="add-to-favorite-icon">
-                                            <svg width="20" height="18" viewBox="0 0 25 22" fill="none"
-                                                 xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M18.033 0C15.6511 0 13.6159 1.70992 12.4977 2.88877C11.3795 1.70992 9.34886 0 6.96818 0C2.86477 0 0 2.88076 0 7.00447C0 11.5482 3.55795 14.4851 7 17.3258C8.625 18.6683 10.3068 20.0555 11.5966 21.5937C11.8136 21.8512 12.1318 22 12.4659 22H12.5318C12.867 22 13.1841 21.8501 13.4 21.5937C14.692 20.0555 16.3727 18.6672 17.9989 17.3258C21.4398 14.4862 25 11.5494 25 7.00447C25 2.88076 22.1352 0 18.033 0Z"
-                                                    fill="#ffffff" />
-                                            </svg>
-                                        </div>
-                                        <div class="product-item-header">
-                                            <img src="../images/product.png" alt="">
-                                        </div>
-                                        <div class="product-item-content">
-                                            <h3 class="item-title">Крем для рук amway ''G&H NOURISH'' 30 мл</h3>
-                                            <div class="product-item-bottom">
-                                                <div class="price-info">
-                                                    <h2 class="item-price"><span class="price-value">3 000</span> ₽</h2>
-                                                    <div class="in-store">
-                                                        <p>В наличии: </p>
-                                                        <p class="in-store-value"><span>3</span> шт.</p>
-                                                    </div>
-                                                </div>
-                                                <div class="go-to-product-page"
-                                                     onclick="location.href = 'product-page.html';">
-                                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
-                                                         xmlns="http://www.w3.org/2000/svg">
-                                                        <path
-                                                            d="M9.37313 1.16481C9.37313 0.888666 9.14927 0.664808 8.87313 0.664808L4.37313 0.664808C4.09698 0.664808 3.87313 0.888666 3.87313 1.16481C3.87313 1.44095 4.09698 1.66481 4.37313 1.66481L8.37313 1.66481L8.37313 5.66481C8.37313 5.94095 8.59698 6.16481 8.87313 6.16481C9.14927 6.16481 9.37313 5.94095 9.37313 5.66481L9.37313 1.16481ZM0.802009 9.94303L9.22668 1.51836L8.51957 0.811255L0.0949024 9.23592L0.802009 9.94303Z"
-                                                            fill="#FD8002" />
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-item">
-                                        <div class="add-to-favorite-icon">
-                                            <svg width="20" height="18" viewBox="0 0 25 22" fill="none"
-                                                 xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M18.033 0C15.6511 0 13.6159 1.70992 12.4977 2.88877C11.3795 1.70992 9.34886 0 6.96818 0C2.86477 0 0 2.88076 0 7.00447C0 11.5482 3.55795 14.4851 7 17.3258C8.625 18.6683 10.3068 20.0555 11.5966 21.5937C11.8136 21.8512 12.1318 22 12.4659 22H12.5318C12.867 22 13.1841 21.8501 13.4 21.5937C14.692 20.0555 16.3727 18.6672 17.9989 17.3258C21.4398 14.4862 25 11.5494 25 7.00447C25 2.88076 22.1352 0 18.033 0Z"
-                                                    fill="#ffffff" />
-                                            </svg>
-                                        </div>
-                                        <div class="product-item-header">
-                                            <img src="../images/product.png" alt="">
-                                        </div>
-                                        <div class="product-item-content">
-                                            <h3 class="item-title">Крем для рук amway ''G&H NOURISH'' 30 мл</h3>
-                                            <div class="product-item-bottom">
-                                                <div class="price-info">
-                                                    <h2 class="item-price"><span class="price-value">3 000</span> ₽</h2>
-                                                    <div class="in-store">
-                                                        <p>В наличии: </p>
-                                                        <p class="in-store-value"><span>3</span> шт.</p>
-                                                    </div>
-                                                </div>
-                                                <div class="go-to-product-page"
-                                                     onclick="location.href = 'product-page.html';">
-                                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
-                                                         xmlns="http://www.w3.org/2000/svg">
-                                                        <path
-                                                            d="M9.37313 1.16481C9.37313 0.888666 9.14927 0.664808 8.87313 0.664808L4.37313 0.664808C4.09698 0.664808 3.87313 0.888666 3.87313 1.16481C3.87313 1.44095 4.09698 1.66481 4.37313 1.66481L8.37313 1.66481L8.37313 5.66481C8.37313 5.94095 8.59698 6.16481 8.87313 6.16481C9.14927 6.16481 9.37313 5.94095 9.37313 5.66481L9.37313 1.16481ZM0.802009 9.94303L9.22668 1.51836L8.51957 0.811255L0.0949024 9.23592L0.802009 9.94303Z"
-                                                            fill="#FD8002" />
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-item">
-                                        <div class="add-to-favorite-icon">
-                                            <svg width="20" height="18" viewBox="0 0 25 22" fill="none"
-                                                 xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M18.033 0C15.6511 0 13.6159 1.70992 12.4977 2.88877C11.3795 1.70992 9.34886 0 6.96818 0C2.86477 0 0 2.88076 0 7.00447C0 11.5482 3.55795 14.4851 7 17.3258C8.625 18.6683 10.3068 20.0555 11.5966 21.5937C11.8136 21.8512 12.1318 22 12.4659 22H12.5318C12.867 22 13.1841 21.8501 13.4 21.5937C14.692 20.0555 16.3727 18.6672 17.9989 17.3258C21.4398 14.4862 25 11.5494 25 7.00447C25 2.88076 22.1352 0 18.033 0Z"
-                                                    fill="#ffffff" />
-                                            </svg>
-                                        </div>
-                                        <div class="product-item-header">
-                                            <img src="../images/product.png" alt="">
-                                        </div>
-                                        <div class="product-item-content">
-                                            <h3 class="item-title">Крем для рук amway ''G&H NOURISH'' 30 мл</h3>
-                                            <div class="product-item-bottom">
-                                                <div class="price-info">
-                                                    <h2 class="item-price"><span class="price-value">3 000</span> ₽</h2>
-                                                    <div class="in-store">
-                                                        <p>В наличии: </p>
-                                                        <p class="in-store-value"><span>3</span> шт.</p>
-                                                    </div>
-                                                </div>
-                                                <div class="go-to-product-page"
-                                                     onclick="location.href = 'product-page.html';">
-                                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
-                                                         xmlns="http://www.w3.org/2000/svg">
-                                                        <path
-                                                            d="M9.37313 1.16481C9.37313 0.888666 9.14927 0.664808 8.87313 0.664808L4.37313 0.664808C4.09698 0.664808 3.87313 0.888666 3.87313 1.16481C3.87313 1.44095 4.09698 1.66481 4.37313 1.66481L8.37313 1.66481L8.37313 5.66481C8.37313 5.94095 8.59698 6.16481 8.87313 6.16481C9.14927 6.16481 9.37313 5.94095 9.37313 5.66481L9.37313 1.16481ZM0.802009 9.94303L9.22668 1.51836L8.51957 0.811255L0.0949024 9.23592L0.802009 9.94303Z"
-                                                            fill="#FD8002" />
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-item">
-                                        <div class="add-to-favorite-icon">
-                                            <svg width="20" height="18" viewBox="0 0 25 22" fill="none"
-                                                 xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M18.033 0C15.6511 0 13.6159 1.70992 12.4977 2.88877C11.3795 1.70992 9.34886 0 6.96818 0C2.86477 0 0 2.88076 0 7.00447C0 11.5482 3.55795 14.4851 7 17.3258C8.625 18.6683 10.3068 20.0555 11.5966 21.5937C11.8136 21.8512 12.1318 22 12.4659 22H12.5318C12.867 22 13.1841 21.8501 13.4 21.5937C14.692 20.0555 16.3727 18.6672 17.9989 17.3258C21.4398 14.4862 25 11.5494 25 7.00447C25 2.88076 22.1352 0 18.033 0Z"
-                                                    fill="#ffffff" />
-                                            </svg>
-                                        </div>
-                                        <div class="product-item-header">
-                                            <img src="../images/product.png" alt="">
-                                        </div>
-                                        <div class="product-item-content">
-                                            <h3 class="item-title">Крем для рук amway ''G&H NOURISH'' 30 мл</h3>
-                                            <div class="product-item-bottom">
-                                                <div class="price-info">
-                                                    <h2 class="item-price"><span class="price-value">3 000</span> ₽</h2>
-                                                    <div class="in-store">
-                                                        <p>В наличии: </p>
-                                                        <p class="in-store-value"><span>3</span> шт.</p>
-                                                    </div>
-                                                </div>
-                                                <div class="go-to-product-page"
-                                                     onclick="location.href = 'product-page.html';">
-                                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
-                                                         xmlns="http://www.w3.org/2000/svg">
-                                                        <path
-                                                            d="M9.37313 1.16481C9.37313 0.888666 9.14927 0.664808 8.87313 0.664808L4.37313 0.664808C4.09698 0.664808 3.87313 0.888666 3.87313 1.16481C3.87313 1.44095 4.09698 1.66481 4.37313 1.66481L8.37313 1.66481L8.37313 5.66481C8.37313 5.94095 8.59698 6.16481 8.87313 6.16481C9.14927 6.16481 9.37313 5.94095 9.37313 5.66481L9.37313 1.16481ZM0.802009 9.94303L9.22668 1.51836L8.51957 0.811255L0.0949024 9.23592L0.802009 9.94303Z"
-                                                            fill="#FD8002" />
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @endforeach
+                                    @endif
                                 </div>
                             </div>
                             @endforeach
@@ -677,4 +520,24 @@
 @endsection
 @section('scripts')
     <script src="/assets/script/personal-admin-account.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        $('.show-card-products').click(function (){
+            let el = $(this).parent().parent().find('.card-products');
+            if(el.css('display') == 'none') {
+                el.css('display', 'flex')
+            }else{
+                el.css('display', 'none')
+            }
+        });
+
+        $('.seller-products-btn').click(function (){
+            let el = $(this).parent().parent().find($(".edit_usr"));
+            if(el.css('display') == 'none') {
+                el.css('display', 'flex');
+            }else{
+                el.css('display', 'none');
+            }
+        });
+    </script>
 @endsection

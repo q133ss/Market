@@ -18,18 +18,18 @@ bannerAction.forEach((action) => {
   });
 });
 
-document.querySelectorAll(".seller-products-btn").forEach((action) => {
-  action.addEventListener("click", () => {
-    action.classList.toggle("opened");
-    const editProduct = document.getElementById("admin-edit-product-1");
-    if (action.classList.contains("opened")) {
-      editProduct.style.display = "flex";
-    } else {
-      editProduct.style.display = "none";
-      document.getElementById("show-card-product-1").style.display = "none";
-    }
-  });
-});
+// document.querySelectorAll(".seller-products-btn").forEach((action) => {
+//   action.addEventListener("click", () => {
+//     action.classList.toggle("opened");
+//     const editProduct = document.getElementById("admin-edit-product-1");
+//     if (action.classList.contains("opened")) {
+//       editProduct.style.display = "flex";
+//     } else {
+//       editProduct.style.display = "none";
+//       document.getElementById("show-card-product-1").style.display = "none";
+//     }
+//   });
+// });
 
 personalBtns.forEach((btn) => {
   btn.addEventListener("click", () => {
@@ -44,28 +44,27 @@ document.getElementById("add-admin-product").addEventListener("click", () => {
   hideShowPersonaAdminlContent("personal-content-add-admin-product");
 });
 
-document
-  .querySelectorAll(".show-card-products")[0]
-  .addEventListener("click", (btn) => {
-    console.log(5555555);
-    if (
-      !btn.target.nextElementSibling.nextElementSibling.classList.contains(
-        "opened"
-      )
-    ) {
-      btn.target.nextElementSibling.nextElementSibling.classList.toggle(
-        "opened"
-      );
-    }
-    btn.target.classList.toggle("active-personal-btn");
-    if (btn.target.classList.contains("active-personal-btn")) {
-      document.getElementById("admin-edit-product-1").style.display = "none";
-      document.getElementById("show-card-product-1").style.display = "flex";
-    } else {
-      document.getElementById("admin-edit-product-1").style.display = "flex";
-      document.getElementById("show-card-product-1").style.display = "none";
-    }
-  });
+// document
+//   .querySelectorAll(".show-card-products")[0]
+//   .addEventListener("click", (btn) => {
+//     if (
+//       !btn.target.nextElementSibling.nextElementSibling.classList.contains(
+//         "opened"
+//       )
+//     ) {
+//       btn.target.nextElementSibling.nextElementSibling.classList.toggle(
+//         "opened"
+//       );
+//     }
+//     btn.target.classList.toggle("active-personal-btn");
+//     if (btn.target.classList.contains("active-personal-btn")) {
+//       document.getElementById("admin-edit-product-1").style.display = "none";
+//       document.getElementById("show-card-product-1").style.display = "flex";
+//     } else {
+//       document.getElementById("admin-edit-product-1").style.display = "flex";
+//       document.getElementById("show-card-product-1").style.display = "none";
+//     }
+//   });
 
 function hideShowPersonaAdminlContent(contentId) {
   contents.forEach((content) => (content.style.display = "none"));
