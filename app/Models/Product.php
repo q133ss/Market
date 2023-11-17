@@ -40,4 +40,17 @@ class Product extends Model
     {
         return $this->hasMany(Question::class, 'product_id', 'id');
     }
+
+    /*
+     * Характеристики
+     */
+    public function chars()
+    {
+        return $this->hasMany(ProductChar::class, 'product_id', 'id');
+    }
+
+    public function sizes()
+    {
+        return $this->hasMany(ProductSize::class, 'product_id', 'id');
+    }
 }

@@ -10,10 +10,13 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function show(int $id)
+    public function show(Request $request, int $id)
     {
-        $product = Product::with('shop', 'photos', 'reviews')->findOrFail($id);
-        return view('products.show', compact('product'));
+        $request->session()->push('test', $id);
+        $product = Product::with('shop', 'photos', 'reviews', 'questions', 'chars', 'sizes')->findOrFail($id);
+
+        $lastSeenProducts = Product::with('photos')->whereIn('id', $request->session()->get('test'))->get();
+        return view('products.show', compact('product', 'lastSeenProducts'));
     }
 
     public function createReview(Request $request)

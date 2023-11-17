@@ -37,6 +37,8 @@ Route::post('/login', [App\Http\Controllers\AuthController::class, 'auth'])->nam
 Route::get('/products/{id}', [App\Http\Controllers\ProductController::class, 'show'])->name('products.show');
 Route::post('/send/review', [App\Http\Controllers\ProductController::class, 'createReview'])->name('products.review.store');
 Route::post('/send/question', [App\Http\Controllers\ProductController::class, 'createQuestion'])->name('products.question.store');
+Route::get('/shop/{id}/products', [])->name('shop.products'); //Товары магазина
+Route::get('/category/{id}')->name('category.show'); //Товары категории
 
 Route::middleware('auth')->group(function(){
     Route::prefix('account')->group(function(){
