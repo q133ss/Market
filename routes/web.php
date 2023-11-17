@@ -15,11 +15,12 @@ use Illuminate\Support\Facades\Route;
 
 /*
  * TODO
- * Закончить деталку товара
+ * Закончить деталку товара +
+ * В ДЕТАЛКЕ ДОДЕЛАТЬ ПОДПИСКУ НА ТОВАР!!! КОТОРЫЙ НЕ В НАЛИЧИИ
  * Сделать поиск
  * ЛК
  * Корзина и избранное
- * Товары магазина страница
+ * Товары магазина страница +-
  */
 
 /*
@@ -37,8 +38,10 @@ Route::post('/login', [App\Http\Controllers\AuthController::class, 'auth'])->nam
 Route::get('/products/{id}', [App\Http\Controllers\ProductController::class, 'show'])->name('products.show');
 Route::post('/send/review', [App\Http\Controllers\ProductController::class, 'createReview'])->name('products.review.store');
 Route::post('/send/question', [App\Http\Controllers\ProductController::class, 'createQuestion'])->name('products.question.store');
-Route::get('/shop/{id}/products', [])->name('shop.products'); //Товары магазина
-Route::get('/category/{id}')->name('category.show'); //Товары категории
+Route::get('/shop/{id}/products', [App\Http\Controllers\ShopController::class, 'products'])->name('shop.products'); //Товары магазина
+Route::get('/category/{id}', [App\Http\Controllers\CategoryController::class, 'products'])->name('category.show'); //Товары категории
+
+Route::post('add-to-cart/{id}', []);
 
 Route::middleware('auth')->group(function(){
     Route::prefix('account')->group(function(){
