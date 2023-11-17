@@ -1,0 +1,39 @@
+@extends('layouts.app')
+@section('title', 'Избранные магазины')
+@section('content')
+    <div class="container">
+        <div class="favorite-controls">
+            <span class="" onclick="location.href = '{{route('favorite')}}';">Товары в избранном</span>
+            <span class="active-favorite" onclick="location.href = '{{route('favorite.shop')}}';">Магазины в избранном</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="main-products">
+            @foreach($shops as $shop)
+            <div class="product-item">
+                <div class="add-to-favorite-icon">
+                    <svg width="20" height="18" viewBox="0 0 25 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M18.033 0C15.6511 0 13.6159 1.70992 12.4977 2.88877C11.3795 1.70992 9.34886 0 6.96818 0C2.86477 0 0 2.88076 0 7.00447C0 11.5482 3.55795 14.4851 7 17.3258C8.625 18.6683 10.3068 20.0555 11.5966 21.5937C11.8136 21.8512 12.1318 22 12.4659 22H12.5318C12.867 22 13.1841 21.8501 13.4 21.5937C14.692 20.0555 16.3727 18.6672 17.9989 17.3258C21.4398 14.4862 25 11.5494 25 7.00447C25 2.88076 22.1352 0 18.033 0Z"
+                            fill="#ffffff" />
+                    </svg>
+                </div>
+                <div class="product-item-header">
+                    <img src="{{$shop->photo == null ? '' : $shop->photo->pluck('src')->first()}}" alt="">
+                </div>
+                <div class="product-item-content favorite-stores">
+                    <h3 class="item-title">Магазин {{$shop->title}}</h3>
+                    <div class="go-to-product-page" onclick="location.href = '{{route('shop.products', $shop->id)}}';">
+                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M9.37313 1.16481C9.37313 0.888666 9.14927 0.664808 8.87313 0.664808L4.37313 0.664808C4.09698 0.664808 3.87313 0.888666 3.87313 1.16481C3.87313 1.44095 4.09698 1.66481 4.37313 1.66481L8.37313 1.66481L8.37313 5.66481C8.37313 5.94095 8.59698 6.16481 8.87313 6.16481C9.14927 6.16481 9.37313 5.94095 9.37313 5.66481L9.37313 1.16481ZM0.802009 9.94303L9.22668 1.51836L8.51957 0.811255L0.0949024 9.23592L0.802009 9.94303Z"
+                                fill="#FD8002" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+@endsection

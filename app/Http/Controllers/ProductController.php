@@ -12,10 +12,13 @@ class ProductController extends Controller
 {
     public function show(Request $request, int $id)
     {
-        $request->session()->push('test', $id);
+        if (!is_array($request->session()->get('last_seen'))) {
+            $request->session()->put('last_seen', []);
+        }
+        $request->session()->push('last_seen', $id);
         $product = Product::with('shop', 'photos', 'reviews', 'questions', 'chars', 'sizes')->findOrFail($id);
 
-        $lastSeenProducts = Product::with('photos')->whereIn('id', $request->session()->get('test'))->get();
+        $lastSeenProducts = Product::with('photos')->whereIn('id', $request->session()->get('last_seen'))->get();
         return view('products.show', compact('product', 'lastSeenProducts'));
     }
 

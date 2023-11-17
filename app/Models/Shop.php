@@ -20,4 +20,9 @@ class Shop extends Model
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
+
+    public function photo()
+    {
+        return $this->morphOne(File::class, 'fileable');
+    }
 }

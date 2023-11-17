@@ -89,7 +89,7 @@
                         </div>
                     </div>
                     @endif
-                    <div class="add-to-favorite-list">
+                    <div class="add-to-favorite-list" onclick="addTo('{{$product->id}}', 'favorite', '{{csrf_token()}}')">
                         <p>Добавить товар в избранное</p>
                         <div class="user-control-btn">
                             <svg width="25" height="22" viewBox="0 0 25 22" fill="none"

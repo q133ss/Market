@@ -310,3 +310,19 @@ function showPersonalMobileContent(id) {
     break;
   }
 }
+
+function addTo(id, type, csrf){
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/add-to/"+id+"/"+type, true);
+    xhr.setRequestHeader('X-CSRF-TOKEN', csrf);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // Обработка успешного ответа
+            console.log(xhr.responseText);
+        } else {
+            // Обработка ошибок
+            console.error(xhr.responseText);
+        }
+    };
+    xhr.send();
+}

@@ -37,7 +37,7 @@
                     <div class="mega-menu-item">
                         <span class="cataloge-title">{{$category->name}}</span>
                         @foreach($category->children as $child)
-                        <a href="#">{{$child->name}}</a>
+                        <a href="{{route('category.show', $child->id)}}">{{$child->name}}</a>
                         @endforeach
                         <a href="#">Ещё..</a>
                     </div>
@@ -103,7 +103,7 @@
                     <a href="#">Выйти</a>
                 </div> -->
             </div>
-            <div class="user-control-btn favorite" onclick="location.href = 'templates/favorite-products.html';">
+            <div class="user-control-btn favorite" onclick="location.href = '{{route('favorite')}}';">
                 <svg width="25" height="22" viewBox="0 0 25 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M18.033 0C15.6511 0 13.6159 1.70992 12.4977 2.88877C11.3795 1.70992 9.34886 0 6.96818 0C2.86477 0 0 2.88076 0 7.00447C0 11.5482 3.55795 14.4851 7 17.3258C8.625 18.6683 10.3068 20.0555 11.5966 21.5937C11.8136 21.8512 12.1318 22 12.4659 22H12.5318C12.867 22 13.1841 21.8501 13.4 21.5937C14.692 20.0555 16.3727 18.6672 17.9989 17.3258C21.4398 14.4862 25 11.5494 25 7.00447C25 2.88076 22.1352 0 18.033 0Z"

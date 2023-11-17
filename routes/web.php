@@ -19,13 +19,14 @@ use Illuminate\Support\Facades\Route;
  * В ДЕТАЛКЕ ДОДЕЛАТЬ ПОДПИСКУ НА ТОВАР!!! КОТОРЫЙ НЕ В НАЛИЧИИ
  * Сделать поиск
  * ЛК
- * Корзина и избранное
+ * избранное +
  * Товары магазина страница +-
  */
 
 /*
  * ВОПРОСЫ
  * При добавлении отзыва нет рейтинга
+ * Как добавить магазин в избранное? (вывел кнопку)
  */
 
 Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('index');
@@ -41,7 +42,9 @@ Route::post('/send/question', [App\Http\Controllers\ProductController::class, 'c
 Route::get('/shop/{id}/products', [App\Http\Controllers\ShopController::class, 'products'])->name('shop.products'); //Товары магазина
 Route::get('/category/{id}', [App\Http\Controllers\CategoryController::class, 'products'])->name('category.show'); //Товары категории
 
-Route::post('add-to-cart/{id}', []);
+Route::post('add-to/{id}/{type}', [App\Http\Controllers\CartController::class, 'addTo']);
+Route::get('favorite', [App\Http\Controllers\CartController::class, 'favorite'])->name('favorite');
+Route::get('favorite/shops', [App\Http\Controllers\CartController::class, 'favoriteShop'])->name('favorite.shop');
 
 Route::middleware('auth')->group(function(){
     Route::prefix('account')->group(function(){
