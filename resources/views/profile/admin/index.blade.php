@@ -12,7 +12,7 @@
 
     <div class="container">
         <div class="personal-account">
-            <div class="add-product" id="add-admin-product"><span>+</span></div>
+            <div class="add-product" id="add-admin-product"><span onclick="addSeller()">+</span></div>
             <div class="personal-account-content admin-account-page">
                 <div class="personal-account-btns">
                     <span class="active-personal-btn" id="personal-sellers">Продавцы</span>
@@ -302,11 +302,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="personal-account-content-item" id="personal-content-add-admin-product">
+                    <div class="personal-account-content-item" id="seller_add">
                         <div class="add-product-content">
                             <div class="add-header"></div>
                             <div class="add-product-items-content">
-                                <div class="add-product-items-content">
+                                <form method="POST" action="{{route('admin.user.store')}}" class="add-product-items-content" enctype="multipart/form-data">
+                                    @csrf
                                     <div class="add-product-img-content">
                                         <div class="add-product-img-swiper">
                                             <div class="product-imaage">
@@ -314,41 +315,82 @@
                                             </div>
                                         </div>
                                         <div class="file-input">
-                                            <input type="file" name="file-input" id="write-review-file-input"
+                                            <input type="file" name="img" id="write-review-file-input_user"
                                                    class="file-input__input" />
                                             <label class="file-input__label"
-                                                   for="write-review-file-input"><span>Загрузить
+                                                   for="write-review-file-input_user"><span>Загрузить
                                                     фото</span></label>
                                         </div>
                                     </div>
                                     <div class="add-characteristics-form">
                                         <label>ФИО продавца:</label>
-                                        <input type="text">
+                                        <input type="text" name="name">
 
                                         <label>Email для входа:</label>
-                                        <input type="email">
+                                        <input type="email" name="email">
+
+                                        <label>Пароль:</label>
+                                        <input type="password" name="password">
 
                                         <label>Название магазина:</label>
-                                        <input type="email">
+                                        <input name="shop_name" type="text">
 
                                         <label>Описание:</label>
-                                        <textarea cols="30" rows="10"></textarea>
+                                        <textarea cols="30" name="shop_description" rows="10"></textarea>
 
                                         <label>Информация о доставке:</label>
-                                        <textarea cols="30" rows="6"></textarea>
+                                        <textarea cols="30" name="shop_shipping" rows="6"></textarea>
 
                                         <label>Информация о связи с продавцом:</label>
-                                        <textarea cols="30" rows="6"></textarea>
+                                        <textarea cols="30" name="shop_communication_info" rows="6"></textarea>
 
                                         <label>Место на карте:</label>
                                         <div class="map"></div>
 
                                         <button>СОХРАНИТЬ</button>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
+
+                    <div class="personal-account-content-item" id="banner_add">
+                        <div class="add-product-content">
+                            <div class="add-header"></div>
+                            <div class="add-product-items-content">
+                                <form class="add-product-items-content" action="{{route('admin.banners.store')}}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="add-product-img-content">
+                                        <div class="add-product-img-swiper">
+                                            <div class="product-imaage">
+                                                <img src="../images/product.png" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="file-input">
+                                            <input type="file" name="img" id="write-review-file-input_banner"
+                                                   class="file-input__input" />
+                                            <label class="file-input__label"
+                                                   for="write-review-file-input_banner"><span>Загрузить
+                                                    фото</span></label>
+                                        </div>
+                                    </div>
+                                    <div class="add-characteristics-form">
+                                        <label>Заголовок:</label>
+                                        <input type="text" name="title">
+
+                                        <label>Текст:</label>
+                                        <input type="text" name="text">
+
+                                        <label>Ссылка на кнопку:</label>
+                                        <input type="text" name="link">
+
+                                        <button>СОХРАНИТЬ</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -375,5 +417,23 @@
                 el.css('display', 'none');
             }
         });
+
+        $('#personal-adds').click(function(){
+            $('#add-admin-product > span').attr('onclick', 'addBanner()');
+        });
+
+        $('#personal-sellers').click(function(){
+            $('#add-admin-product > span').attr('onclick', 'addSeller()');
+        });
+
+        function addBanner(){
+            $('.personal-account-content-item').css('display', 'none');
+            $('#banner_add').css('display', 'block');
+        }
+
+        function addSeller(){
+            $('.personal-account-content-item').css('display', 'none');
+            $('#seller_add').css('display', 'block');
+        }
     </script>
 @endsection

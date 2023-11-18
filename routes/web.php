@@ -27,6 +27,9 @@ use Illuminate\Support\Facades\Route;
  * ВОПРОСЫ
  * При добавлении отзыва нет рейтинга
  * Как добавить магазин в избранное? (вывел кнопку)
+ *
+ *
+ * У админа в ЛК есть "отзывы магазинов", что это?
  */
 
 Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('index');
@@ -56,10 +59,21 @@ Route::middleware('auth')->group(function(){
             Route::get('/user/{id}/status/change/{status}', [App\Http\Controllers\Admin\UsersController::class, 'status'])->name('status.change');
             Route::post('/user/update/{id}', [App\Http\Controllers\Admin\UsersController::class, 'update'])->name('user.update');
             Route::get('/review/{id}/{action}', [App\Http\Controllers\Admin\ReviewController::class, 'action'])->name('review.action');
+            Route::post('/users', [App\Http\Controllers\Admin\UsersController::class, 'store'])->name('user.store');
 
             Route::post('/users/{id}/rating', [App\Http\Controllers\Admin\UsersController::class, 'rating'])->name('users.rating');
 
             Route::post('/banners/{id}', [App\Http\Controllers\Admin\BannerController::class, 'update'])->name('banners.update');
+            Route::post('/banners', [App\Http\Controllers\Admin\BannerController::class, 'store'])->name('banners.store');
+        });
+
+        Route::prefix('seller')->middleware('is.seller')->name('seller.')->group(function(){
+            Route::post('/product', [App\Http\Controllers\Seller\ProductController::class, 'store'])->name('product.store');
+            Route::post('/product/{id}', [App\Http\Controllers\Seller\ProductController::class, 'update'])->name('product.update');
+            Route::post('/product/{id}/add/size', [App\Http\Controllers\Seller\ProductController::class, 'addSize'])->name('product.add.size');
+            Route::post('/product/{id}/add/char', [App\Http\Controllers\Seller\ProductController::class, 'addChar'])->name('product.add.char');
+            Route::post('/product/size/{id}/delete', [App\Http\Controllers\Seller\ProductController::class, 'deleteSize']);
+            Route::post('/product/char/{id}/delete', [App\Http\Controllers\Seller\ProductController::class, 'deleteChar']);
         });
 
     });

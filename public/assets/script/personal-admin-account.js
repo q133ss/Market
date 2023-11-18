@@ -40,9 +40,9 @@ personalBtns.forEach((btn) => {
   });
 });
 
-document.getElementById("add-admin-product").addEventListener("click", () => {
-  hideShowPersonaAdminlContent("personal-content-add-admin-product");
-});
+// document.getElementById("add-admin-product").addEventListener("click", () => {
+//   hideShowPersonaAdminlContent("personal-content-add-admin-product");
+// });
 
 // document
 //   .querySelectorAll(".show-card-products")[0]

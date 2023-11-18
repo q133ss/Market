@@ -151,39 +151,39 @@ if (addRowBtns) {
   });
 }
 
-document.querySelectorAll('.add-size-or-characteristic-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const divList = document.querySelector(`#${btn.parentElement.querySelector('#size-or-characteristic-div-id').value}`)
-    const div = document.createElement('div')
-    const span = document.createElement('span')
-    const button = document.createElement('button')
-    button.innerText = 'Удалить'
-    if (btn.parentElement.parentElement.classList.contains('add-size-popup')) {
-      span.innerHTML = btn.parentElement.querySelector('.size').value
-      button.classList.add('remove-product-size')
-      div.appendChild(span)
-      div.appendChild(button)
-      divList.querySelector('div').prepend(div)
-      addSizeModal.style.display = "none";
-      addRemoveBtnClick('remove-product-size')
-    } else if(btn.parentElement.parentElement.classList.contains('add-characteristic-popup')) {
-      const p = document.createElement('p')
-      const subDiv = document.createElement('div')
-      div.classList.add('about-added-item')
-      button.classList.add('remove-product-characteristic')
-      span.innerHTML = btn.parentElement.querySelector('.parametr').value
-      p.innerHTML = btn.parentElement.querySelector('.comment').value
-      subDiv.appendChild(span)
-      subDiv.appendChild(p)
-      div.appendChild(subDiv)
-      div.appendChild(button)
-      console.log(555, divList);
-      divList.prepend(div)
-      addCharacteristicModal.style.display = "none";
-      addRemoveBtnClick('remove-product-characteristic')
-    }
-  })
-});
+// document.querySelectorAll('.add-size-or-characteristic-btn').forEach(btn => {
+//   btn.addEventListener('click', () => {
+//     const divList = document.querySelector(`#${btn.parentElement.querySelector('#size-or-characteristic-div-id').value}`)
+//     const div = document.createElement('div')
+//     const span = document.createElement('span')
+//     const button = document.createElement('button')
+//     button.innerText = 'Удалить'
+//     if (btn.parentElement.parentElement.classList.contains('add-size-popup')) {
+//       span.innerHTML = btn.parentElement.querySelector('.size').value
+//       button.classList.add('remove-product-size')
+//       div.appendChild(span)
+//       div.appendChild(button)
+//       divList.querySelector('div').prepend(div)
+//       addSizeModal.style.display = "none";
+//       addRemoveBtnClick('remove-product-size')
+//     } else if(btn.parentElement.parentElement.classList.contains('add-characteristic-popup')) {
+//       const p = document.createElement('p')
+//       const subDiv = document.createElement('div')
+//       div.classList.add('about-added-item')
+//       button.classList.add('remove-product-characteristic')
+//       span.innerHTML = btn.parentElement.querySelector('.parametr').value
+//       p.innerHTML = btn.parentElement.querySelector('.comment').value
+//       subDiv.appendChild(span)
+//       subDiv.appendChild(p)
+//       div.appendChild(subDiv)
+//       div.appendChild(button)
+//       console.log(555, divList);
+//       divList.prepend(div)
+//       addCharacteristicModal.style.display = "none";
+//       addRemoveBtnClick('remove-product-characteristic')
+//     }
+//   })
+// });
 
 function addRemoveBtnClick(klass) {
   document.querySelectorAll(`.${klass}`).forEach(btn => {

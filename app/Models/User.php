@@ -22,7 +22,8 @@ class User extends Authenticatable
         'email',
         'password',
         'status',
-        'rating'
+        'rating',
+        'role_id'
     ];
 
     /**
@@ -58,5 +59,14 @@ class User extends Authenticatable
     public function photos()
     {
         return $this->morphMany(File::class, 'fileable');
+    }
+
+    public function products()
+    {
+        if($this->shop) {
+            return Product::where('shop_id', $this->shop->id)->get();
+        }else{
+            return [];
+        }
     }
 }

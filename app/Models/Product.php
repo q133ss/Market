@@ -41,6 +41,11 @@ class Product extends Model
         return $this->hasMany(Question::class, 'product_id', 'id');
     }
 
+    public function category()
+    {
+        return $this->hasOne(Category::class, 'id', 'category_id');
+    }
+
     /*
      * Характеристики
      */

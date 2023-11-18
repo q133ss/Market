@@ -31,4 +31,26 @@ class BannerController extends Controller
 
         return back();
     }
+
+    public function store(Request $request)
+    {
+        if(!$request->img) {
+            return back();
+        }
+        $banner = Banner::create([
+            'title' => $request->title,
+            'text' => $request->text,
+            'link' => $request->link
+        ]);
+
+        $path = $request->img->store('banners', 'public');
+        File::create([
+            'src' => '/storage/'.$path,
+            'category' => 'banner',
+            'fileable_type' => 'App\Models\Banner',
+            'fileable_id' => $banner->id
+        ]);
+
+        return back();
+    }
 }
