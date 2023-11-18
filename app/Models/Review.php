@@ -19,4 +19,9 @@ class Review extends Model
     {
         return $this->morphMany(File::class, 'fileable')->where('category', 'review');
     }
+
+    public function product()
+    {
+        return $this->hasOne(Product::class, 'id', 'reviewable_id');
+    }
 }

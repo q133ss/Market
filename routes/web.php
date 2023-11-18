@@ -55,6 +55,11 @@ Route::middleware('auth')->group(function(){
         Route::middleware('is.admin')->name('admin.')->group(function(){
             Route::get('/user/{id}/status/change/{status}', [App\Http\Controllers\Admin\UsersController::class, 'status'])->name('status.change');
             Route::post('/user/update/{id}', [App\Http\Controllers\Admin\UsersController::class, 'update'])->name('user.update');
+            Route::get('/review/{id}/{action}', [App\Http\Controllers\Admin\ReviewController::class, 'action'])->name('review.action');
+
+            Route::post('/users/{id}/rating', [App\Http\Controllers\Admin\UsersController::class, 'rating'])->name('users.rating');
+
+            Route::post('/banners/{id}', [App\Http\Controllers\Admin\BannerController::class, 'update'])->name('banners.update');
         });
 
     });

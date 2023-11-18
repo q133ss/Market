@@ -159,78 +159,28 @@
                                 <span>Вопрос</span>
                             </div>
                             <div class="personal-content-table-content">
+                                @foreach($reviews as $review)
                                 <div class="personal-content-table-content-item">
-                                    <p>№<span>234</span></p>
+                                    <p>№<span>{{$review->id}}</span></p>
                                     <span class="vertical-line"></span>
-                                    <p>Название товара</p>
+                                    <p>{{$review->product->name}}</p>
                                     <span class="vertical-line"></span>
                                     <div class="personal-account-question-content">
                                         <div class="moder-reviews-desc">
-                                            <p>Для современного мира семантический разбор внешних
-                                                противодействий обеспечивает актуальность приоретизации
-                                                разума над эмоциями. Картельные сговоры не допускают
-                                                ситуации, при которой представители ?
-                                            </p>
+                                            <p>{{$review->title}}</p>
                                             <div>
-                                                <img src="../images/product.png" alt="">
-                                                <img src="../images/product.png" alt="">
-                                                <img src="../images/product.png" alt="">
+                                                @foreach($review->files as $photo)
+                                                <img src="{{$photo->src}}" alt="">
+                                                @endforeach
                                             </div>
                                         </div>
                                         <div class="personal-account-question-btns">
-                                            <button>Сохранить</button>
-                                            <button>Отклонить</button>
+                                            <button onclick="location.href='{{route('admin.review.action', [$review->id, 1])}}'">Сохранить</button>
+                                            <button onclick="location.href='{{route('admin.review.action', [$review->id, 0])}}'">Отклонить</button>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="personal-content-table-content-item">
-                                    <p>№<span>234</span></p>
-                                    <span class="vertical-line"></span>
-                                    <p>Название товара</p>
-                                    <span class="vertical-line"></span>
-                                    <div class="personal-account-question-content">
-                                        <div class="moder-reviews-desc">
-                                            <p>Для современного мира семантический разбор внешних
-                                                противодействий обеспечивает актуальность приоретизации
-                                                разума над эмоциями. Картельные сговоры не допускают
-                                                ситуации, при которой представители ?
-                                            </p>
-                                            <div>
-                                                <img src="../images/product.png" alt="">
-                                                <img src="../images/product.png" alt="">
-                                                <img src="../images/product.png" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="personal-account-question-btns">
-                                            <button>Сохранить</button>
-                                            <button>Отклонить</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="personal-content-table-content-item">
-                                    <p>№<span>234</span></p>
-                                    <span class="vertical-line"></span>
-                                    <p>Название товара</p>
-                                    <span class="vertical-line"></span>
-                                    <div class="personal-account-question-content">
-                                        <div class="moder-reviews-desc">
-                                            <p>Для современного мира семантический разбор внешних
-                                                противодействий обеспечивает актуальность приоретизации
-                                                разума над эмоциями. Картельные сговоры не допускают
-                                                ситуации, при которой представители ?
-                                            </p>
-                                            <div>
-                                                <img src="../images/product.png" alt="">
-                                                <img src="../images/product.png" alt="">
-                                                <img src="../images/product.png" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="personal-account-question-btns">
-                                            <button>Сохранить</button>
-                                            <button>Отклонить</button>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -242,111 +192,38 @@
                                 <span>Магазин</span>
                                 <span>Рейтинг</span>
                             </div>
+
+                            @foreach($sellers as $seller)
                             <div class="personal-content-table-content">
-                                <div class="personal-content-table-content-item">
-                                    <p>ID12</p>
+                                <form class="personal-content-table-content-item" action="{{route('admin.users.rating', $seller->id)}}" method="POST">
+                                    @csrf
+                                    <p>ID{{$seller->id}}</p>
                                     <span class="vertical-line"></span>
-                                    <p>ФИО</p>
+                                    <p>{{$seller->name ?? ''}}</p>
                                     <span class="vertical-line"></span>
-                                    <p>Название магазина</p>
+                                    <p>{{$seller->shop->title ?? ''}}</p>
                                     <span class="vertical-line"></span>
                                     <div class="search-select">
-                                        <input class="search-select-input" type="text" placeholder="-1" readonly />
+                                        <input class="search-select-input" name="rating" type="text" placeholder="{{$seller->rating}}" readonly />
+                                        @php
+                                        $ratings = [
+                                            '-1' => '#FF0000',
+                                            '0' => '#969696',
+                                            '1' => '#42FF00',
+                                            '2' => '#FD8002',
+                                        ];
+                                        @endphp
                                         <ul class="options">
-                                            <li class="option" style="color: #FF0000;">-1</li>
-                                            <li class="option" style="color: #969696;">0</li>
-                                            <li class="option" style="color: #42FF00;">1</li>
-                                            <li class="option" style="color: #FD8002;">2</li>
+                                            @foreach($ratings as $rating => $key)
+                                            <li class="option" style="color: {{$key}};">{{$rating}}</li>
+                                            @endforeach
                                         </ul>
                                     </div>
                                     <span class="vertical-line"></span>
-                                    <button>Сохранить</button>
-                                </div>
+                                    <button type="submit">Сохранить</button>
+                                </form>
                             </div>
-                            <div class="personal-content-table-content">
-                                <div class="personal-content-table-content-item">
-                                    <p>ID12</p>
-                                    <span class="vertical-line"></span>
-                                    <p>ФИО</p>
-                                    <span class="vertical-line"></span>
-                                    <p>Название магазина</p>
-                                    <span class="vertical-line"></span>
-                                    <div class="search-select">
-                                        <input class="search-select-input" type="text" placeholder="-1" readonly />
-                                        <ul class="options">
-                                            <li class="option" style="color: #FF0000;">-1</li>
-                                            <li class="option" style="color: #969696;">0</li>
-                                            <li class="option" style="color: #42FF00;">1</li>
-                                            <li class="option" style="color: #FD8002;">2</li>
-                                        </ul>
-                                    </div>
-                                    <span class="vertical-line"></span>
-                                    <button>Сохранить</button>
-                                </div>
-                            </div>
-                            <div class="personal-content-table-content">
-                                <div class="personal-content-table-content-item">
-                                    <p>ID12</p>
-                                    <span class="vertical-line"></span>
-                                    <p>ФИО</p>
-                                    <span class="vertical-line"></span>
-                                    <p>Название магазина</p>
-                                    <span class="vertical-line"></span>
-                                    <div class="search-select">
-                                        <input class="search-select-input" type="text" placeholder="-1" readonly />
-                                        <ul class="options">
-                                            <li class="option" style="color: #FF0000;">-1</li>
-                                            <li class="option" style="color: #969696;">0</li>
-                                            <li class="option" style="color: #42FF00;">1</li>
-                                            <li class="option" style="color: #FD8002;">2</li>
-                                        </ul>
-                                    </div>
-                                    <span class="vertical-line"></span>
-                                    <button>Сохранить</button>
-                                </div>
-                            </div>
-                            <div class="personal-content-table-content">
-                                <div class="personal-content-table-content-item">
-                                    <p>ID12</p>
-                                    <span class="vertical-line"></span>
-                                    <p>ФИО</p>
-                                    <span class="vertical-line"></span>
-                                    <p>Название магазина</p>
-                                    <span class="vertical-line"></span>
-                                    <div class="search-select">
-                                        <input class="search-select-input" type="text" placeholder="-1" readonly />
-                                        <ul class="options">
-                                            <li class="option" style="color: #FF0000;">-1</li>
-                                            <li class="option" style="color: #969696;">0</li>
-                                            <li class="option" style="color: #42FF00;">1</li>
-                                            <li class="option" style="color: #FD8002;">2</li>
-                                        </ul>
-                                    </div>
-                                    <span class="vertical-line"></span>
-                                    <button>Сохранить</button>
-                                </div>
-                            </div>
-                            <div class="personal-content-table-content">
-                                <div class="personal-content-table-content-item">
-                                    <p>ID12</p>
-                                    <span class="vertical-line"></span>
-                                    <p>ФИО</p>
-                                    <span class="vertical-line"></span>
-                                    <p>Название магазина</p>
-                                    <span class="vertical-line"></span>
-                                    <div class="search-select">
-                                        <input class="search-select-input" type="text" placeholder="-1" readonly />
-                                        <ul class="options">
-                                            <li class="option" style="color: #FF0000;">-1</li>
-                                            <li class="option" style="color: #969696;">0</li>
-                                            <li class="option" style="color: #42FF00;">1</li>
-                                            <li class="option" style="color: #FD8002;">2</li>
-                                        </ul>
-                                    </div>
-                                    <span class="vertical-line"></span>
-                                    <button>Сохранить</button>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                     <div class="personal-account-content-item" id="personal-content-adds">
@@ -355,70 +232,29 @@
                                 <span>Баннер</span>
                             </div>
                             <div class="personal-content-table-content">
+                                @foreach($banners as $banner)
                                 <div class="personal-content-table-content-item banner-action">
-                                    <p class="">Баннер 1</p>
+                                    <p class="">Баннер {{$banner->id}}</p>
                                 </div>
-                                <div class="banner-hidden-item">
+                                <form class="banner-hidden-item" action="{{route('admin.banners.update', $banner->id)}}" method="POST" enctype="multipart/form-data">
+                                    @csrf
                                     <div class="banner-hidden-photo">
-                                        <div class="banner-hidden-img"></div>
+                                        <div class="banner-hidden-img" style="background-image: url('{{$banner->img ? $banner->img->src : ''}}'); background-size: cover"></div>
                                         <div class="file-input">
-                                            <input type="file" name="file-input" id="write-review-file-input"
+                                            <input type="file" name="img" id="write-review-file-input_{{$banner->id}}"
                                                    class="file-input__input" />
                                             <label class="file-input__label"
-                                                   for="write-review-file-input"><span>Загрузить</span></label>
+                                                   for="write-review-file-input_{{$banner->id}}"><span>Загрузить</span></label>
                                         </div>
                                     </div>
-                                    <input type="text" placeholder="Ссылка на кнопку" class="banner-link">
-                                    <button>Сохранить</button>
-                                </div>
-                                <div class="personal-content-table-content-item banner-action">
-                                    <p class="">Баннер 2</p>
-                                </div>
-                                <div class="banner-hidden-item">
-                                    <div class="banner-hidden-photo">
-                                        <div class="banner-hidden-img"></div>
-                                        <div class="file-input">
-                                            <input type="file" name="file-input" id="write-review-file-input"
-                                                   class="file-input__input" />
-                                            <label class="file-input__label"
-                                                   for="write-review-file-input"><span>Загрузить</span></label>
-                                        </div>
+                                    <div style="display: grid; grid-template-columns: 1fr">
+                                        <input type="text" value="{{$banner->title}}" name="title" placeholder="Заголовок" class="banner-link">
+                                        <input type="text" value="{{$banner->text}}" name="text" placeholder="Текст" class="banner-link">
+                                        <input type="text" value="{{$banner->link}}" name="link" placeholder="Ссылка на кнопку" class="banner-link">
                                     </div>
-                                    <input type="text" placeholder="Ссылка на кнопку" class="banner-link">
-                                    <button>Сохранить</button>
-                                </div>
-                                <div class="personal-content-table-content-item banner-action">
-                                    <p class="">Баннер 3</p>
-                                </div>
-                                <div class="banner-hidden-item">
-                                    <div class="banner-hidden-photo">
-                                        <div class="banner-hidden-img"></div>
-                                        <div class="file-input">
-                                            <input type="file" name="file-input" id="write-review-file-input"
-                                                   class="file-input__input" />
-                                            <label class="file-input__label"
-                                                   for="write-review-file-input"><span>Загрузить</span></label>
-                                        </div>
-                                    </div>
-                                    <input type="text" placeholder="Ссылка на кнопку" class="banner-link">
-                                    <button>Сохранить</button>
-                                </div>
-                                <div class="personal-content-table-content-item banner-action">
-                                    <p class="">Баннер 4</p>
-                                </div>
-                                <div class="banner-hidden-item">
-                                    <div class="banner-hidden-photo">
-                                        <div class="banner-hidden-img"></div>
-                                        <div class="file-input">
-                                            <input type="file" name="file-input" id="write-review-file-input"
-                                                   class="file-input__input" />
-                                            <label class="file-input__label"
-                                                   for="write-review-file-input"><span>Загрузить</span></label>
-                                        </div>
-                                    </div>
-                                    <input type="text" placeholder="Ссылка на кнопку" class="banner-link">
-                                    <button>Сохранить</button>
-                                </div>
+                                    <button type="submit">Сохранить</button>
+                                </form>
+                                @endforeach
                             </div>
                         </div>
                     </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Banner;
 use App\Models\Review;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -21,7 +22,9 @@ class AccountController extends Controller
 
             $reviews = Review::where('approved', 0)->orderBy('created_at', 'DESC')->get();
 
-            return view('profile.' . Auth()->user()->role->tech_name . '.index', compact('sellers'));
+            $banners = Banner::orderBy('id', 'DESC')->get();
+
+            return view('profile.' . Auth()->user()->role->tech_name . '.index', compact('sellers', 'reviews', 'banners'));
         }else{
             return view('profile.' . Auth()->user()->role->tech_name . '.index');
         }

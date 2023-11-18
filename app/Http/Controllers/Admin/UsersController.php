@@ -56,4 +56,10 @@ class UsersController extends Controller
 
         return back();
     }
+
+    public function rating(Request $request, int $id)
+    {
+        User::findOrFail($id)->update(['rating' => $request->rating]);
+        return back();
+    }
 }
