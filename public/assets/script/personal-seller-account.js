@@ -1,6 +1,6 @@
 const personalBtns = document.querySelector('.personal-account-btns').querySelectorAll('span')
 const contents = document.querySelector('.personal-account-content-items').querySelectorAll('.personal-account-content-item')
-const genderBtns = document.querySelector('.gender-items').querySelectorAll('span')
+// const genderBtns = document.querySelector('.gender-items').querySelectorAll('span')
 const inStockBtns = document.querySelectorAll('.in-stock-controls')
 
 personalBtns.forEach(btn => {
@@ -10,10 +10,10 @@ personalBtns.forEach(btn => {
         if (['personal-stores', 'personal-waiting-list'].includes(btn.id)) {
             addProductBtn.style.display = 'none'
         } else {
-            addProductBtn.style.display = 'flex'            
+            addProductBtn.style.display = 'flex'
         }
         hideShowPersonalContent(id)
-        btn.classList.toggle('active-personal-btn')                
+        btn.classList.toggle('active-personal-btn')
     })
 });
 
@@ -27,9 +27,9 @@ document.getElementById('personal-content-products').querySelectorAll('.table-ac
         if (action.classList.contains('opened')) {
             action.parentElement.nextElementSibling.style.display = 'block'
         } else {
-            action.parentElement.nextElementSibling.style.display = 'none'            
+            action.parentElement.nextElementSibling.style.display = 'none'
         }
-    })    
+    })
 });
 
 document.getElementById('personal-content-waiting-list').querySelectorAll('.table-action').forEach(action => {
@@ -38,24 +38,24 @@ document.getElementById('personal-content-waiting-list').querySelectorAll('.tabl
         if (action.classList.contains('opened')) {
             action.parentElement.nextElementSibling.style.display = 'block'
         } else {
-            action.parentElement.nextElementSibling.style.display = 'none'            
+            action.parentElement.nextElementSibling.style.display = 'none'
         }
-    })    
+    })
 });
 
-genderBtns.forEach(action => {
-    action.addEventListener('click', () => {
-        genderBtns.forEach(btn => {btn.classList.remove('active-personal-btn')});
-        action.classList.toggle('active-personal-btn')
-    })    
-});
+// genderBtns.forEach(action => {
+//     action.addEventListener('click', () => {
+//         genderBtns.forEach(btn => {btn.classList.remove('active-personal-btn')});
+//         action.classList.toggle('active-personal-btn')
+//     })
+// });
 
 inStockBtns.forEach(actions => {
     actions.querySelectorAll('span').forEach(action => {
         action.addEventListener('click', () => {
             actions.querySelectorAll('span').forEach(btn => {btn.classList.remove('active-personal-btn')});
             action.classList.toggle('active-personal-btn')
-        })            
+        })
     })
 });
 
@@ -67,14 +67,14 @@ document.querySelectorAll('.phone-input').forEach(input => {
         setTimeout(() => {
             e.target.style.setProperty('border', '1px solid #E6E6E6', 'important');
         }, 3000);
-    })    
+    })
 });
 
 
 function hideShowPersonalContent(contentId) {
     contents.forEach(content => content.style.display = 'none');
     if (contentId !== 'personal-content-add-product') {
-        personalBtns.forEach(btn => btn.classList.remove('active-personal-btn'));        
+        personalBtns.forEach(btn => btn.classList.remove('active-personal-btn'));
     }
     console.log(contentId);
     document.getElementById(contentId).style.display = 'block'

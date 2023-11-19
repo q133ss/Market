@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
+use App\Models\City;
 use App\Models\File;
 use App\Models\Product;
 use App\Models\ProductChar;
@@ -13,6 +14,20 @@ class ProductController extends Controller
 {
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
+            'compound' => 'required|string',
+            'color' => 'required|string',
+            'price' => 'required|string',
+            'old_price' => 'required|string',
+            'phone' => 'required|string',
+            'description' => 'required|string',
+            'shipping' => 'required|string',
+            'in_stock' => 'required|in:0,1',
+            'city' => 'required|exists:cities,name'
+        ]);
+
         $product = Product::create([
             'name' => $request->name,
             'category_id' => $request->category_id,
@@ -23,8 +38,25 @@ class ProductController extends Controller
             'phone' => $request->phone,
             'description' => $request->description,
             'shipping' => $request->shipping,
-            'in_stock' => $request->in_stock
+            'in_stock' => $request->in_stock,
+            'city_id' => City::where('name', $request->city)->pluck('id')->first(),
+            'shop_id' => Auth()->user()->shop->id
         ]);
+
+        foreach ($request->char_keys as $key => $value){
+            ProductChar::create([
+                'product_id' => $product->id,
+                'key' => $value,
+                'value' => $request->char_vals[$key]
+            ]);
+        }
+
+        foreach ($request->sizes as $size){
+            ProductSize::create([
+                'product_id' => $product->id,
+                'size' => $size
+            ]);
+        }
 
         foreach ($request->img as $file) {
             $path = $file->store('products', 'public');
@@ -38,7 +70,7 @@ class ProductController extends Controller
             );
         }
 
-        return back();
+        return back()->withSuccess('Товар успешно добавлен');
     }
 
     public function update(Request $request, $id)

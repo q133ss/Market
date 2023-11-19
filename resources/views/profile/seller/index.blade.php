@@ -643,113 +643,122 @@
                     <div class="personal-account-content-item" id="personal-content-add-product">
                         <div class="add-product-content">
                             <div class="add-header"></div>
-                            <div class="add-product-items-content">
+                            <form action="{{route('seller.product.store')}}" method="POST" id="addProductForm" class="add-product-items-content" enctype="multipart/form-data">
+                                @csrf
                                 <span class="dublicate"><img src="/assets/images/dublicate.svg" alt=""></span>
                                 <div class="add-product-img-content">
                                     <div class="add-product-img-swiper">
                                         <div class="swiper add-product-img-slider">
                                             <div class="swiper-wrapper">
-                                                <div class="swiper-slide">
-                                                    <div class="product-imaage">
-                                                        <img src="/assets/images/product.png" alt="">
-                                                    </div>
-                                                </div>
-                                                <div class="swiper-slide">
-                                                    <div class="product-imaage">
-                                                        <img src="/assets/images/product.png" alt="">
-                                                    </div>
-                                                </div>
+{{--                                                <div class="swiper-slide">--}}
+{{--                                                    <div class="product-imaage">--}}
+{{--                                                        <img src="/assets/images/product.png" alt="">--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                                <div class="swiper-slide">--}}
+{{--                                                    <div class="product-imaage">--}}
+{{--                                                        <img src="/assets/images/product.png" alt="">--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
                                             </div>
                                             <span class="swiper-button-prev"></span>
                                             <span class="swiper-button-next"></span>
                                         </div>
                                     </div>
                                     <div class="file-input">
-                                        <input type="file" name="file-input" id="write-review-file-input"
+                                        <input type="file" name="img[]" multiple id="write-review-file-input_product_add"
                                                class="file-input__input" />
-                                        <label class="file-input__label" for="write-review-file-input"><span>Загрузить
+                                        <label class="file-input__label" for="write-review-file-input_product_add"><span>Загрузить
                                                 фотографии</span></label>
                                     </div>
                                 </div>
                                 <div class="add-characteristics-form">
                                     <label>Название:</label>
-                                    <input type="text">
+                                    <input type="text" name="name">
 
                                     <label>Категория:</label>
-                                    <input type="text">
+                                    <select name="category_id" id="" style="background-color: #EDEDED;
+                                                                            padding: 6px 0px 6px 12px;
+                                                                            border-radius: 4px;
+                                                                            width: 335px;">
+                                        @foreach($categories as $category)
+                                            <option value="{{$category->id}}">{{$category->name}}</option>
+                                        @endforeach
+                                    </select>
 
                                     <label>Состав:</label>
-                                    <input type="text">
+                                    <input type="text" name="compound">
 
                                     <label>Цвет:</label>
-                                    <input type="text">
+                                    <input type="text" name="color">
 
                                     <div class="sizes-and-gender">
-                                        <div class="add-sizes" id="add-product-form">
+                                        <div class="add-sizes new_product_sizes" id="add-product-form">
                                             <p>Размеры:</p>
                                             <div>
-                                                <span class="add-row-btn"><img src="/assets/images/white-cross.svg"
+                                                <span class="add-row-btn" onclick="newAddSize()"><img src="/assets/images/white-cross.svg"
                                                                                alt=""></span>
                                             </div>
                                         </div>
-                                        <div class="add-gender">
-                                            <p>Пол:</p>
-                                            <div class="gender-items">
-                                                <span class="active-personal-btn">Мужской</span>
-                                                <span>Женский</span>
-                                                <span>Унисекс</span>
-                                            </div>
-                                        </div>
+{{--                                        <div class="add-gender">--}}
+{{--                                            <p>Пол:</p>--}}
+{{--                                            <div class="gender-items">--}}
+{{--                                                <span class="active-personal-btn">Мужской</span>--}}
+{{--                                                <span>Женский</span>--}}
+{{--                                                <span>Унисекс</span>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
                                     </div>
 
                                     <label>Цена:</label>
-                                    <input type="text">
+                                    <input type="text" name="price">
 
                                     <label>Старая цена:</label>
-                                    <input type="text">
+                                    <input type="text" name="old_price">
 
-                                    <div class="about-added-product">
+                                    <div class="about-added-product" id="new_product_chars">
                                         <p>О товаре:</p>
                                         <div class="about-added-product-content">
                                             <div class="about-added-items" id="add-characteristic-form">
                                             </div>
-                                            <span class="add-row-btn characteristic"><img
+                                            <span onclick="newAddChar()" class="add-row-btn characteristic"><img
                                                     src="/assets/images/white-cross.svg" alt=""></span>
                                         </div>
                                     </div>
 
                                     <label>Номер телефона для связи с покупателем</label>
-                                    <input type="text" placeholder="+7 (999) 999-99-99" class="phone-input">
+                                    <input type="text" placeholder="+7 (999) 999-99-99" name="phone" class="phone-input">
 
                                     <label>Описание:</label>
-                                    <textarea cols="30" rows="10"></textarea>
+                                    <textarea cols="30" rows="10" name="description"></textarea>
 
                                     <label>Информация о доставке:</label>
-                                    <textarea cols="30" rows="10"></textarea>
+                                    <textarea cols="30" rows="10" name="shipping"></textarea>
+
+                                    <input type="hidden" id="newInStock" name="in_stock" value="1">
 
                                     <div class="present-in-stock">
                                         <p>Есть в наличии:</p>
                                         <div class="in-stock-controls">
-                                            <span class="active-personal-btn">да</span>
-                                            <span>нет</span>
+                                            <span onclick="newChangeStock(1)" class="active-personal-btn">да</span>
+                                            <span onclick="newChangeStock(0)">нет</span>
                                         </div>
                                     </div>
 
-                                    <button>СОХРАНИТЬ</button>
+                                    <button type="submit">СОХРАНИТЬ</button>
                                 </div>
                                 <div class="about-select-country">
                                     <p>Город:</p>
                                     <div class="search-select city-select">
-                                        <input class="search-select-input" type="text" placeholder="Город" readonly />
+                                        <input class="search-select-input" name="city" type="text" placeholder="Город" readonly />
                                         <ul class="options">
-                                            <li class="option">Город 1</li>
-                                            <li class="option">Город 2</li>
-                                            <li class="option">Город 3</li>
-                                            <li class="option">Город 4</li>
+                                            @foreach($cities as $city)
+                                            <li class="option">{{$city->name}}</li>
+                                            @endforeach
                                         </ul>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -792,26 +801,35 @@
         }
 
         function addSize(){
-            let id = $('#char_product_id').val();
+            let id = $('#size_product_id').val();
             let size = $('#char_size').val();
 
-            $.ajax({
-                url: '/account/seller/product/'+id+'/add/size',
-                type: "POST",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: {
-                    'size': size
-                },
-                success: (data) => {
-                    $('.add-size-popup').css('display', 'none');
-                    $('.product_sizes_'+id).append("<div>"+data.size+"</div>");
-                },
-                error: function (request, status, error) {
-                    //console.log(statusCode = request.responseText);
-                }
-            });
+            if(id != 'new') {
+                $.ajax({
+                    url: '/account/seller/product/' + id + '/add/size',
+                    type: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        'size': size
+                    },
+                    success: (data) => {
+                        $('.add-size-popup').css('display', 'none');
+                        $('.product_sizes_' + id).append("<div>" + data.size + "</div>");
+                    },
+                    error: function (request, status, error) {
+                        //console.log(statusCode = request.responseText);
+                    }
+                });
+            }else{
+                $('#addProductForm').append("<input type='hidden' id='size_inp_"+size+"' name='sizes[]' value='"+size+"'>");
+
+                $('.new_product_sizes').append("<div id='new_product_s_"+size+"'>" + size + "<img src='/assets/images/cross-arrow.svg' alt='' style='cursor: pointer' onclick='newSizeDel("+size+")'></div>");
+
+                $('#char_size').val("");
+                $('.add-size-popup').css('display', 'none');
+            }
         }
 
         function sizeDelete(id){
@@ -839,29 +857,46 @@
             let value = $('#char_value').val();
             let id = $('#char_product_id').val();
 
-            $.ajax({
-                url: '/account/seller/product/'+id+'/add/char',
-                type: "POST",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data:{
-                  'key': key,
-                  'value': value
-                },
-                success: (data) => {
-                    $('.add-characteristic-popup').css('display', 'none');
-                    $('#chars_wrap_'+id).append(
-                        '<div class="about-added-product-content" id="char_item_'+data.id+'" style="margin-top: 10px; display: flex; flex-direction: row; justify-content: center; gap: 10px">'+
+            if(id != 'new') {
+                $.ajax({
+                    url: '/account/seller/product/' + id + '/add/char',
+                    type: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        'key': key,
+                        'value': value
+                    },
+                    success: (data) => {
+                        $('.add-characteristic-popup').css('display', 'none');
+                        $('#chars_wrap_' + id).append(
+                            '<div class="about-added-product-content" id="char_item_' + data.id + '" style="margin-top: 10px; display: flex; flex-direction: row; justify-content: center; gap: 10px">' +
                             data.key + ' : ' + data.value +
-                        '<img src="/assets/images/cross-arrow.svg" alt="" style="cursor: pointer" onclick="charDelele(\''+data.id+'\')">'+
-                        '</div>'
-                    );
-                },
-                error: function (request, status, error) {
-                    //console.log(statusCode = request.responseText);
-                }
-            });
+                            '<img src="/assets/images/cross-arrow.svg" alt="" style="cursor: pointer" onclick="charDelele(\'' + data.id + '\')">' +
+                            '</div>'
+                        );
+                    },
+                    error: function (request, status, error) {
+                        //console.log(statusCode = request.responseText);
+                    }
+                });
+            }else{
+                let form = $('#addProductForm');
+                form.append("<input type='hidden' id='char_key_inp_"+key+"' name='char_keys[]' value='"+key+"'>");
+                form.append("<input type='hidden' id='char_val_inp_"+key+"' name='char_vals[]' value='"+value+"'>");
+
+                $('#new_product_chars').append(
+                    '<div class="about-added-product-content" id="new_char_item_' + key + '" style="margin-top: 10px; display: flex; flex-direction: row; justify-content: center; gap: 10px">' +
+                    key + ' : ' + value +
+                    '<img src="/assets/images/cross-arrow.svg" alt="" style="cursor: pointer" onclick="newCharDelele(\''+key+'\')">' +
+                    '</div>'
+                );
+
+                $('#char_key').val("");
+                $('#char_value').val("");
+                $('.add-characteristic-popup').css('display', 'none');
+            }
         }
 
         function charDelele(char_id){
@@ -878,6 +913,29 @@
                     //console.log(statusCode = request.responseText);
                 }
             });
+        }
+
+        function newAddSize(){
+            $('#size_product_id').val('new');
+        }
+
+        function newAddChar(){
+            $('#char_product_id').val('new');
+        }
+
+        function newSizeDel(size){
+            $('#size_inp_' + size).remove();
+            $('#new_product_s_' + size).remove();
+        }
+
+        function newCharDelele(key){
+            $('#char_key_inp_'+key).remove();
+            $('#char_val_inp_'+key).remove();
+            $('#new_char_item_'+key).remove();
+        }
+
+        function newChangeStock(status){
+            $('#newInStock').val(status)
         }
     </script>
 @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Banner;
 use App\Models\Category;
+use App\Models\City;
 use App\Models\Review;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -29,7 +30,8 @@ class AccountController extends Controller
         }elseif($user->role->tech_name == 'seller'){
             $products = $user->products();
             $categories = Category::where('parent_id', '!=', null)->get();
-            return view('profile.' . Auth()->user()->role->tech_name . '.index', compact('products', 'categories'));
+            $cities = City::get();
+            return view('profile.' . Auth()->user()->role->tech_name . '.index', compact('products', 'categories', 'cities'));
         }else{
             return view('profile.' . Auth()->user()->role->tech_name . '.index');
         }
