@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Banner;
 use App\Models\Category;
 use App\Models\City;
+use App\Models\Product;
+use App\Models\Question;
 use App\Models\Review;
 use App\Models\User;
+use App\Models\WaitList;
 use Illuminate\Http\Request;
 
 class AccountController extends Controller
@@ -31,7 +34,11 @@ class AccountController extends Controller
             $products = $user->products();
             $categories = Category::where('parent_id', '!=', null)->get();
             $cities = City::get();
-            return view('profile.' . Auth()->user()->role->tech_name . '.index', compact('products', 'categories', 'cities'));
+            $questions = Question::whereIn('product_id',Product::where('shop_id', $user->shop->id)->pluck('id')->all())->get();
+            $user = $user->load('shop');
+            $reviews = Review::where('reviewable_type', 'App\Models\Product')->whereIn('reviewable_id', Product::where('shop_id', $user->shop->id)->pluck('id')->all())->get();
+
+            return view('profile.' . Auth()->user()->role->tech_name . '.index', compact('products', 'categories', 'cities', 'questions', 'user', 'reviews'));
         }else{
             return view('profile.' . Auth()->user()->role->tech_name . '.index');
         }

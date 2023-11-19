@@ -23,6 +23,10 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->text('description');
             $table->text('shipping')->nullable();
+            $table->integer('views')->default(0)->comment('Просмотры');
+            $table->integer('favorites')->default(0)->comment('В избранном');
+            $table->integer('buys')->default(0)->comment('Купили');
+            $table->integer('wait_list')->default(0)->comment('ожидание');
             $table->boolean('in_stock')->default(true);
             $table->foreignId('city_id');
             $table->timestamps();

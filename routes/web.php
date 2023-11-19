@@ -44,6 +44,7 @@ Route::post('/send/review', [App\Http\Controllers\ProductController::class, 'cre
 Route::post('/send/question', [App\Http\Controllers\ProductController::class, 'createQuestion'])->name('products.question.store');
 Route::get('/shop/{id}/products', [App\Http\Controllers\ShopController::class, 'products'])->name('shop.products'); //Товары магазина
 Route::get('/category/{id}', [App\Http\Controllers\CategoryController::class, 'products'])->name('category.show'); //Товары категории
+Route::post('/buy/{id}', [App\Http\Controllers\ProductController::class, 'buy']);
 
 Route::post('add-to/{id}/{type}', [App\Http\Controllers\CartController::class, 'addTo']);
 Route::get('favorite', [App\Http\Controllers\CartController::class, 'favorite'])->name('favorite');
@@ -74,6 +75,10 @@ Route::middleware('auth')->group(function(){
             Route::post('/product/{id}/add/char', [App\Http\Controllers\Seller\ProductController::class, 'addChar'])->name('product.add.char');
             Route::post('/product/size/{id}/delete', [App\Http\Controllers\Seller\ProductController::class, 'deleteSize']);
             Route::post('/product/char/{id}/delete', [App\Http\Controllers\Seller\ProductController::class, 'deleteChar']);
+
+            Route::post('/shop/update', [App\Http\Controllers\Seller\ProductController::class, 'shopUpdate'])->name('shop.update');
+
+            Route::post('/question/{id}', [App\Http\Controllers\Seller\QuestionController::class, 'update'])->name('quest.update');
         });
 
     });

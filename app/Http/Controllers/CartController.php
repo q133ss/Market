@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Shop;
+use App\Models\WaitList;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -13,8 +14,31 @@ class CartController extends Controller
      */
     public function addTo(Request $request, int $id, $type = 'cart')
     {
-        Product::findOrFail($id);
-        $request->session()->push($type, $id);
+        $product = Product::findOrFail($id);
+
+
+        if($request->session()->get('favorite') != null && in_array($id, $request->session()->get('favorite'))) {
+            //удаляем
+            $products = session('favorite');
+            foreach ($products as $key => $value) {
+                if ($value == $id) {
+                    unset($products[$key]);
+                }
+            }
+            session(['favorite' => $products]);
+            $product->update(['favorites' => $product->favorites - 1]);
+
+        }elseif($type == 'wait'){
+            $product->update(['wait_list' => $product->wait_list + 1]);
+            $request->session()->push($type, $id);
+        }else{
+            $request->session()->push($type, $id);
+
+            if($type == 'favorite'){
+                //check if session not has
+                $product->update(['favorites' => $product->favorites+1]);
+            }
+        }
 
         return Response('true', 200);
     }
@@ -22,7 +46,7 @@ class CartController extends Controller
     private function getProducts(Request $request, $type)
     {
         if($request->session()->get($type) != null) {
-            if($type == 'shop'){
+            if($type == 'shop') {
                 return Shop::whereIn('id', $request->session()->get($type))->get();
             }else {
                 return Product::whereIn('id', $request->session()->get($type))->get();

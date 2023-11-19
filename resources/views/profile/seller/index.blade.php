@@ -14,6 +14,9 @@
     <div class="container">
         <div class="personal-account">
             <div class="add-product" id="add-product"><span>+</span></div>
+            @if(session()->has('success'))
+                <h3 class="item-title">{{ session()->get('success') }}</h3>
+            @endif
             <div class="personal-account-content">
                 <div class="personal-account-btns">
                     <span class="active-personal-btn" id="personal-products">Товары</span>
@@ -183,69 +186,28 @@
                                 <span>Вопрос</span>
                             </div>
                             <div class="personal-content-table-content">
+                                @foreach($questions as $question)
                                 <div class="personal-content-table-content-item">
-                                    <p>№<span>234</span></p>
+                                    <p>№<span>{{$question->id}}</span></p>
                                     <span class="vertical-line"></span>
-                                    <p>Название товара</p>
+                                    <p>{{$question->product->name}}</p>
                                     <span class="vertical-line"></span>
-                                    <div class="personal-account-question-content">
-                                        <h3>Для современного мира семантический разбор внешних
-                                            противодействий обеспечивает актуальность приоретизации
-                                            разума над эмоциями. Картельные сговоры не допускают
-                                            ситуации, при которой представители ?
+                                    <form class="personal-account-question-content" method="POST" action="{{route('seller.quest.update', $question->id)}}">
+                                        @csrf
+                                        <h3>
+                                            {{$question->question}}
                                         </h3>
                                         <div class="personal-account-question-edit">
                                             <label>Ответ:</label>
-                                            <textarea cols="22" rows="5"></textarea>
+                                            <textarea cols="22" name="answer" rows="5">{{$question->answer}}</textarea>
                                         </div>
                                         <div class="personal-account-question-btns">
                                             <button>Сохранить</button>
-                                            <a href="#">Скрыть/показать</a>
+{{--                                            <a href="#">Скрыть/показать</a>--}}
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
-                                <div class="personal-content-table-content-item">
-                                    <p>№<span>234</span></p>
-                                    <span class="vertical-line"></span>
-                                    <p>Название товара</p>
-                                    <span class="vertical-line"></span>
-                                    <div class="personal-account-question-content">
-                                        <h3>Для современного мира семантический разбор внешних
-                                            противодействий обеспечивает актуальность приоретизации
-                                            разума над эмоциями. Картельные сговоры не допускают
-                                            ситуации, при которой представители ?
-                                        </h3>
-                                        <div class="personal-account-question-edit">
-                                            <label>Ответ:</label>
-                                            <textarea cols="22" rows="5"></textarea>
-                                        </div>
-                                        <div class="personal-account-question-btns">
-                                            <button>Сохранить</button>
-                                            <a href="#">Скрыть/показать</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="personal-content-table-content-item">
-                                    <p>№<span>234</span></p>
-                                    <span class="vertical-line"></span>
-                                    <p>Название товара</p>
-                                    <span class="vertical-line"></span>
-                                    <div class="personal-account-question-content">
-                                        <h3>Для современного мира семантический разбор внешних
-                                            противодействий обеспечивает актуальность приоретизации
-                                            разума над эмоциями. Картельные сговоры не допускают
-                                            ситуации, при которой представители ?
-                                        </h3>
-                                        <div class="personal-account-question-edit">
-                                            <label>Ответ:</label>
-                                            <textarea cols="22" rows="5"></textarea>
-                                        </div>
-                                        <div class="personal-account-question-btns">
-                                            <button>Сохранить</button>
-                                            <a href="#">Скрыть/показать</a>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -279,71 +241,58 @@
                                 <th>Купили</th>
                                 <th>Лист ожидания</th>
                             </tr>
+                            @foreach($products as $product)
                             <tr>
-                                <td>№<span>234</span></td>
-                                <td>Название товара</td>
-                                <td>2500</td>
-                                <td>121</td>
-                                <td>25</td>
-                                <td>465</td>
+                                <td>№<span>{{$product->id}}</span></td>
+                                <td>{{$product->name}}</td>
+                                <td>{{$product->views}}</td>
+                                <td>{{$product->favorites}}</td>
+                                <td>{{$product->buys}}</td>
+                                <td>{{$product->wait_list}}</td>
                             </tr>
-                            <tr>
-                                <td>№<span>234</span></td>
-                                <td>Название товара</td>
-                                <td>2500</td>
-                                <td>121</td>
-                                <td>25</td>
-                                <td>465</td>
-                            </tr>
-                            <tr>
-                                <td>№<span>234</span></td>
-                                <td>Название товара</td>
-                                <td>2500</td>
-                                <td>121</td>
-                                <td>25</td>
-                                <td>465</td>
-                            </tr>
+                            @endforeach
                         </table>
                     </div>
                     <div class="personal-account-content-item" id="personal-content-stores">
                         <div class="personal-content-table-header">
                         </div>
-                        <div class="add-product-items-content">
+                        <form action="{{route('seller.shop.update')}}" method="POST" class="add-product-items-content" enctype="multipart/form-data">
+                            @csrf
                             <div class="add-product-img-content">
                                 <div class="add-product-img-swiper">
                                     <div class="product-imaage">
-                                        <img src="/assets/images/product.png" alt="">
+                                        <img src="{{$user->shop->photo ? $user->shop->photo->src : ''}}" alt="" width="100%">
                                     </div>
                                 </div>
                                 <div class="file-input">
-                                    <input type="file" name="file-input" id="write-review-file-input"
+                                    <input type="file" name="img" id="write-review-file-input_shop"
                                            class="file-input__input" />
-                                    <label class="file-input__label" for="write-review-file-input"><span>Загрузить
+                                    <label class="file-input__label" for="write-review-file-input_shop"><span>Загрузить
                                             фото</span></label>
                                 </div>
                             </div>
                             <div class="add-characteristics-form">
                                 <label>Название магазина:</label>
-                                <input type="text">
+                                <input type="text" name="title" value="{{$user->shop->title}}">
 
                                 <label>Номер телефона для связи с покупателем</label>
-                                <input type="text" placeholder="+7 (999) 999-99-99" class="phone-input">
+                                <input type="text" placeholder="+7 (999) 999-99-99" class="phone-input" name="phone" value="{{$user->shop->phone}}">
 
                                 <label>Описание:</label>
-                                <textarea cols="30" rows="10"></textarea>
+                                <textarea cols="30" name="description" rows="10">{{$user->shop->description}}</textarea>
 
                                 <label>Информация о связи с продавцом:</label>
-                                <textarea cols="30" rows="6"></textarea>
+                                <textarea cols="30" name="communication_info" rows="6">{{$user->shop->communication_info}}</textarea>
 
                                 <label>Информация о доставке:</label>
-                                <textarea cols="30" rows="6"></textarea>
+                                <textarea cols="30" name="shipping_info" rows="6">{{$user->shop->shipping_info}}</textarea>
 
                                 <label>Место на карте:</label>
                                 <div class="map"></div>
 
                                 <button>СОХРАНИТЬ</button>
                             </div>
-                        </div>
+                        </form>
                     </div>
                     <div class="personal-account-content-item" id="personal-content-reviews">
                         <div class="personal-content-table">
@@ -351,13 +300,13 @@
                                 <span style="width: 20px;"></span>
                             </div>
                             <div class="personal-content-table-content">
+                                @foreach($reviews as $review)
                                 <div class="personal-content-table-content-item">
-                                    <p>Имя</p>
+                                    <p>{{$review->user->name}}</p>
                                     <span class="vertical-line"></span>
-                                    <p>Для современного мира семантический разбор внешних противодействий
-                                        обеспечивает актуальность приоретизации разума над эмоциями.
-                                        Картельные сговоры не допускают ситуации, при которой представители ?</p>
+                                    <p>{{$review->title}}</p>
                                 </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -373,20 +322,22 @@
                                 <span style="width: 20px;"></span>
                             </div>
                             <div class="personal-content-table-content">
+                                @foreach($products as $product)
                                 <div class="personal-content-table-content-item">
-                                    <p>№<span>234</span></p>
+                                    <p>№<span>{{$product->id}}</span></p>
                                     <span class="vertical-line"></span>
-                                    <p>Название товара</p>
+                                    <p>{{$product->name}}</p>
                                     <span class="vertical-line"></span>
-                                    <p>3 600</p>
+                                    <p>{{$product->price}}</p>
                                     <span class="vertical-line"></span>
-                                    <p>Категория</p>
+                                    <p>{{$product->category->id}}</p>
                                     <span class="vertical-line"></span>
-                                    <p>Черный</p>
+                                    <p>{{$product->color}}</p>
                                     <span class="vertical-line"></span>
-                                    <p class="gray">20</p>
+                                    <p class="gray">{{$product->wait_list}}</p>
                                     <span class="vertical-line"></span>
-                                    <span class="table-action"></span>
+                                    <span></span>
+{{--                                    <span class="table-action"></span>--}}
                                 </div>
                                 <div class="personal-content-table-hidden-item">
                                     <div class="add-product-items-content">
@@ -461,182 +412,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="personal-content-table-content-item">
-                                    <p>№<span>234</span></p>
-                                    <span class="vertical-line"></span>
-                                    <p>Название товара</p>
-                                    <span class="vertical-line"></span>
-                                    <p>3 600</p>
-                                    <span class="vertical-line"></span>
-                                    <p>Категория</p>
-                                    <span class="vertical-line"></span>
-                                    <p>Черный</p>
-                                    <span class="vertical-line"></span>
-                                    <p class="gray">20</p>
-                                    <span class="vertical-line"></span>
-                                    <span class="table-action"></span>
-                                </div>
-                                <div class="personal-content-table-hidden-item">
-                                    <div class="add-product-items-content">
-                                        <div class="add-product-img-content">
-                                            <div class="add-product-img-swiper">
-                                                <div class="product-imaage">
-                                                    <img src="/assets/images/product.png" alt="">
-                                                </div>
-                                            </div>
-                                            <div class="file-input">
-                                                <input type="file" name="file-input" id="write-review-file-input"
-                                                       class="file-input__input" />
-                                                <label class="file-input__label"
-                                                       for="write-review-file-input"><span>Загрузить фото</span></label>
-                                            </div>
-                                        </div>
-                                        <div class="add-characteristics-form">
-                                            <label>Название:</label>
-                                            <input type="text">
-
-                                            <label>Категория:</label>
-                                            <input type="text">
-
-                                            <label>Состав:</label>
-                                            <input type="text">
-
-                                            <label>Цвет:</label>
-                                            <input type="text">
-
-                                            <div class="sizes-and-gender">
-                                                <div class="add-sizes" id="add-product-waiting-list-2">
-                                                    <p>Размеры:</p>
-                                                    <div>
-                                                        <span class="add-row-btn"><img src="/assets/images/white-cross.svg"
-                                                                                       alt=""></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <label>Цена:</label>
-                                            <input type="text">
-
-                                            <label>Старая цена:</label>
-                                            <input type="text">
-
-                                            <div class="about-added-product">
-                                                <p>О товаре:</p>
-                                                <div class="about-added-product-content">
-                                                    <div class="about-added-items"
-                                                         id="add-characteristic-from-waiting-list-2">
-                                                    </div>
-                                                    <span class="add-row-btn characteristic"><img
-                                                            src="/assets/images/white-cross.svg" alt=""></span>
-                                                </div>
-                                            </div>
-
-                                            <label>Номер телефона для связи с покупателем</label>
-                                            <input type="text" placeholder="+7 (999) 999-99-99" class="phone-input">
-
-                                            <label>Описание:</label>
-                                            <textarea cols="30" rows="10"></textarea>
-
-                                            <div class="present-in-stock">
-                                                <p>Есть в наличии:</p>
-                                                <div class="in-stock-controls">
-                                                    <span class="active-personal-btn">да</span>
-                                                    <span>нет</span>
-                                                </div>
-                                            </div>
-
-                                            <button>СОХРАНИТЬ</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="personal-content-table-content-item">
-                                    <p>№<span>234</span></p>
-                                    <span class="vertical-line"></span>
-                                    <p>Название товара</p>
-                                    <span class="vertical-line"></span>
-                                    <p>3 600</p>
-                                    <span class="vertical-line"></span>
-                                    <p>Категория</p>
-                                    <span class="vertical-line"></span>
-                                    <p>Черный</p>
-                                    <span class="vertical-line"></span>
-                                    <p class="gray">20</p>
-                                    <span class="vertical-line"></span>
-                                    <span class="table-action"></span>
-                                </div>
-                                <div class="personal-content-table-hidden-item">
-                                    <div class="add-product-items-content">
-                                        <div class="add-product-img-content">
-                                            <div class="add-product-img-swiper">
-                                                <div class="product-imaage">
-                                                    <img src="/assets/images/product.png" alt="">
-                                                </div>
-                                            </div>
-                                            <div class="file-input">
-                                                <input type="file" name="file-input" id="write-review-file-input"
-                                                       class="file-input__input" />
-                                                <label class="file-input__label"
-                                                       for="write-review-file-input"><span>Загрузить фото</span></label>
-                                            </div>
-                                        </div>
-                                        <div class="add-characteristics-form">
-                                            <label>Название:</label>
-                                            <input type="text">
-
-                                            <label>Категория:</label>
-                                            <input type="text">
-
-                                            <label>Состав:</label>
-                                            <input type="text">
-
-                                            <label>Цвет:</label>
-                                            <input type="text">
-
-                                            <div class="sizes-and-gender">
-                                                <div class="add-sizes" id="add-product-waiting-list-3">
-                                                    <p>Размеры:</p>
-                                                    <div>
-                                                        <span class="add-row-btn"><img src="/assets/images/white-cross.svg"
-                                                                                       alt=""></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <label>Цена:</label>
-                                            <input type="text">
-
-                                            <label>Старая цена:</label>
-                                            <input type="text">
-
-                                            <div class="about-added-product">
-                                                <p>О товаре:</p>
-                                                <div class="about-added-product-content">
-                                                    <div class="about-added-items"
-                                                         id="add-characteristic-from-waiting-list-3">
-                                                    </div>
-                                                    <span class="add-row-btn characteristic"><img
-                                                            src="/assets/images/white-cross.svg" alt=""></span>
-                                                </div>
-                                            </div>
-
-                                            <label>Номер телефона для связи с покупателем</label>
-                                            <input type="text" placeholder="+7 (999) 999-99-99" class="phone-input">
-
-                                            <label>Описание:</label>
-                                            <textarea cols="30" rows="10"></textarea>
-
-                                            <div class="present-in-stock">
-                                                <p>Есть в наличии:</p>
-                                                <div class="in-stock-controls">
-                                                    <span class="active-personal-btn">да</span>
-                                                    <span>нет</span>
-                                                </div>
-                                            </div>
-
-                                            <button>СОХРАНИТЬ</button>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>

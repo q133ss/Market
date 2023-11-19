@@ -5,7 +5,7 @@
         <div class="swiper banner-slider">
             <div class="swiper-wrapper">
                 @foreach($banners as $banner)
-                <div class="slide-item swiper-slide" style="background-image: url('{{$banner->img->src}}')">
+                <div class="slide-item swiper-slide" style="background-image: url('{{$banner->img ? $banner->img->src : ''}}')">
                     <div class="slider-content">
                         <h2>{{$banner->title}}</h2>
                         <p>{{$banner->text}}</p>
@@ -30,7 +30,7 @@
                     </svg>
                 </div>
                 <div class="product-item-header">
-                    <img src="{{$product->src}}" alt="">
+                    <img src="{{$product->src}}" alt="" style="width: 100%;">
                 </div>
                 <div class="product-item-content">
                     <h3 class="item-title">{{$product->name}}</h3>

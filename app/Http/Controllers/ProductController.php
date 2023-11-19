@@ -18,6 +18,8 @@ class ProductController extends Controller
         $request->session()->push('last_seen', $id);
         $product = Product::with('shop', 'photos', 'reviews', 'questions', 'chars', 'sizes')->findOrFail($id);
 
+        $product->update(['views' => $product->views + 1]);
+
         $lastSeenProducts = Product::with('photos')->whereIn('id', $request->session()->get('last_seen'))->get();
         return view('products.show', compact('product', 'lastSeenProducts'));
     }
@@ -53,5 +55,12 @@ class ProductController extends Controller
         ]);
 
         return $question;
+    }
+
+    public function buy($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->update(['buys' => $product->buys + 1]);
+        return Response('true');
     }
 }

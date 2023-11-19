@@ -103,7 +103,7 @@ class ProductController extends Controller
             }
         }
 
-        return back();
+        return back()->withSuccess('Товар успешно обновлен!');
     }
 
     public function addSize(Request $request, $id)
@@ -167,5 +167,28 @@ class ProductController extends Controller
         $char->delete();
 
         return true;
+    }
+
+    public function shopUpdate(Request $request)
+    {
+        $shop = Auth()->user()->shop;
+        $shop->update([
+            'title' => $request->title,
+            'phone' => $request->phone,
+            'description' => $request->description,
+            'communication_info' => $request->communication_info,
+            'shipping_info' => $request->shipping_info
+        ]);
+
+        if($request->img){
+            $path = $request->img->store('shops', 'public');
+            File::where('fileable_type', 'App\Models\Shop')->where('fileable_id', $shop->id)->delete();
+            File::create([
+                'fileable_type' => 'App\Models\Shop',
+                'fileable_id' => $shop->id,
+                'src' => '/storage/'.$path,
+                'category' => 'shop'
+            ]);
+        }
     }
 }

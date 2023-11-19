@@ -5,6 +5,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endsection
 @section('content')
+    @php $pId = $product->id; @endphp
     <div class="container">
         <div class="history">
             <a href="#">Главная</a>
@@ -83,7 +84,7 @@
                     @if($product->in_stock == 0)
                     <div class="no-in-stoke">
                         <h2>Нет в наличии</h2>
-                        <div class="add-to-wating-list">
+                        <div class="add-to-wating-list" onclick="addToWait()">
                             <p>Добавить в лист ожидания</p>
                             <img src="/assets/images/orange-croos-circle.svg" alt="">
                         </div>
@@ -102,7 +103,7 @@
                     </div>
                     <div class="product-buy-info">
                         <div class="custom-info-select">
-                            <div class="custom-info-select-title">
+                            <div class="custom-info-select-title" onclick="buy()">
                                 <p>Связаться с продавцом</p>
                                 <svg width="34" height="34" viewBox="0 0 18 19" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
@@ -400,7 +401,7 @@
                                         </svg>
                                     </div>
                                     <div class="product-item-header">
-                                        <img src="{{$product->photos->pluck('src')->first()}}" alt="">
+                                        <img src="{{$product->photos->pluck('src')->first()}}" alt="" width="100%">
                                     </div>
                                     <div class="product-item-content">
                                         <h3 class="item-title">{{$product->name}}</h3>
@@ -505,7 +506,7 @@
                     type: 'POST',
                     data: {
                         'question': quest,
-                        'product_id': '{{$product->id}}'
+                        'product_id': '{{$pId}}'
                     },
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -538,6 +539,41 @@
                 });
             }
             @endif
+        }
+
+        function buy(){
+            $.ajax({
+                url: "/buy/{{$pId}}",
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (response) {
+                    // Обработка успешного ответа
+                },
+                error: function (xhr, status, error) {
+                    // Обработка ошибки
+                    console.log(error);
+                }
+            });
+        }
+
+        function addToWait(){
+            $.ajax({
+                url: "/add-to/{{$pId}}/wait",
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (response) {
+                    // Обработка успешного ответа
+                    alert('Товар успешно добавлен в ожидание')
+                },
+                error: function (xhr, status, error) {
+                    // Обработка ошибки
+                    console.log(error);
+                }
+            });
         }
     </script>
 @endsection
