@@ -29,6 +29,7 @@ return new class extends Migration
             $table->integer('wait_list')->default(0)->comment('ожидание');
             $table->boolean('in_stock')->default(true);
             $table->foreignId('city_id');
+            $table->integer('qty')->default(1);
             $table->timestamps();
         });
     }

@@ -8,12 +8,11 @@
     @php $pId = $product->id; @endphp
     <div class="container">
         <div class="history">
-            <a href="#">Главная</a>
-            <a href="#">/ каталог </a>
-            <a href="#">/ бомбер</a>
-            <a href="#">/ крошки</a>
-            <a href="#">/ крошки</a>
-            <a href="#">/ крошки</a>
+            <a href="/">Главная</a>
+            @if($product->category->parent_id != null)
+                <a href="{{route('category.show', $product->category->parent_id)}}">/ {{\App\Models\Category::find($product->category->parent_id)->name}}</a>
+            @endif
+            <a href="{{route('category.show', $product->category_id)}}">/ {{$product->category->name}}</a>
         </div>
         <div class="product">
             <h2 class="store-name">{{$product->shop->title}}</h2>
@@ -21,9 +20,9 @@
                 <div class="product-main-info">
                     <h2>{{$product->name}}</h2>
                     <div class="product-rate">
-                        <span><img src="/assets/images/star.svg" alt=""> 4,7</span>
-                        <span>20 оценок</span>
-                        <span>Артикул: 32423453</span>
+{{--                        <span><img src="/assets/images/star.svg" alt=""> 4,7</span>--}}
+                        <span>{{$product->reviews->count()}} оценок</span>
+                        <span>Артикул: {{$product->id}}</span>
                     </div>
                     <div class="product-image-and-characteristic">
                         <div class="product-img-swiper">
@@ -42,14 +41,41 @@
                             </div>
                         </div>
                         <div class="product-characteristics">
+                            @if($product->compound)
                             <div class="product-characteristic">
                                 <p>Состав: </p>
                                 <span>{{$product->compound}}</span>
                             </div>
+                            @else
+
+                            @if(isset($product->chars[0]))
+                            <div class="product-characteristic">
+                                <p>{{$product->chars[0]->key}}: </p>
+                                <span>{{$product->chars[0]->value}}</span>
+                            </div>
+                            @endif
+                            @php
+                                unset($product->chars[0]);
+                            @endphp
+
+                            @endif
+                            @if($product->color)
                             <div class="product-characteristic">
                                 <p>Цвет: </p>
                                 <span>{{$product->color}}</span>
                             </div>
+                            @else
+                                @if(isset($product->chars[1]))
+                                    <div class="product-characteristic">
+                                        <p>{{$product->chars[1]->key}}: </p>
+                                        <span>{{$product->chars[1]->value}}</span>
+                                    </div>
+                                @endif
+                                @php
+                                    unset($product->chars[1]);
+                                @endphp
+                            @endif
+                            @if($product->sizes->count() > 1)
                             <div class="product-sizes">
                                 <p>Таблица размеров: </p>
                                 <div class="product-sizes-list">
@@ -58,6 +84,17 @@
                                     @endforeach
                                 </div>
                             </div>
+                            @else
+                                @if(isset($product->chars[2]))
+                                    <div class="product-characteristic">
+                                        <p>{{$product->chars[2]->key}}: </p>
+                                        <span>{{$product->chars[2]->value}}</span>
+                                    </div>
+                                    @endif
+                                @php
+                                    unset($product->chars[2]);
+                                @endphp
+                            @endif
                             <div class="product-links">
                                 <a href="{{route('shop.products', $product->shop->id)}}">
                                     <span>Все товары магазина {{$product->shop->name}}</span>
@@ -81,7 +118,7 @@
                             @endif
                         </div>
                     </div>
-                    @if($product->in_stock == 0)
+                    @if($product->qty <= 0)
                     <div class="no-in-stoke">
                         <h2>Нет в наличии</h2>
                         <div class="add-to-wating-list" onclick="addToWait()">

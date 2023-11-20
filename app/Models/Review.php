@@ -24,4 +24,9 @@ class Review extends Model
     {
         return $this->hasOne(Product::class, 'id', 'reviewable_id');
     }
+
+    public function shop()
+    {
+        return Shop::where('id', $this->product->shop_id)->first();
+    }
 }

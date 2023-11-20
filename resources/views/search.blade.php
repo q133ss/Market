@@ -21,16 +21,9 @@
                             <div class="search-select main-search-control">
                                 <input class="search-select-input" type="text" placeholder="Select option" readonly />
                                 <ul class="options">
-                                    <li class="option">Свитер</li>
-                                    <li class="option">Свитер</li>
-                                    <li class="option">Свитер</li>
-                                    <li class="option">Свитер</li>
-                                    <li class="option">Свитер</li>
-                                    <li class="option">Свитер</li>
-                                    <li class="option">Свитер</li>
-                                    <li class="option">Свитер</li>
-                                    <li class="option">Свитер</li>
-                                    <li class="option">Свитер</li>
+                                    @foreach($categories as $category)
+                                    <li class="option">{{$category->name}}</li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -46,46 +39,46 @@
                             </div>
                         </div>
 
-                        <div class="swiper-slide">
-                            <div class="search-select">
-                                <input class="search-select-input" type="text" placeholder="Размер" readonly />
-                                <ul class="options">
-                                    <li class="option">Размер</li>
-                                    <li class="option">Размер</li>
-                                    <li class="option">Размер</li>
-                                    <li class="option">Размер</li>
-                                    <li class="option">Размер</li>
-                                    <li class="option">Размер</li>
-                                </ul>
-                            </div>
-                        </div>
+{{--                        <div class="swiper-slide">--}}
+{{--                            <div class="search-select">--}}
+{{--                                <input class="search-select-input" type="text" placeholder="Размер" readonly />--}}
+{{--                                <ul class="options">--}}
+{{--                                    <li class="option">Размер</li>--}}
+{{--                                    <li class="option">Размер</li>--}}
+{{--                                    <li class="option">Размер</li>--}}
+{{--                                    <li class="option">Размер</li>--}}
+{{--                                    <li class="option">Размер</li>--}}
+{{--                                    <li class="option">Размер</li>--}}
+{{--                                </ul>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+
+{{--                        <div class="swiper-slide">--}}
+{{--                            <div class="search-select">--}}
+{{--                                <input class="search-select-input" type="text" placeholder="Материал" readonly />--}}
+{{--                                <ul class="options">--}}
+{{--                                    <li class="option">Материал</li>--}}
+{{--                                    <li class="option">Материал</li>--}}
+{{--                                    <li class="option">Материал</li>--}}
+{{--                                    <li class="option">Материал</li>--}}
+{{--                                    <li class="option">Материал</li>--}}
+{{--                                    <li class="option">Материал</li>--}}
+{{--                                </ul>--}}
+{{--                            </div>--}}
+
+{{--                        </div>--}}
 
                         <div class="swiper-slide">
-                            <div class="search-select">
-                                <input class="search-select-input" type="text" placeholder="Материал" readonly />
-                                <ul class="options">
-                                    <li class="option">Материал</li>
-                                    <li class="option">Материал</li>
-                                    <li class="option">Материал</li>
-                                    <li class="option">Материал</li>
-                                    <li class="option">Материал</li>
-                                    <li class="option">Материал</li>
-                                </ul>
-                            </div>
-
-                        </div>
-
-                        <div class="swiper-slide">
 
                             <div class="search-select">
-                                <input class="search-select-input" type="text" placeholder="Цена" readonly />
+                                <input class="search-select-input" name="price" type="text" placeholder="Цена" readonly />
                                 <ul class="options">
-                                    <li class="option">Цена</li>
-                                    <li class="option">Цена</li>
-                                    <li class="option">Цена</li>
-                                    <li class="option">Цена</li>
-                                    <li class="option">Цена</li>
-                                    <li class="option">Цена</li>
+                                    <li class="option">До 1000</li>
+                                    <li class="option">До 3000</li>
+                                    <li class="option">До 5000</li>
+                                    <li class="option">До 10000</li>
+                                    <li class="option">До 15000</li>
+                                    <li class="option">До 20000</li>
                                 </ul>
                             </div>
                         </div>
@@ -95,10 +88,9 @@
                             <div class="search-select">
                                 <input class="search-select-input" type="text" placeholder="Цвет" readonly />
                                 <ul class="options">
-                                    <li class="option">Свитер</li>
-                                    <li class="option">Свитер</li>
-                                    <li class="option">Свитер</li>
-                                    <li class="option">Свитер</li>
+                                    @foreach($colors as $color)
+                                    <li class="option">{{$color}}</li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -110,12 +102,11 @@
                         <div class="swiper-slide">
                             <div class="city-control">
                                 <div class="search-select city-select">
-                                    <input class="search-select-input" type="text" placeholder="Город" readonly />
+                                    <input class="search-select-input" name="city_id" type="text" placeholder="Город" readonly />
                                     <ul class="options">
-                                        <li class="option">Город 1</li>
-                                        <li class="option">Город 2</li>
-                                        <li class="option">Город 3</li>
-                                        <li class="option">Город 4</li>
+                                        @foreach($cities as $city)
+                                        <li class="option">{{$city->name}}</li>
+                                        @endforeach
                                     </ul>
                                 </div>
                             </div>

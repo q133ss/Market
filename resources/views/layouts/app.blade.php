@@ -14,8 +14,8 @@
 <div class="container">
     <div class="top-nav">
         <a href="#">Партнёрам</a>
-        <a href="#">Покупателям</a>
-        <a href="#" class="active" onclick="location.href = 'templates/store-register.html';">Продавайте на
+        <a href="{{route('register')}}">Покупателям</a>
+        <a href="{{route('shop.register')}}" class="active" onclick="location.href = 'templates/store-register.html';">Продавайте на
             Regionselect</a>
     </div>
 
@@ -90,11 +90,12 @@
                         fill="#929292" />
                 </svg>
                 <div class="user-controls-hidden-items register-items">
+                    @if(Auth()->check())
+                        <a onclick="location.href = '{{route('account')}}';" href="#">Личный кабинет</a>
+                    @else
                     <button onclick="location.href = '{{route('login')}}';">Войти по Email</button>
                     <a href="#" onclick="location.href = '{{route('register')}}';">Создать аккаунт</a>
-                    <a href="#" onclick="location.href = 'templates/personal-account.html';" style="line-height: 12px;">Личный кабинет</a>
-                    <a href="#" onclick="location.href = 'templates/personal-seller-account.html';" style="line-height: 12px;">Личный кабинет продавца</a>
-                    <a href="#" onclick="location.href = 'templates/personal-admin-account.html';" style="line-height: 12px;">Личный кабинет администратора</a>
+                    @endif
                 </div>
                 <!-- <div class="user-controls-hidden-items logedin-items">
                     <a href="#">Личный кабинет</a>

@@ -25,7 +25,8 @@ class ProductController extends Controller
             'description' => 'required|string',
             'shipping' => 'required|string',
             'in_stock' => 'required|in:0,1',
-            'city' => 'required|exists:cities,name'
+            'city' => 'required|exists:cities,name',
+            'qty' => 'required|int|min:0'
         ]);
 
         $product = Product::create([
@@ -38,36 +39,43 @@ class ProductController extends Controller
             'phone' => $request->phone,
             'description' => $request->description,
             'shipping' => $request->shipping,
-            'in_stock' => $request->in_stock,
+            //'in_stock' => $request->in_stock,
             'city_id' => City::where('name', $request->city)->pluck('id')->first(),
-            'shop_id' => Auth()->user()->shop->id
+            'shop_id' => Auth()->user()->shop->id,
+            'qty' => $request->qty
         ]);
 
-        foreach ($request->char_keys as $key => $value){
-            ProductChar::create([
-                'product_id' => $product->id,
-                'key' => $value,
-                'value' => $request->char_vals[$key]
-            ]);
+        if($request->char_keys) {
+            foreach ($request->char_keys as $key => $value) {
+                ProductChar::create([
+                    'product_id' => $product->id,
+                    'key' => $value,
+                    'value' => $request->char_vals[$key]
+                ]);
+            }
         }
 
-        foreach ($request->sizes as $size){
-            ProductSize::create([
-                'product_id' => $product->id,
-                'size' => $size
-            ]);
+        if($request->sizes) {
+            foreach ($request->sizes as $size) {
+                ProductSize::create([
+                    'product_id' => $product->id,
+                    'size' => $size
+                ]);
+            }
         }
 
-        foreach ($request->img as $file) {
-            $path = $file->store('products', 'public');
-            File::create(
-                [
-                    'fileable_type' => 'App\Models\Product',
-                    'fileable_id' => $product->id,
-                    'category' => 'product',
-                    'src' => '/storage/' . $path
-                ]
-            );
+        if($request->img) {
+            foreach ($request->img as $file) {
+                $path = $file->store('products', 'public');
+                File::create(
+                    [
+                        'fileable_type' => 'App\Models\Product',
+                        'fileable_id' => $product->id,
+                        'category' => 'product',
+                        'src' => '/storage/' . $path
+                    ]
+                );
+            }
         }
 
         return back()->withSuccess('Товар успешно добавлен');
@@ -85,7 +93,8 @@ class ProductController extends Controller
             'phone' => $request->phone,
             'description' => $request->description,
             'shipping' => $request->shipping,
-            'in_stock' => $request->in_stock
+            //'in_stock' => $request->in_stock,
+            'qty' => $request->qty
         ]);
 
         if($request->img) {

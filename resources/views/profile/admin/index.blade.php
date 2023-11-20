@@ -20,6 +20,7 @@
                     <span class="" id="personal-rating">Рейтинг продавцов</span>
                     <span class="" id="personal-adds">Реклама</span>
                     <span class="" id="personal-store-reviews">Отзывы магазинов</span>
+                    <span class="" id="personal-city">Города</span>
                 </div>
                 <div class="personal-mobile-btns">
                     <div class="search-select city-select">
@@ -30,6 +31,7 @@
                             <li class="option" id="admin-rating-page">Рейтинг продавцов</li>
                             <li class="option" id="admin-adds-page">Реклама</li>
                             <li class="option" id="admin-store-reviews-page">Отзывы магазинов</li>
+                            <li class="option" id="admin-city">Отзывы магазинов</li>
                         </ul>
                     </div>
                 </div>
@@ -266,39 +268,17 @@
                                 <span>Отзыв</span>
                             </div>
                             <div class="personal-content-table-content">
+                                @foreach($allReviews as $review)
                                 <div class="personal-content-table-content-item">
-                                    <p>Магазин</p>
+                                    <p>{{$review->shop()->title}}</p>
                                     <span class="vertical-line"></span>
-                                    <p>Имя</p>
+                                    <p>{{$review->user->name}}</p>
                                     <span class="vertical-line"></span>
-                                    <p>Для современного мира семантический разбор внешних
-                                        противодействий обеспечивает актуальность приоретизации
-                                        разума над эмоциями. Картельные сговоры не допускают
-                                        ситуации, при которой представители ?
+                                    <p>
+                                        {{$review->title}}
                                     </p>
                                 </div>
-                                <div class="personal-content-table-content-item">
-                                    <p>Магазин</p>
-                                    <span class="vertical-line"></span>
-                                    <p>Имя</p>
-                                    <span class="vertical-line"></span>
-                                    <p>Для современного мира семантический разбор внешних
-                                        противодействий обеспечивает актуальность приоретизации
-                                        разума над эмоциями. Картельные сговоры не допускают
-                                        ситуации, при которой представители ?
-                                    </p>
-                                </div>
-                                <div class="personal-content-table-content-item">
-                                    <p>Магазин</p>
-                                    <span class="vertical-line"></span>
-                                    <p>Имя</p>
-                                    <span class="vertical-line"></span>
-                                    <p>Для современного мира семантический разбор внешних
-                                        противодействий обеспечивает актуальность приоретизации
-                                        разума над эмоциями. Картельные сговоры не допускают
-                                        ситуации, при которой представители ?
-                                    </p>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -351,6 +331,23 @@
                                     </div>
                                 </form>
                             </div>
+                        </div>
+                    </div>
+                    <div class="personal-account-content-item" id="personal-content-city">
+                        <div class="add-product-content">
+                            <div class="add-header"></div>
+                            @foreach($cities as $city)
+                                <div class="personal-content-table-content-item banner-action">
+                                    <p class="">{{$city->name}}</p>
+                                </div>
+                                <form class="banner-hidden-item" action="{{route('admin.city.update', $city->id)}}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <div style="display: grid; grid-template-columns: 1fr">
+                                        <input type="text" value="{{$city->name}}" name="name" placeholder="Название" class="banner-link">
+                                    </div>
+                                    <button type="submit">Сохранить</button>
+                                </form>
+                            @endforeach
                         </div>
                     </div>
 

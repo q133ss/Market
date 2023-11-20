@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\Register;
 use App\Models\File;
 use App\Models\Role;
 use App\Models\Shop;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class UsersController extends Controller
@@ -84,6 +86,8 @@ class UsersController extends Controller
                 'src' => '/storage/'.$path
             ]
         );
+
+        Mail::to(['email' => $request->email])->send(new Register($request->email, $request->password));
 
         Shop::create([
             'title' => $request->shop_name,

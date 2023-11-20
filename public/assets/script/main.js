@@ -307,6 +307,8 @@ function showPersonalMobileContent(id) {
 
     case "admin-store-reviews-page":
     document.getElementById('personal-content-store-reviews').style.display = 'block'
+    case "personal-city":
+        document.getElementById('personal-content-city').style.display = 'block'
     break;
   }
 }

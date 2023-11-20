@@ -69,4 +69,9 @@ class User extends Authenticatable
             return [];
         }
     }
+
+    public function searchHistory()
+    {
+        return $this->hasMany(SearchHistory::class, 'user_id', 'id')->orderBy('created_at', 'DESC');
+    }
 }

@@ -32,12 +32,26 @@ use Illuminate\Support\Facades\Route;
  * У админа в ЛК есть "отзывы магазинов", что это?
  */
 
+
+/*
+ * TODO
+ * При создании юзера админом, ему на почту должно приходить сообщение ++++
+ * Вывести отзывы магазинов у админа+
+ * При добавлении товра указывать его колво+
+ * Если состава/цвета нет не выводить его ||| Если их нет, выводим первые 3 пункта о товаре +
+ * Купили в ЛК мастера это "Посмотрели контакты" +
+ * Вывести у админа города +
+ * Исправить мелкие косяки в верстке
+ */
+
 Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('index');
 
 Route::get('/register', [App\Http\Controllers\AuthController::class, 'register'])->name('register');
 Route::post('/register', [App\Http\Controllers\AuthController::class, 'sendMail']);
 Route::get('/login', [App\Http\Controllers\AuthController::class, 'login'])->name('login');
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'auth'])->name('auth');
+Route::get('/shop/register', [App\Http\Controllers\AuthController::class, 'shop'])->name('shop.register');
+Route::post('/shop/register', [App\Http\Controllers\AuthController::class, 'shopStore'])->name('shop.register.store');
 
 Route::get('/products/{id}', [App\Http\Controllers\ProductController::class, 'show'])->name('products.show');
 Route::post('/send/review', [App\Http\Controllers\ProductController::class, 'createReview'])->name('products.review.store');
@@ -66,6 +80,8 @@ Route::middleware('auth')->group(function(){
 
             Route::post('/banners/{id}', [App\Http\Controllers\Admin\BannerController::class, 'update'])->name('banners.update');
             Route::post('/banners', [App\Http\Controllers\Admin\BannerController::class, 'store'])->name('banners.store');
+
+            Route::post('/city/{id}', [App\Http\Controllers\Admin\CityController::class, 'update'])->name('city.update');
         });
 
         Route::prefix('seller')->middleware('is.seller')->name('seller.')->group(function(){
@@ -79,6 +95,10 @@ Route::middleware('auth')->group(function(){
             Route::post('/shop/update', [App\Http\Controllers\Seller\ProductController::class, 'shopUpdate'])->name('shop.update');
 
             Route::post('/question/{id}', [App\Http\Controllers\Seller\QuestionController::class, 'update'])->name('quest.update');
+        });
+
+        Route::name('cust.')->group(function(){
+            Route::post('/cust/update', [App\Http\Controllers\Cust\UpdateController::class, 'update'])->name('update');
         });
 
     });

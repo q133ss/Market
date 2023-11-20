@@ -29,7 +29,11 @@ class AccountController extends Controller
 
             $banners = Banner::orderBy('id', 'DESC')->get();
 
-            return view('profile.' . Auth()->user()->role->tech_name . '.index', compact('sellers', 'reviews', 'banners'));
+            $allReviews = Review::orderBy('created_at','DESC')->get();
+
+            $cities = City::get();
+
+            return view('profile.' . Auth()->user()->role->tech_name . '.index', compact('sellers', 'reviews', 'banners', 'allReviews', 'cities'));
         }elseif($user->role->tech_name == 'seller'){
             $products = $user->products();
             $categories = Category::where('parent_id', '!=', null)->get();
@@ -40,7 +44,10 @@ class AccountController extends Controller
 
             return view('profile.' . Auth()->user()->role->tech_name . '.index', compact('products', 'categories', 'cities', 'questions', 'user', 'reviews'));
         }else{
-            return view('profile.' . Auth()->user()->role->tech_name . '.index');
+            $reviews = Review::with('product')->where('user_id', Auth()->id())->get();
+            $questions = Question::with('product')->where('user_id', Auth()->id())->get();
+            $waits = session()->get('wait') ? Product::whereIn('id', session()->get('wait'))->get() : [];
+            return view('profile.' . Auth()->user()->role->tech_name . '.index', compact('user', 'reviews', 'questions', 'waits'));
         }
     }
 }

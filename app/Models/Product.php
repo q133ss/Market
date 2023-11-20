@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class Product extends Model
 {
@@ -57,5 +59,25 @@ class Product extends Model
     public function sizes()
     {
         return $this->hasMany(ProductSize::class, 'product_id', 'id');
+    }
+
+    public function scopeWithFilter($query, Request $request)
+    {
+        return $query
+            ->when($request->query('category'), function (Builder $query, $category) {
+                $query->where('category_id', $category);
+            })
+            ->when($request->query('color'), function (Builder $query, $color){
+                $query->where('color', $color);
+            })
+            ->when($request->query('compound'), function (Builder $query, $compound){
+                $query->where('compound', $compound);
+            })
+            ->when($request->query('price'), function(Builder $query, $price){
+                $query->where('price', '<', $price);
+            })
+            ->when($request->query('city_id'), function (Builder $query, $city){
+                $query->where('city_id', $city);
+            });
     }
 }

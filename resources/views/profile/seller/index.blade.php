@@ -17,6 +17,15 @@
             @if(session()->has('success'))
                 <h3 class="item-title">{{ session()->get('success') }}</h3>
             @endif
+
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                        @foreach ($errors->all() as $error)
+                            <p>{{ $error }}</p>
+                        @endforeach
+                </div>
+            @endif
+
             <div class="personal-account-content">
                 <div class="personal-account-btns">
                     <span class="active-personal-btn" id="personal-products">Товары</span>
@@ -161,14 +170,16 @@
                                             <label>Информация о доставке:</label>
                                             <textarea cols="30" name="shipping" rows="10">{{$product->shipping}}</textarea>
 
-                                            <div class="present-in-stock">
-                                                <p>Есть в наличии:</p>
-                                                <input type="hidden" name="in_stock" value="{{$product->in_stock}}" id="in_stock">
-                                                <div class="in-stock-controls">
-                                                    <span onclick="selectStock(1)" @if($product->in_stock)class="active-personal-btn"@endif>да</span>
-                                                    <span onclick="selectStock(0)" @if(!$product->in_stock)class="active-personal-btn"@endif>нет</span>
-                                                </div>
-                                            </div>
+{{--                                            <div class="present-in-stock">--}}
+{{--                                                <p>Есть в наличии:</p>--}}
+{{--                                                <input type="hidden" name="in_stock" value="{{$product->in_stock}}" id="in_stock">--}}
+{{--                                                <div class="in-stock-controls">--}}
+{{--                                                    <span onclick="selectStock(1)" @if($product->in_stock)class="active-personal-btn"@endif>да</span>--}}
+{{--                                                    <span onclick="selectStock(0)" @if(!$product->in_stock)class="active-personal-btn"@endif>нет</span>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+                                            <label>Количество товара</label>
+                                            <input type="text" placeholder="1" name="qty" value="{{$product->qty}}">
 
                                             <button>СОХРАНИТЬ</button>
                                         </div>
@@ -238,7 +249,7 @@
                                 <th>Название</th>
                                 <th>Просмотры</th>
                                 <th>В избранном</th>
-                                <th>Купили</th>
+                                <th>Посмотрели контакты</th>
                                 <th>Лист ожидания</th>
                             </tr>
                             @foreach($products as $product)
@@ -400,6 +411,7 @@
                                             <label>Описание:</label>
                                             <textarea cols="30" rows="10"></textarea>
 
+
                                             <div class="present-in-stock">
                                                 <p>Есть в наличии:</p>
                                                 <div class="in-stock-controls">
@@ -450,7 +462,7 @@
                                 </div>
                                 <div class="add-characteristics-form">
                                     <label>Название:</label>
-                                    <input type="text" name="name">
+                                    <input type="text" name="name" value="{{old('name')}}">
 
                                     <label>Категория:</label>
                                     <select name="category_id" id="" style="background-color: #EDEDED;
@@ -463,10 +475,10 @@
                                     </select>
 
                                     <label>Состав:</label>
-                                    <input type="text" name="compound">
+                                    <input type="text" name="compound" value="{{old('compound')}}">
 
                                     <label>Цвет:</label>
-                                    <input type="text" name="color">
+                                    <input type="text" name="color" value="{{old('color')}}">
 
                                     <div class="sizes-and-gender">
                                         <div class="add-sizes new_product_sizes" id="add-product-form">
@@ -487,10 +499,10 @@
                                     </div>
 
                                     <label>Цена:</label>
-                                    <input type="text" name="price">
+                                    <input type="text" name="price" value="{{old('price')}}">
 
                                     <label>Старая цена:</label>
-                                    <input type="text" name="old_price">
+                                    <input type="text" name="old_price" value="{{old('old_price')}}">
 
                                     <div class="about-added-product" id="new_product_chars">
                                         <p>О товаре:</p>
@@ -503,23 +515,26 @@
                                     </div>
 
                                     <label>Номер телефона для связи с покупателем</label>
-                                    <input type="text" placeholder="+7 (999) 999-99-99" name="phone" class="phone-input">
+                                    <input type="text" placeholder="+7 (999) 999-99-99" name="phone" value="{{old('phone')}}" class="phone-input">
 
                                     <label>Описание:</label>
-                                    <textarea cols="30" rows="10" name="description"></textarea>
+                                    <textarea cols="30" rows="10" name="description">{{old('description')}}</textarea>
 
                                     <label>Информация о доставке:</label>
-                                    <textarea cols="30" rows="10" name="shipping"></textarea>
+                                    <textarea cols="30" rows="10" name="shipping">{{old('qty')}}</textarea>
 
                                     <input type="hidden" id="newInStock" name="in_stock" value="1">
 
-                                    <div class="present-in-stock">
-                                        <p>Есть в наличии:</p>
-                                        <div class="in-stock-controls">
-                                            <span onclick="newChangeStock(1)" class="active-personal-btn">да</span>
-                                            <span onclick="newChangeStock(0)">нет</span>
-                                        </div>
-                                    </div>
+                                    <label>Количество товара</label>
+                                    <input type="text" placeholder="1" name="qty" value="{{old('qty')}}">
+
+{{--                                    <div class="present-in-stock">--}}
+{{--                                        <p>Есть в наличии:</p>--}}
+{{--                                        <div class="in-stock-controls">--}}
+{{--                                            <span onclick="newChangeStock(1)" class="active-personal-btn">да</span>--}}
+{{--                                            <span onclick="newChangeStock(0)">нет</span>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
 
                                     <button type="submit">СОХРАНИТЬ</button>
                                 </div>
