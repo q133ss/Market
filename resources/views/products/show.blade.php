@@ -31,7 +31,13 @@
                                     @foreach($product->photos as $photo)
                                     <div class="swiper-slide">
                                         <div class="product-imaage">
+                                            @if($photo->category == 'product')
                                             <img src="{{$photo->src}}" alt="">
+                                            @else
+                                                <video style="width: 400px; height: 400px;" controls="controls">
+                                                    <source src="{{$photo->src}}">
+                                                </video>
+                                            @endif
                                         </div>
                                     </div>
                                     @endforeach
@@ -240,7 +246,7 @@
                         <div class="swiper-wrapper">
                             @foreach($product->reviews as $review)
                             <div class="swiper-slide">
-                                <div class="review-questions-item slider-width-fullscren">
+                                <div class="review-questions-item slider-width-fullscren" data-id="{{$review->id}}">
                                     <div class="review-questions-header">
                                         <h3>{{$review->user->name}}</h3>
                                         <p>{{$review->title}}</p>
@@ -306,7 +312,8 @@
                 </div>
 
 
-                <div class="question-fullscreen">
+                @foreach($product->reviews as $review)
+                <div class="question-fullscreen" id="review_open_{{$review->id}}">
                     <span class="close-full">X</span>
                     <div class="swiper review-question-fullscreen-slider">
                         <div class="swiper-wrapper">
@@ -314,72 +321,63 @@
                                 <div class="question-fullscreen-item">
                                     <div class="swiper product-img-slider-in-fullscreen">
                                         <div class="swiper-wrapper">
+                                            @foreach($review->files as $file)
                                             <div class="swiper-slide">
                                                 <div class="product-imaage">
-                                                    <img src="/assets/images/large-product.png" alt="">
+                                                    <img src="{{$file->src}}" alt="">
                                                 </div>
                                             </div>
-                                            <div class="swiper-slide">
-                                                <div class="product-imaage">
-                                                    <img src="/assets/images/large-product.png" alt="">
-                                                </div>
-                                            </div>
-                                            <div class="swiper-slide">
-                                                <div class="product-imaage">
-                                                    <img src="/assets/images/large-product.png" alt="">
-                                                </div>
-                                            </div>
+                                            @endforeach
                                         </div>
                                         <span class="swiper-button-prev-full"></span>
                                         <span class="swiper-button-next-full"></span>
                                     </div>
                                     <div class="fullscreen-item-content">
-                                        <h2>Алина</h2>
-                                        <p>Мы вынуждены отталкиваться от того, что базовый вектор
-                                            развития прекрасно подходит для реализации новых предложений.
+                                        <h2>{{$review->user->name}}</h2>
+                                        <p>{{$review->title}}
                                         </p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="swiper-slide">
-                                <div class="question-fullscreen-item">
-                                    <div class="fullscreen-item-img">
-                                        <div class="swiper product-img-slider-in-fullscreen">
-                                            <div class="swiper-wrapper">
-                                                <div class="swiper-slide">
-                                                    <div class="product-imaage">
-                                                        <img src="/assets/images/large-product.png" alt="">
-                                                    </div>
-                                                </div>
-                                                <div class="swiper-slide">
-                                                    <div class="product-imaage">
-                                                        <img src="/assets/images/large-product.png" alt="">
-                                                    </div>
-                                                </div>
-                                                <div class="swiper-slide">
-                                                    <div class="product-imaage">
-                                                        <img src="/assets/images/large-product.png" alt="">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <span class="swiper-button-prev-full"></span>
-                                            <span class="swiper-button-next-full"></span>
-                                        </div>
-                                    </div>
-                                    <div class="fullscreen-item-content">
-                                        <h2>Алина</h2>
-                                        <p>Мы вынуждены отталкиваться от того, что базовый вектор
-                                            развития прекрасно подходит для реализации новых предложений.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+{{--                            <div class="swiper-slide">--}}
+{{--                                <div class="question-fullscreen-item">--}}
+{{--                                    <div class="fullscreen-item-img">--}}
+{{--                                        <div class="swiper product-img-slider-in-fullscreen">--}}
+{{--                                            <div class="swiper-wrapper">--}}
+{{--                                                <div class="swiper-slide">--}}
+{{--                                                    <div class="product-imaage">--}}
+{{--                                                        <img src="/assets/images/large-product.png" alt="">--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                                <div class="swiper-slide">--}}
+{{--                                                    <div class="product-imaage">--}}
+{{--                                                        <img src="/assets/images/large-product.png" alt="">--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                                <div class="swiper-slide">--}}
+{{--                                                    <div class="product-imaage">--}}
+{{--                                                        <img src="/assets/images/large-product.png" alt="">--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                            <span class="swiper-button-prev-full"></span>--}}
+{{--                                            <span class="swiper-button-next-full"></span>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="fullscreen-item-content">--}}
+{{--                                        <h2>Алина</h2>--}}
+{{--                                        <p>Мы вынуждены отталкиваться от того, что базовый вектор--}}
+{{--                                            развития прекрасно подходит для реализации новых предложений.--}}
+{{--                                        </p>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                         </div>
                         <span class="swiper-button-prev"></span>
                         <span class="swiper-button-next"></span>
                     </div>
                 </div>
-
+                @endforeach
                 <div class="write-review-content" id="write-review-content">
                     @if(Auth()->check())
                     <form action="{{route('products.review.store')}}" method="POST" class="write-review-form" id="write-review-form" enctype="multipart/form-data">
@@ -438,7 +436,7 @@
                                         </svg>
                                     </div>
                                     <div class="product-item-header">
-                                        <img src="{{$product->photos->pluck('src')->first()}}" alt="" width="100%">
+                                        <img src="{{$product->photos->pluck('src')->first()}}" onclick="location.href = '{{route('products.show', $product->id)}}';" alt="" width="100%">
                                     </div>
                                     <div class="product-item-content">
                                         <h3 class="item-title">{{$product->name}}</h3>
@@ -472,6 +470,11 @@
     </div>
 @endsection
 @section('scripts')
+    <style>
+        .review-question-fullscreen-slider .swiper-slide{
+            max-width: 900px;
+        }
+    </style>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script>
 
@@ -612,5 +615,18 @@
                 }
             });
         }
+
+        document.querySelectorAll('.slider-width-fullscren').forEach(element => {
+            element.addEventListener('click', () => {
+                let id = element.getAttribute('data-id');
+                const fullScreenDiv = document.querySelector('.question-fullscreen')
+                //fullScreenDiv.style.display = 'block';
+                $('#review_open_'+id).css('display', 'block')
+            })
+        });
+
+        $('.close-full').click(function (){
+            $(this).parent().css('display', 'none')
+        })
     </script>
 @endsection

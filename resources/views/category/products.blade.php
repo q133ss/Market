@@ -23,7 +23,7 @@
                                 </svg>
                             </div>
                             <div class="product-item-header">
-                                <img src="{{$product->photos->pluck('src')->first()}}" alt="">
+                                <img src="{{$product->photos->pluck('src')->first()}}" onclick="location.href = '{{route('products.show', $product->id)}}';" alt="">
                             </div>
                             <div class="product-item-content">
                                 <h3 class="item-title">{{$product->name}}</h3>

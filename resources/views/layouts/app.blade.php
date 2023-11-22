@@ -92,6 +92,7 @@
                 <div class="user-controls-hidden-items register-items">
                     @if(Auth()->check())
                         <a onclick="location.href = '{{route('account')}}';" href="#">Личный кабинет</a>
+                        <a onclick="location.href = '{{route('logout')}}';" href="#">Выйти</a>
                     @else
                     <button onclick="location.href = '{{route('login')}}';">Войти по Email</button>
                     <a href="#" onclick="location.href = '{{route('register')}}';">Создать аккаунт</a>

@@ -30,7 +30,7 @@
                     </svg>
                 </div>
                 <div class="product-item-header">
-                    <img src="{{$product->src}}" alt="" style="width: 100%;">
+                    <img src="{{$product->src}}" onclick="location.href = '{{route('products.show', $product->id)}}';" alt="" style="width: 100%;">
                 </div>
                 <div class="product-item-content">
                     <h3 class="item-title">{{$product->name}}</h3>

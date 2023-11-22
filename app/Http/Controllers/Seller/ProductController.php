@@ -98,14 +98,19 @@ class ProductController extends Controller
         ]);
 
         if($request->img) {
-            File::where('fileable_id', $id)->where('fileable_type', 'App\Models\Product')->delete();
+            //File::where('fileable_id', $id)->where('fileable_type', 'App\Models\Product')->delete();
             foreach ($request->img as $file) {
                 $path = $file->store('products', 'public');
+                if($file->extension() == 'mp4'){
+                    $category = 'video';
+                }else {
+                    $category = 'product';
+                }
                 File::create(
                     [
                         'fileable_type' => 'App\Models\Product',
                         'fileable_id' => $id,
-                        'category' => 'product',
+                        'category' => $category,
                         'src' => '/storage/' . $path
                     ]
                 );

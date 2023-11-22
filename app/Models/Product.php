@@ -30,7 +30,7 @@ class Product extends Model
 
     public function photos()
     {
-        return $this->morphMany(File::class, 'fileable')->where('category', 'product');
+        return $this->morphMany(File::class, 'fileable')->where('category', 'product')->orWhere('category', 'video');
     }
 
     public function reviews()
