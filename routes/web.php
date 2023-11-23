@@ -34,13 +34,12 @@ use Illuminate\Support\Facades\Route;
 
 
 /*
- 1. Выход из аккаунта+
-2. Переход на карточеу товара по нажатию на картинку или саму карточку. Не только на стрелку.  +
-3. У нее не загружались фото в карточку товара.  +
-4. Нужно, чтобы можно было загружать видео в карту товара +
-5. При нажатии на отзыв нет текста, только фото+
-6. Фото товара добавили, а удалить нельзя. И надо с другими фото так же посмотреть, где удалить нельзя. В баннерах например.
-TODO(При добавлении новых фото удаляются все старые)
+1. Не создается карточка товара (Все ок)
+2. Не удаляются фото из карточки. Нужно, чтобы была возможность добавлять несколько фото и видео и удалять по одной картинке. +
+3. Сделать кнопку "Поднять наверх"+
+4. Возможность добавлять города через акк админа +
+5. В кабинет продавца не редактируются карточки. +
+6. Фильтры не поправил, странно работают. + Нужно их вывести на страницу товаров при переходе из каталога. +
  */
 
 Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('index');
@@ -86,6 +85,7 @@ Route::middleware('auth')->group(function(){
             Route::post('/banners', [App\Http\Controllers\Admin\BannerController::class, 'store'])->name('banners.store');
 
             Route::post('/city/{id}', [App\Http\Controllers\Admin\CityController::class, 'update'])->name('city.update');
+            Route::post('/city/', [App\Http\Controllers\Admin\CityController::class, 'store'])->name('city.store');
         });
 
         Route::prefix('seller')->middleware('is.seller')->name('seller.')->group(function(){
@@ -95,6 +95,7 @@ Route::middleware('auth')->group(function(){
             Route::post('/product/{id}/add/char', [App\Http\Controllers\Seller\ProductController::class, 'addChar'])->name('product.add.char');
             Route::post('/product/size/{id}/delete', [App\Http\Controllers\Seller\ProductController::class, 'deleteSize']);
             Route::post('/product/char/{id}/delete', [App\Http\Controllers\Seller\ProductController::class, 'deleteChar']);
+            Route::post('/delete/file/{id}', [App\Http\Controllers\Seller\ProductController::class, 'deleteFile']);
 
             Route::post('/shop/update', [App\Http\Controllers\Seller\ProductController::class, 'shopUpdate'])->name('shop.update');
 

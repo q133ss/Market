@@ -3,32 +3,19 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Seller\ProductController\StoreRequest;
 use App\Models\City;
 use App\Models\File;
 use App\Models\Product;
 use App\Models\ProductChar;
 use App\Models\ProductSize;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string',
-            'category_id' => 'required|exists:categories,id',
-            'compound' => 'required|string',
-            'color' => 'required|string',
-            'price' => 'required|string',
-            'old_price' => 'required|string',
-            'phone' => 'required|string',
-            'description' => 'required|string',
-            'shipping' => 'required|string',
-            'in_stock' => 'required|in:0,1',
-            'city' => 'required|exists:cities,name',
-            'qty' => 'required|int|min:0'
-        ]);
-
         $product = Product::create([
             'name' => $request->name,
             'category_id' => $request->category_id,
@@ -204,5 +191,14 @@ class ProductController extends Controller
                 'category' => 'shop'
             ]);
         }
+    }
+
+    public function deleteFile(int $id)
+    {
+        $file = File::findOrFail($id);
+        Storage::disk('public')->delete(str_replace('/storage/', '', $file->src));
+        $file->delete();
+
+        return true;
     }
 }

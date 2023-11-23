@@ -23,7 +23,7 @@
                             </svg>
                         </div>
                         <div class="product-item-header">
-                            <img src="{{$product->photos->pluck('src')->first()}}" alt="">
+                            <img style="max-width: 150px" src="{{$product->photos->pluck('src')->first()}}" alt="">
                         </div>
                         <div class="product-item-content">
                             <h3 class="item-title">{{$product->name}}</h3>
@@ -51,7 +51,7 @@
 
                 <div class="store-information">
                     <h3>{{$shop->title}}</h3>
-                    <img src="/assets/images/partner.png" alt="">
+                    <img src="{{$shop->photo ? $shop->photo->src : ''}}" alt="">
                     <div class="select-info">
                         <p>Контактный телефон:</p>
                         <div class="contact-info-item">

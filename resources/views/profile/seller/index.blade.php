@@ -100,6 +100,22 @@
                                         </div>
                                         <div class="add-characteristics-form">
                                             @csrf
+
+                                            <div style="display: flex; overflow-x: scroll; width: 680px">
+                                                @foreach($product->photos as $photo)
+                                                    <div id="file_{{$photo->id}}">
+                                                        @if($photo->category == 'product')
+                                                        <img src="{{$photo->src}}" style="width: 225px; height: 200px;" alt="">
+                                                        @else
+                                                            <video style="width: 225px; height: 200px;" controls="controls">
+                                                                <source src="{{$photo->src}}">
+                                                            </video>
+                                                        @endif
+                                                        <button type="button" onclick="imgDelete('{{$photo->id}}')">Удалить</button>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+
                                             <label>Название:</label>
                                             <input type="text" name="name" value="{{$product->name}}">
 
@@ -727,6 +743,28 @@
 
         function newChangeStock(status){
             $('#newInStock').val(status)
+        }
+
+        function imgDelete(id){
+            let conf = confirm('Подтвердите');
+
+            if(conf){
+                $.ajax({
+                    url: '/account/seller/delete/file/'+id,
+                    type: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: (data) => {
+                        $('#file_'+id).remove();
+                    },
+                    error: function (request, status, error) {
+                        //console.log(statusCode = request.responseText);
+                    }
+                });
+            }
+
+            return false;
         }
     </script>
 @endsection

@@ -20,7 +20,7 @@
                     </svg>
                 </div>
                 <div class="product-item-header">
-                    <img src="{{$shop->photo == null ? '' : $shop->photo->pluck('src')->first()}}" alt="">
+                    <img style="max-width: 150px" src="{{$shop->photo == null ? '' : $shop->photo->pluck('src')->first()}}" alt="">
                 </div>
                 <div class="product-item-content favorite-stores">
                     <h3 class="item-title">Магазин {{$shop->title}}</h3>

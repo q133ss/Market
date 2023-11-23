@@ -15,12 +15,12 @@ class Product extends Model
 
     public function getForMain()
     {
-        return $this->leftJoin('shops', 'shops.id', 'products.shop_id')
-            ->leftJoin('users', 'users.id', 'shops.user_id')
+        return $this->join('shops', 'shops.id', 'products.shop_id')
+            ->join('users', 'users.id', 'shops.user_id')
             ->leftJoin('files', 'files.fileable_id', 'products.id')
-            ->where('files.fileable_type', 'App\Models\Product')
-            ->where('files.category', 'product')
-            ->orderBy('users.rating', 'DESC')->select('products.*', 'files.src')->get();
+            ->select('products.*')
+            ->orderBy('users.rating', 'DESC')
+            ->get();
     }
 
     public function shop()
@@ -61,10 +61,10 @@ class Product extends Model
         return $this->hasMany(ProductSize::class, 'product_id', 'id');
     }
 
-    public function scopeWithFilter($query, Request $request)
+    public function scopeWithFilter($query, Request $request, string $search)
     {
         return $query
-            ->when($request->query('category'), function (Builder $query, $category) {
+            ->when($request->query('category_id'), function (Builder $query, $category) {
                 $query->where('category_id', $category);
             })
             ->when($request->query('color'), function (Builder $query, $color){
@@ -78,6 +78,11 @@ class Product extends Model
             })
             ->when($request->query('city_id'), function (Builder $query, $city){
                 $query->where('city_id', $city);
-            });
+            })
+            ->when($request->query('size_id'), function (Builder $query, $size){
+                $query->leftJoin('product_sizes', 'product_sizes.product_id', 'products.id')
+                    ->where('product_sizes.id', $size);
+            })
+            ->where('name', 'LIKE', '%'.$search.'%');
     }
 }

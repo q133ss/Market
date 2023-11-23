@@ -31,8 +31,8 @@
                                     @foreach($product->photos as $photo)
                                     <div class="swiper-slide">
                                         <div class="product-imaage">
-                                            @if($photo->category == 'product')
-                                            <img src="{{$photo->src}}" alt="">
+                                            @if($photo->category != 'video')
+                                            <img src="{{$photo->src}}" alt="" style="max-width: 250px;">
                                             @else
                                                 <video style="width: 400px; height: 400px;" controls="controls">
                                                     <source src="{{$photo->src}}">
@@ -436,7 +436,13 @@
                                         </svg>
                                     </div>
                                     <div class="product-item-header">
-                                        <img src="{{$product->photos->pluck('src')->first()}}" onclick="location.href = '{{route('products.show', $product->id)}}';" alt="" width="100%">
+                                        @if($product->photos->pluck('category')->first() != 'video')
+                                            <img src="{{$product->photos->pluck('src')->first()}}" width="100%" alt="" onclick="location.href = '{{route('products.show', $product->id)}}';">
+                                        @else
+                                            <video style="width: 184px; height: 215px;" controls="controls">
+                                                <source src="{{$product->photos->pluck('src')->first()}}">
+                                            </video>
+                                        @endif
                                     </div>
                                     <div class="product-item-content">
                                         <h3 class="item-title">{{$product->name}}</h3>
@@ -445,7 +451,7 @@
                                                 <h2 class="item-price"><span class="price-value">{{$product->price}}</span> ₽</h2>
                                                 <div class="in-store">
                                                     <p>В наличии: </p>
-                                                    <p class="in-store-value"><span>3</span> шт.</p>
+                                                    <p class="in-store-value"><span>{{$product->qty}}</span> шт.</p>
                                                 </div>
                                             </div>
                                             <div class="go-to-product-page"

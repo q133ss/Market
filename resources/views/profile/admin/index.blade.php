@@ -388,6 +388,23 @@
                         </div>
                     </div>
 
+                    <div class="personal-account-content-item" id="city_add">
+                        <div class="add-product-content">
+                            <div class="add-header"></div>
+                            <div class="add-product-items-content">
+                                <form class="add-product-items-content" action="{{route('admin.city.store')}}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="add-characteristics-form">
+                                        <label>Название:</label>
+                                        <input type="text" name="name">
+
+                                        <button>СОХРАНИТЬ</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -431,6 +448,15 @@
         function addSeller(){
             $('.personal-account-content-item').css('display', 'none');
             $('#seller_add').css('display', 'block');
+        }
+
+        $('#personal-city').click(function (){
+            $('#add-admin-product > span').attr('onclick', 'addCity()');
+        });
+
+        function addCity(){
+            $('.personal-account-content-item').css('display', 'none');
+            $('#city_add').css('display', 'block');
         }
     </script>
 @endsection

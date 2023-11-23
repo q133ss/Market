@@ -13,4 +13,10 @@ class CityController extends Controller
         City::findOrFail($id)->update(['name' => $request->name]);
         return back()->withSuccess('Город успешно обновлен');
     }
+
+    public function store(Request $request)
+    {
+        City::create(['name' => $request->name]);
+        return back()->withSuccess('Город успешно добавлен');
+    }
 }

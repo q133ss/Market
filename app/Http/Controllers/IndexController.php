@@ -14,7 +14,7 @@ class IndexController extends Controller
     {
         $banners = Banner::orderBy('created_at', 'DESC')->get();
 
-        $products = (new Product)->getForMain();
+        $products = (new Product)->load('photos')->getForMain();
 
         return view('index', compact('banners', 'products'));
     }

@@ -23,7 +23,14 @@
                                 </svg>
                             </div>
                             <div class="product-item-header">
-                                <img src="{{$product->photos->pluck('src')->first()}}" onclick="location.href = '{{route('products.show', $product->id)}}';" alt="">
+{{--                                <img src="{{$product->photos->pluck('src')->first()}}" style="max-width: 150px;" onclick="location.href = '{{route('products.show', $product->id)}}';" alt="">--}}
+                                @if($product->photos->pluck('category')->first() == 'video')
+                                    <video style="width: 225px; height: 224px;" controls="controls">
+                                        <source src="{{$product->photos->pluck('src')->first()}}">
+                                    </video>
+                                @else
+                                    <img src="{{$product->photos->pluck('src')->first()}}" onclick="location.href = '{{route('products.show', $product->id)}}';" alt="" style="width: 100%;">
+                                @endif
                             </div>
                             <div class="product-item-content">
                                 <h3 class="item-title">{{$product->name}}</h3>

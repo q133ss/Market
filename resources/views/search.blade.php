@@ -13,107 +13,143 @@
                 <h1>Одежда</h1>
                 <p>Найдено <span>{{$products->count()}}</span> товаров</p>
             </div>
-
-            <div class="search-controls">
-                <div class="swiper search-controls-slider">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide first-search-slide">
-                            <div class="search-select main-search-control">
-                                <input class="search-select-input" type="text" placeholder="Select option" readonly />
-                                <ul class="options">
-                                    @foreach($categories as $category)
-                                    <li class="option">{{$category->name}}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
+            <form id="filter_form" class="search-controls">
+                <div class="filter_cats">
+                    <div class="filter-item">
+                        <div id="first_filter_wrap">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="16" viewBox="0 0 18 16" fill="none">
+                                <rect x="0.398438" y="0.881363" width="16.9492" height="14.9153" rx="4" fill="white"/>
+                                <path d="M5.82227 6.3051H11.924H5.82227ZM5.82227 8.339H11.924H5.82227ZM5.82227 10.3729H11.924H5.82227Z" fill="white"/>
+                                <path d="M5.82227 6.3051H11.924M5.82227 8.339H11.924M5.82227 10.3729H11.924" stroke="#2D2D2D" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <select name="category_id" id="">
+                                @foreach($categories as $category)
+                                <option @if(\Request()->category_id == $category->id) selected @endif value="{{$category->id}}">{{$category->name}}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <div class="swiper-slide newest-items">
-                            <div class="search-select">
-                                <input class="search-select-input" type="text" placeholder="Новинки" readonly />
-                                <ul class="options">
-                                    <li class="option">Скидки</li>
-                                    <li class="option">По цене <img src="/assets/images/orange-circle-arrow.svg" alt=""></li>
-                                    <li class="option">По цене <img src="/assets/images/orange-circle-arrow.svg" alt=""
-                                                                    style="transform: rotate(180deg);"></li>
-                                </ul>
-                            </div>
-                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" viewBox="0 0 18 19" fill="none">
+                            <circle cx="9.04208" cy="9.33898" r="8.81356" fill="white"/>
+                            <path d="M9.04192 12.0508L13.1097 7.94393L12.4317 7.30508L9.04192 10.6819L5.65209 7.30508L4.97412 7.94393L9.04192 12.0508Z" fill="#2F2F2F"/>
+                        </svg>
+                    </div>
 
-{{--                        <div class="swiper-slide">--}}
-{{--                            <div class="search-select">--}}
-{{--                                <input class="search-select-input" type="text" placeholder="Размер" readonly />--}}
-{{--                                <ul class="options">--}}
-{{--                                    <li class="option">Размер</li>--}}
-{{--                                    <li class="option">Размер</li>--}}
-{{--                                    <li class="option">Размер</li>--}}
-{{--                                    <li class="option">Размер</li>--}}
-{{--                                    <li class="option">Размер</li>--}}
-{{--                                    <li class="option">Размер</li>--}}
-{{--                                </ul>--}}
-{{--                            </div>--}}
+                    <div class="filter-item">
+                        <div id="first_filter_wrap">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="16" viewBox="0 0 18 16" fill="none">
+                                <rect x="0.398438" y="0.881363" width="16.9492" height="14.9153" rx="4" fill="white"/>
+                                <path d="M5.82227 6.3051H11.924H5.82227ZM5.82227 8.339H11.924H5.82227ZM5.82227 10.3729H11.924H5.82227Z" fill="white"/>
+                                <path d="M5.82227 6.3051H11.924M5.82227 8.339H11.924M5.82227 10.3729H11.924" stroke="#2D2D2D" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <select name="sort" id="">
+                                <option value="1" @if(\Request()->sort == 1) selected @endif>Новинки</option>
+                                <option value="2" @if(\Request()->sort == 2) selected @endif>По умолчанию</option>
+                            </select>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" viewBox="0 0 18 19" fill="none">
+                            <circle cx="9.04208" cy="9.33898" r="8.81356" fill="white"/>
+                            <path d="M9.04192 12.0508L13.1097 7.94393L12.4317 7.30508L9.04192 10.6819L5.65209 7.30508L4.97412 7.94393L9.04192 12.0508Z" fill="#2F2F2F"/>
+                        </svg>
+                    </div>
+
+                    <div class="filter-item">
+                        <div id="first_filter_wrap">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="16" viewBox="0 0 18 16" fill="none">
+                                <rect x="0.398438" y="0.881363" width="16.9492" height="14.9153" rx="4" fill="white"/>
+                                <path d="M5.82227 6.3051H11.924H5.82227ZM5.82227 8.339H11.924H5.82227ZM5.82227 10.3729H11.924H5.82227Z" fill="white"/>
+                                <path d="M5.82227 6.3051H11.924M5.82227 8.339H11.924M5.82227 10.3729H11.924" stroke="#2D2D2D" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <select name="size_id" id="">
+                                <option value="" selected disabled>Размер</option>
+                                @foreach($sizes as $size)
+                                <option @if(\Request()->size_id == $size->id) selected @endif value="{{$size->id}}">{{$size->size}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" viewBox="0 0 18 19" fill="none">
+                            <circle cx="9.04208" cy="9.33898" r="8.81356" fill="white"/>
+                            <path d="M9.04192 12.0508L13.1097 7.94393L12.4317 7.30508L9.04192 10.6819L5.65209 7.30508L4.97412 7.94393L9.04192 12.0508Z" fill="#2F2F2F"/>
+                        </svg>
+                    </div>
+
+{{--                    <div class="filter-item">--}}
+{{--                        <div id="first_filter_wrap">--}}
+{{--                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="16" viewBox="0 0 18 16" fill="none">--}}
+{{--                                <rect x="0.398438" y="0.881363" width="16.9492" height="14.9153" rx="4" fill="white"/>--}}
+{{--                                <path d="M5.82227 6.3051H11.924H5.82227ZM5.82227 8.339H11.924H5.82227ZM5.82227 10.3729H11.924H5.82227Z" fill="white"/>--}}
+{{--                                <path d="M5.82227 6.3051H11.924M5.82227 8.339H11.924M5.82227 10.3729H11.924" stroke="#2D2D2D" stroke-linecap="round" stroke-linejoin="round"/>--}}
+{{--                            </svg>--}}
+{{--                            <select name="material" id="">--}}
+{{--                                <option value="" selected disabled>Материал</option>--}}
+{{--                                @foreach($materials as $material)--}}
+{{--                                    <option value="{{$material}}">{{$material}}</option>--}}
+{{--                                @endforeach--}}
+{{--                            </select>--}}
 {{--                        </div>--}}
+{{--                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" viewBox="0 0 18 19" fill="none">--}}
+{{--                            <circle cx="9.04208" cy="9.33898" r="8.81356" fill="white"/>--}}
+{{--                            <path d="M9.04192 12.0508L13.1097 7.94393L12.4317 7.30508L9.04192 10.6819L5.65209 7.30508L4.97412 7.94393L9.04192 12.0508Z" fill="#2F2F2F"/>--}}
+{{--                        </svg>--}}
+{{--                    </div>--}}
 
-{{--                        <div class="swiper-slide">--}}
-{{--                            <div class="search-select">--}}
-{{--                                <input class="search-select-input" type="text" placeholder="Материал" readonly />--}}
-{{--                                <ul class="options">--}}
-{{--                                    <li class="option">Материал</li>--}}
-{{--                                    <li class="option">Материал</li>--}}
-{{--                                    <li class="option">Материал</li>--}}
-{{--                                    <li class="option">Материал</li>--}}
-{{--                                    <li class="option">Материал</li>--}}
-{{--                                    <li class="option">Материал</li>--}}
-{{--                                </ul>--}}
-{{--                            </div>--}}
-
-{{--                        </div>--}}
-
-                        <div class="swiper-slide">
-
-                            <div class="search-select">
-                                <input class="search-select-input" name="price" type="text" placeholder="Цена" readonly />
-                                <ul class="options">
-                                    <li class="option">До 1000</li>
-                                    <li class="option">До 3000</li>
-                                    <li class="option">До 5000</li>
-                                    <li class="option">До 10000</li>
-                                    <li class="option">До 15000</li>
-                                    <li class="option">До 20000</li>
-                                </ul>
-                            </div>
+                    <div class="filter-item">
+                        <div id="first_filter_wrap">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="16" viewBox="0 0 18 16" fill="none">
+                                <rect x="0.398438" y="0.881363" width="16.9492" height="14.9153" rx="4" fill="white"/>
+                                <path d="M5.82227 6.3051H11.924H5.82227ZM5.82227 8.339H11.924H5.82227ZM5.82227 10.3729H11.924H5.82227Z" fill="white"/>
+                                <path d="M5.82227 6.3051H11.924M5.82227 8.339H11.924M5.82227 10.3729H11.924" stroke="#2D2D2D" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <select name="price" id="">
+                                <option value="" selected disabled>Цена</option>
+                                <option value="1000" @if(\Request()->price == 1000) selected @endif >До 1000</option>
+                                <option value="2000" @if(\Request()->price == 2000) selected @endif >До 2000</option>
+                                <option value="3000" @if(\Request()->price == 3000) selected @endif >До 3000</option>
+                                <option value="5000" @if(\Request()->price == 5000) selected @endif >До 5000</option>
+                                <option value="10000" @if(\Request()->price == 10000) selected @endif >До 10000</option>
+                            </select>
                         </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" viewBox="0 0 18 19" fill="none">
+                            <circle cx="9.04208" cy="9.33898" r="8.81356" fill="white"/>
+                            <path d="M9.04192 12.0508L13.1097 7.94393L12.4317 7.30508L9.04192 10.6819L5.65209 7.30508L4.97412 7.94393L9.04192 12.0508Z" fill="#2F2F2F"/>
+                        </svg>
+                    </div>
 
-                        <div class="swiper-slide">
-
-                            <div class="search-select">
-                                <input class="search-select-input" type="text" placeholder="Цвет" readonly />
-                                <ul class="options">
-                                    @foreach($colors as $color)
-                                    <li class="option">{{$color}}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
+                    <div class="filter-item">
+                        <div id="first_filter_wrap">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="16" viewBox="0 0 18 16" fill="none">
+                                <rect x="0.398438" y="0.881363" width="16.9492" height="14.9153" rx="4" fill="white"/>
+                                <path d="M5.82227 6.3051H11.924H5.82227ZM5.82227 8.339H11.924H5.82227ZM5.82227 10.3729H11.924H5.82227Z" fill="white"/>
+                                <path d="M5.82227 6.3051H11.924M5.82227 8.339H11.924M5.82227 10.3729H11.924" stroke="#2D2D2D" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <select name="color" id="">
+                                <option value="" selected disabled>Цвет</option>
+                                @foreach($colors as $color)
+                                <option value="{{$color}}" @if(\Request()->color == $color) selected @endif >{{$color}}</option>
+                                @endforeach
+                            </select>
                         </div>
-
-                        <!-- <div class="sub-controls">
-                        </div> -->
-                        <!-- </div> -->
-
-                        <div class="swiper-slide">
-                            <div class="city-control">
-                                <div class="search-select city-select">
-                                    <input class="search-select-input" name="city_id" type="text" placeholder="Город" readonly />
-                                    <ul class="options">
-                                        @foreach($cities as $city)
-                                        <li class="option">{{$city->name}}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" viewBox="0 0 18 19" fill="none">
+                            <circle cx="9.04208" cy="9.33898" r="8.81356" fill="white"/>
+                            <path d="M9.04192 12.0508L13.1097 7.94393L12.4317 7.30508L9.04192 10.6819L5.65209 7.30508L4.97412 7.94393L9.04192 12.0508Z" fill="#2F2F2F"/>
+                        </svg>
                     </div>
                 </div>
-            </div>
+
+                <div class="filter-item city_item">
+                    <div id="first_filter_wrap">
+                        <select name="city_id" id="">
+                            <option value="" selected disabled>Город</option>
+                            @foreach($cities as $city)
+                            <option value="{{$city->id}}" @if(\Request()->city_id == $city->id) selected @endif >{{$city->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="19" viewBox="0 0 22 19" fill="none">
+                        <ellipse cx="10.9594" cy="9.84747" rx="10.6122" ry="9.0339" fill="white"/>
+                        <path d="M11 13L15 8.67308L14.3333 8L11 11.5577L7.66667 8L7 8.67308L11 13Z" fill="#2F2F2F"/>
+                    </svg>
+                </div>
+            </form>
 
             <div class="main-products">
                 @foreach($products as $product)
@@ -126,7 +162,13 @@
                         </svg>
                     </div>
                     <div class="product-item-header">
-                        <img src="{{$product->photos->pluck('src')->first()}}" alt="">
+                        @if($product->photos->pluck('category')->first() == 'video')
+                            <video style="width: 225px; height: 200px;" controls="controls">
+                                <source src="{{$product->photos->pluck('src')->first()}}">
+                            </video>
+                        @else
+                            <img src="{{$product->photos->pluck('src')->first()}}" onclick="location.href = '{{route('products.show', $product->id ?? '')}}';" alt="" style="width: 100%;">
+                        @endif
                     </div>
                     <div class="product-item-content">
                         <h3 class="item-title">{{$product->name}}</h3>
@@ -135,7 +177,7 @@
                                 <h2 class="item-price"><span class="price-value">{{$product->price}}</span> ₽</h2>
                                 <div class="in-store">
                                     <p>В наличии: </p>
-                                    <p class="in-store-value"><span>3</span> шт.</p>
+                                    <p class="in-store-value"><span>{{$product->qty}}</span> шт.</p>
                                 </div>
                             </div>
                             <div class="go-to-product-page" onclick="location.href = 'product-page.html';">
@@ -155,4 +197,78 @@
         </div>
 
     </div>
+@endsection
+@section('scripts')
+    <style>
+
+        .search-controls{
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .filter_cats{
+            display: flex;
+            gap: 10px;
+        }
+
+        .filter-item{
+            display: flex;
+            align-items: center;
+
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #E6E6E6;
+            background: #F6F6F6;
+
+            color: #2F2F2F;
+
+            font-family: 'Jost', sans-serif;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500;
+        }
+        .filter-item:first-child{
+            width: 221px;
+            justify-content: space-between;
+            margin-right: 32px;
+        }
+
+        #first_filter_wrap{
+            display: flex;
+            align-items: center;
+        }
+
+        .filter-item select{
+            border:0px;
+            outline:0px;
+            -webkit-appearance: none;
+            outline: none !important;
+        }
+
+        .city_item{
+            background: #FF8000;
+        }
+
+        .city_item select{
+            background: #FF8000;
+            color: #ffffff;
+        }
+
+        .city_item svg{
+            margin-left: 51px;
+        }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        // $('.filter-item').click(function (){
+        //     $(this).find('select').show().focus().click();
+        // });
+
+        if($('select').change(function (){
+            $('#filter_form').submit();
+        }
+        ));
+        //$('#filter_form').submit();
+    </script>
 @endsection

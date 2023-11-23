@@ -30,7 +30,13 @@
                     </svg>
                 </div>
                 <div class="product-item-header">
-                    <img src="{{$product->src}}" onclick="location.href = '{{route('products.show', $product->id)}}';" alt="" style="width: 100%;">
+                    @if($product->photos->pluck('category')->first() == 'video')
+                        <video style="width: 225px; height: 200px;" controls="controls">
+                            <source src="{{$product->photos->pluck('src')->first()}}">
+                        </video>
+                    @else
+                        <img src="{{$product->photos->pluck('src')->first()}}" onclick="location.href = '{{route('products.show', $product->id)}}';" alt="" style="width: 100%;">
+                    @endif
                 </div>
                 <div class="product-item-content">
                     <h3 class="item-title">{{$product->name}}</h3>
@@ -39,7 +45,7 @@
                             <h2 class="item-price"><span class="price-value">{{$product->price}}</span> ₽</h2>
                             <div class="in-store">
                                 <p>В наличии: </p>
-                                <p class="in-store-value"><span>3</span> шт.</p>
+                                <p class="in-store-value"><span>{{$product->qty}}</span> шт.</p>
                             </div>
                         </div>
                         <div class="go-to-product-page" onclick="location.href = '{{route('products.show', $product->id)}}';">
