@@ -3,9 +3,8 @@
 @section('content')
     <div class="container">
         <div class="history">
-            <a href="#">Главная</a>
-            <a href="#">/ каталог </a>
-            <a href="#">/ одежда</a>
+            <a href="/">Главная</a>
+            <a href="#">/ Поиск </a>
         </div>
 
         <div class="search-content">
@@ -15,62 +14,56 @@
             </div>
             <form id="filter_form" class="search-controls">
                 <div class="filter_cats">
-                    <div class="filter-item">
+                    <select name="category_id" class="filter-item">
                         <div id="first_filter_wrap">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="16" viewBox="0 0 18 16" fill="none">
                                 <rect x="0.398438" y="0.881363" width="16.9492" height="14.9153" rx="4" fill="white"/>
                                 <path d="M5.82227 6.3051H11.924H5.82227ZM5.82227 8.339H11.924H5.82227ZM5.82227 10.3729H11.924H5.82227Z" fill="white"/>
                                 <path d="M5.82227 6.3051H11.924M5.82227 8.339H11.924M5.82227 10.3729H11.924" stroke="#2D2D2D" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            <select name="category_id" id="">
                                 @foreach($categories as $category)
                                 <option @if(\Request()->category_id == $category->id) selected @endif value="{{$category->id}}">{{$category->name}}</option>
                                 @endforeach
-                            </select>
                         </div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" viewBox="0 0 18 19" fill="none">
                             <circle cx="9.04208" cy="9.33898" r="8.81356" fill="white"/>
                             <path d="M9.04192 12.0508L13.1097 7.94393L12.4317 7.30508L9.04192 10.6819L5.65209 7.30508L4.97412 7.94393L9.04192 12.0508Z" fill="#2F2F2F"/>
                         </svg>
-                    </div>
+                    </select>
 
-                    <div class="filter-item">
+                    <select name="sort" class="filter-item">
                         <div id="first_filter_wrap">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="16" viewBox="0 0 18 16" fill="none">
                                 <rect x="0.398438" y="0.881363" width="16.9492" height="14.9153" rx="4" fill="white"/>
                                 <path d="M5.82227 6.3051H11.924H5.82227ZM5.82227 8.339H11.924H5.82227ZM5.82227 10.3729H11.924H5.82227Z" fill="white"/>
                                 <path d="M5.82227 6.3051H11.924M5.82227 8.339H11.924M5.82227 10.3729H11.924" stroke="#2D2D2D" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            <select name="sort" id="">
                                 <option value="1" @if(\Request()->sort == 1) selected @endif>Новинки</option>
                                 <option value="2" @if(\Request()->sort == 2) selected @endif>По умолчанию</option>
-                            </select>
                         </div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" viewBox="0 0 18 19" fill="none">
                             <circle cx="9.04208" cy="9.33898" r="8.81356" fill="white"/>
                             <path d="M9.04192 12.0508L13.1097 7.94393L12.4317 7.30508L9.04192 10.6819L5.65209 7.30508L4.97412 7.94393L9.04192 12.0508Z" fill="#2F2F2F"/>
                         </svg>
-                    </div>
+                    </select>
 
-                    <div class="filter-item">
+                    <select name="size_id" class="filter-item">
                         <div id="first_filter_wrap">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="16" viewBox="0 0 18 16" fill="none">
                                 <rect x="0.398438" y="0.881363" width="16.9492" height="14.9153" rx="4" fill="white"/>
                                 <path d="M5.82227 6.3051H11.924H5.82227ZM5.82227 8.339H11.924H5.82227ZM5.82227 10.3729H11.924H5.82227Z" fill="white"/>
                                 <path d="M5.82227 6.3051H11.924M5.82227 8.339H11.924M5.82227 10.3729H11.924" stroke="#2D2D2D" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            <select name="size_id" id="">
                                 <option value="" selected disabled>Размер</option>
                                 @foreach($sizes as $size)
                                 <option @if(\Request()->size_id == $size->id) selected @endif value="{{$size->id}}">{{$size->size}}</option>
                                 @endforeach
-                            </select>
                         </div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" viewBox="0 0 18 19" fill="none">
                             <circle cx="9.04208" cy="9.33898" r="8.81356" fill="white"/>
                             <path d="M9.04192 12.0508L13.1097 7.94393L12.4317 7.30508L9.04192 10.6819L5.65209 7.30508L4.97412 7.94393L9.04192 12.0508Z" fill="#2F2F2F"/>
                         </svg>
-                    </div>
+                    </select>
 
 {{--                    <div class="filter-item">--}}
 {{--                        <div id="first_filter_wrap">--}}
@@ -92,63 +85,57 @@
 {{--                        </svg>--}}
 {{--                    </div>--}}
 
-                    <div class="filter-item">
+                    <select class="filter-item" name="price">
                         <div id="first_filter_wrap">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="16" viewBox="0 0 18 16" fill="none">
                                 <rect x="0.398438" y="0.881363" width="16.9492" height="14.9153" rx="4" fill="white"/>
                                 <path d="M5.82227 6.3051H11.924H5.82227ZM5.82227 8.339H11.924H5.82227ZM5.82227 10.3729H11.924H5.82227Z" fill="white"/>
                                 <path d="M5.82227 6.3051H11.924M5.82227 8.339H11.924M5.82227 10.3729H11.924" stroke="#2D2D2D" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            <select name="price" id="">
                                 <option value="" selected disabled>Цена</option>
                                 <option value="1000" @if(\Request()->price == 1000) selected @endif >До 1000</option>
                                 <option value="2000" @if(\Request()->price == 2000) selected @endif >До 2000</option>
                                 <option value="3000" @if(\Request()->price == 3000) selected @endif >До 3000</option>
                                 <option value="5000" @if(\Request()->price == 5000) selected @endif >До 5000</option>
                                 <option value="10000" @if(\Request()->price == 10000) selected @endif >До 10000</option>
-                            </select>
                         </div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" viewBox="0 0 18 19" fill="none">
                             <circle cx="9.04208" cy="9.33898" r="8.81356" fill="white"/>
                             <path d="M9.04192 12.0508L13.1097 7.94393L12.4317 7.30508L9.04192 10.6819L5.65209 7.30508L4.97412 7.94393L9.04192 12.0508Z" fill="#2F2F2F"/>
                         </svg>
-                    </div>
+                    </select>
 
-                    <div class="filter-item">
+                    <select name="color" class="filter-item">
                         <div id="first_filter_wrap">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="16" viewBox="0 0 18 16" fill="none">
                                 <rect x="0.398438" y="0.881363" width="16.9492" height="14.9153" rx="4" fill="white"/>
                                 <path d="M5.82227 6.3051H11.924H5.82227ZM5.82227 8.339H11.924H5.82227ZM5.82227 10.3729H11.924H5.82227Z" fill="white"/>
                                 <path d="M5.82227 6.3051H11.924M5.82227 8.339H11.924M5.82227 10.3729H11.924" stroke="#2D2D2D" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            <select name="color" id="">
                                 <option value="" selected disabled>Цвет</option>
                                 @foreach($colors as $color)
                                 <option value="{{$color}}" @if(\Request()->color == $color) selected @endif >{{$color}}</option>
                                 @endforeach
-                            </select>
                         </div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" viewBox="0 0 18 19" fill="none">
                             <circle cx="9.04208" cy="9.33898" r="8.81356" fill="white"/>
                             <path d="M9.04192 12.0508L13.1097 7.94393L12.4317 7.30508L9.04192 10.6819L5.65209 7.30508L4.97412 7.94393L9.04192 12.0508Z" fill="#2F2F2F"/>
                         </svg>
-                    </div>
+                    </select>
                 </div>
 
-                <div class="filter-item city_item">
+                <select name="city_id" class="filter-item city_item">
                     <div id="first_filter_wrap">
-                        <select name="city_id" id="">
                             <option value="" selected disabled>Город</option>
                             @foreach($cities as $city)
                             <option value="{{$city->id}}" @if(\Request()->city_id == $city->id) selected @endif >{{$city->name}}</option>
                             @endforeach
-                        </select>
                     </div>
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="19" viewBox="0 0 22 19" fill="none">
                         <ellipse cx="10.9594" cy="9.84747" rx="10.6122" ry="9.0339" fill="white"/>
                         <path d="M11 13L15 8.67308L14.3333 8L11 11.5577L7.66667 8L7 8.67308L11 13Z" fill="#2F2F2F"/>
                     </svg>
-                </div>
+                </select>
             </form>
 
             <div class="main-products">
@@ -247,6 +234,7 @@
 
         .city_item{
             background: #FF8000;
+            color: #ffffff;
         }
 
         .city_item select{

@@ -61,9 +61,9 @@ class Product extends Model
         return $this->hasMany(ProductSize::class, 'product_id', 'id');
     }
 
-    public function scopeWithFilter($query, Request $request, string $search)
+    public function scopeWithFilter($query, Request $request, string $search = null, $category_id = null)
     {
-        return $query
+        $query
             ->when($request->query('category_id'), function (Builder $query, $category) {
                 $query->where('category_id', $category);
             })
@@ -83,6 +83,20 @@ class Product extends Model
                 $query->leftJoin('product_sizes', 'product_sizes.product_id', 'products.id')
                     ->where('product_sizes.id', $size);
             })
-            ->where('name', 'LIKE', '%'.$search.'%');
+            ->when($request->query('sort'), function (Builder $query, $sort){
+                if($sort == 1){
+                    $query->orderBy('created_at', 'DESC');
+                }
+            });
+
+            if($search != null) {
+                $query->where('name', 'LIKE', '%' . $search . '%');
+            }
+
+            if($category_id != null){
+                $query->where('category_id', $category_id);
+            }
+
+            return $query;
     }
 }
