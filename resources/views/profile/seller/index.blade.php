@@ -198,6 +198,7 @@
                                             <input type="text" placeholder="1" name="qty" value="{{$product->qty}}">
 
                                             <button>СОХРАНИТЬ</button>
+                                            <span onclick="product_del('{{$product->id}}')" style="color: #FF0000; cursor:pointer;">Удалить</span>
                                         </div>
                                     </form>
                                 </div>
@@ -764,6 +765,14 @@
                 });
             }
 
+            return false;
+        }
+
+        function product_del(id){
+            let conf = confirm('Подтвердите');
+            if(conf){
+                location.href = '/account/seller/product/delete/'+id
+            }
             return false;
         }
     </script>

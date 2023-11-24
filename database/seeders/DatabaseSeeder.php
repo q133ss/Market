@@ -174,7 +174,7 @@ class DatabaseSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'status' => 1,
                 'rating' => 2,
-                'role_id' => 2
+                'role_id' => 3
             ],
             [
                 'name' => 'Продавец с рейтингом +1',
@@ -182,7 +182,7 @@ class DatabaseSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'status' => 1,
                 'rating' => 1,
-                'role_id' => 2
+                'role_id' => 3
             ],
             [
                 'name' => 'Продавец с рейтингом 0',
@@ -190,7 +190,7 @@ class DatabaseSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'status' => 1,
                 'rating' => 0,
-                'role_id' => 2
+                'role_id' => 3
             ],
             [
                 'name' => 'Продавец с рейтингом -1',
@@ -198,7 +198,7 @@ class DatabaseSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'status' => 1,
                 'rating' => -1,
-                'role_id' => 2
+                'role_id' => 3
             ]
         ];
 

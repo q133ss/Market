@@ -167,7 +167,7 @@
                                     <p class="in-store-value"><span>{{$product->qty}}</span> шт.</p>
                                 </div>
                             </div>
-                            <div class="go-to-product-page" onclick="location.href = 'product-page.html';">
+                            <div class="go-to-product-page" onclick="location.href = '{{route('products.show', $product->id ?? '')}}';">
                                 <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path

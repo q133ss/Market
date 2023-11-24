@@ -91,6 +91,7 @@ Route::middleware('auth')->group(function(){
         Route::prefix('seller')->middleware('is.seller')->name('seller.')->group(function(){
             Route::post('/product', [App\Http\Controllers\Seller\ProductController::class, 'store'])->name('product.store');
             Route::post('/product/{id}', [App\Http\Controllers\Seller\ProductController::class, 'update'])->name('product.update');
+            Route::get('/product/delete/{id}', [App\Http\Controllers\Seller\ProductController::class, 'delete'])->name('product.delete');
             Route::post('/product/{id}/add/size', [App\Http\Controllers\Seller\ProductController::class, 'addSize'])->name('product.add.size');
             Route::post('/product/{id}/add/char', [App\Http\Controllers\Seller\ProductController::class, 'addChar'])->name('product.add.char');
             Route::post('/product/size/{id}/delete', [App\Http\Controllers\Seller\ProductController::class, 'deleteSize']);

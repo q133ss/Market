@@ -201,4 +201,16 @@ class ProductController extends Controller
 
         return true;
     }
+
+    public function delete(int $id)
+    {
+        $files = File::where('fileable_type', 'App\Models\Product')->where('fileable_id', $id);
+
+        foreach ($files->get() as $file){
+            Storage::disk('public')->delete(str_replace('/storage/', '', $file->src));
+        }
+        $files->delete();
+        Product::findOrFail($id)->delete();
+        return back()->withSuccess('Товар успешно удален!');
+    }
 }
