@@ -2,6 +2,8 @@
 @section('title', 'Личный кабинет')
 @section('meta')
     <link rel="stylesheet" href="/assets/style/personal-account.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 @endsection
 @section('content')
     <div class="container personal-account-title">
@@ -54,6 +56,24 @@
                                     <input type="email" name="email" value="{{$user->email}}">
                                     <img src="../images/edit-gray.svg" alt="">
                                 </div>
+
+                                <label>Старый пароль:</label>
+                                <div class="personal-account-input">
+                                    <div style="display: flex; align-items: center; width: 100%; gap: 3px;">
+                                        <input type="password" id="pwd1" name="old_password" placeholder="Пароль">
+                                        <i class="fa fa-eye" id="showPwd1" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+
+                                <label>Новый пароль:</label>
+                                <div class="personal-account-input">
+                                    <div style="display: flex; align-items: center; width: 100%; gap: 3px;">
+                                        <input type="password" id="pwd2" name="new_password" placeholder="Пароль">
+                                        <i class="fa fa-eye" id="showPwd2" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+
+
 
                                 <button>Сохранить изменения</button>
                             </form>
@@ -178,4 +198,30 @@
 @endsection
 @section('scripts')
     <script src="/assets/script/personal-account.js"></script>
+
+    <style>
+        #showPwd1{
+            cursor: pointer;
+        }
+        #showPwd2{
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        $('#showPwd1').click(function (){
+            if($('#pwd1').attr('type') == 'password') {
+                $('#pwd1').attr('type', 'text');
+            }else{
+                $('#pwd1').attr('type', 'password');
+            }
+        });
+
+        $('#showPwd2').click(function (){
+            if($('#pwd2').attr('type') == 'password') {
+                $('#pwd2').attr('type', 'text');
+            }else{
+                $('#pwd2').attr('type', 'password');
+            }
+        });
+    </script>
 @endsection

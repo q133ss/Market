@@ -30,6 +30,7 @@ return new class extends Migration
             $table->boolean('in_stock')->default(true);
             $table->foreignId('city_id');
             $table->integer('qty')->default(1);
+            $table->unsignedSmallInteger('type')->nullable();
             $table->timestamps();
         });
     }

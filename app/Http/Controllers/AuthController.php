@@ -30,7 +30,7 @@ class AuthController extends Controller
 
         Mail::to(['email' => $request->email])->send(new Register($request->email, $password));
 
-        User::create(['email' => $request->email, 'password' => Hash::make($password)]);
+        User::create(['email' => $request->email, 'password' => Hash::make($password), 'role_id' => 2]);
 
         return Response('success', 200);
     }

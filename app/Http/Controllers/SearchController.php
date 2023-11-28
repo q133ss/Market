@@ -26,7 +26,6 @@ class SearchController extends Controller
 
         $products = Product::withFilter($request, $search)->get();
             //->where('name', 'LIKE', '%'.$search.'%')->orWhere('description', 'LIKE', '%'.$search.'%')->orWhere('price', 'LIKE', '%'.$search.'%')->get();
-
         $getColors = $products->pluck('color')->filter()->all();
         $colors = array_diff($getColors, array_diff_assoc($getColors, array_unique($getColors)));
 

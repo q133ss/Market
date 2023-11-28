@@ -33,7 +33,8 @@ class StoreRequest extends FormRequest
             'shipping' => 'required|string',
             'in_stock' => 'nullable|in:0,1',
             'city' => 'required|exists:cities,name',
-            'qty' => 'required|integer|min:0'
+            'qty' => 'required|integer|min:0',
+            'type' => 'nullable|integer'
         ];
     }
 
@@ -61,7 +62,9 @@ class StoreRequest extends FormRequest
             'city.exists' => 'Указан неверный город',
             'qty.required' => 'Введите колличество',
             'qty.integer' => 'Колличество должно быть числом',
-            'qty.min' => 'Колличество не должно быть меньше 0'
+            'qty.min' => 'Колличество не должно быть меньше 0',
+
+            'type.integer' => 'Неверно указан тип'
         ];
     }
 }

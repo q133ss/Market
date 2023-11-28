@@ -497,6 +497,20 @@
                                     <label>Цвет:</label>
                                     <input type="text" name="color" value="{{old('color')}}">
 
+                                    <label>Тип:</label>
+                                    <select name="type" id="" style="background-color: #EDEDED;
+                                                                            padding: 6px 0px 6px 12px;
+                                                                            border-radius: 4px;
+                                                                            width: 335px; text-transform: capitalize">
+                                        <option value="">Не указан</option>
+                                        <option value="1">Мужской</option>
+                                        <option value="2">женский</option>
+                                        <option value="3">детский</option>
+                                        <option value="4">мальчикам</option>
+                                        <option value="5">девочкам</option>
+                                        <option value="6">новорожденным</option>
+                                    </select>
+
                                     <div class="sizes-and-gender">
                                         <div class="add-sizes new_product_sizes" id="add-product-form">
                                             <p>Размеры:</p>

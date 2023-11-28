@@ -104,6 +104,28 @@
                             <path d="M9.04192 12.0508L13.1097 7.94393L12.4317 7.30508L9.04192 10.6819L5.65209 7.30508L4.97412 7.94393L9.04192 12.0508Z" fill="#2F2F2F"/>
                         </svg>
                     </select>
+
+                    <select name="type" class="filter-item">
+                        <div id="first_filter_wrap">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="16" viewBox="0 0 18 16" fill="none">
+                                <rect x="0.398438" y="0.881363" width="16.9492" height="14.9153" rx="4" fill="white"/>
+                                <path d="M5.82227 6.3051H11.924H5.82227ZM5.82227 8.339H11.924H5.82227ZM5.82227 10.3729H11.924H5.82227Z" fill="white"/>
+                                <path d="M5.82227 6.3051H11.924M5.82227 8.339H11.924M5.82227 10.3729H11.924" stroke="#2D2D2D" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <option value="" selected disabled>Тип</option>
+                            <option value="">Не указан</option>
+                            <option value="1">Мужской</option>
+                            <option value="2">женский</option>
+                            <option value="3">детский</option>
+                            <option value="4">мальчикам</option>
+                            <option value="5">девочкам</option>
+                            <option value="6">новорожденным</option>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" viewBox="0 0 18 19" fill="none">
+                            <circle cx="9.04208" cy="9.33898" r="8.81356" fill="white"/>
+                            <path d="M9.04192 12.0508L13.1097 7.94393L12.4317 7.30508L9.04192 10.6819L5.65209 7.30508L4.97412 7.94393L9.04192 12.0508Z" fill="#2F2F2F"/>
+                        </svg>
+                    </select>
                 </div>
 
                 <select name="city_id" class="filter-item city_item">

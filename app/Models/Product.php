@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class Product extends Model
 {
@@ -86,7 +87,42 @@ class Product extends Model
             ->when($request->query('sort'), function (Builder $query, $sort){
                 if($sort == 1){
                     $query->orderBy('created_at', 'DESC');
+                }elseif($sort == 2){
+                    $query->orderBy('price', 'ASC');
+                }elseif($sort == 3){
+                    $query->orderBy('price', 'DESC');
+                }elseif($sort == 4){
+                    $query
+                        ->leftJoin('reviews', 'reviews.reviewable_id', 'products.id')
+                        ->select('products.*', DB::raw('SUM(reviews.rating) AS raiting'))
+                        ->groupBy(
+                        'products.name',
+                            'products.id',
+                            'products.category_id',
+                            'products.shop_id',
+                            'products.compound',
+                            'products.color',
+                            'products.price',
+                            'products.old_price',
+                            'products.phone',
+                            'products.description',
+                            'products.type',
+                            'products.shipping',
+                            'products.views',
+                            'products.favorites',
+                            'products.buys',
+                            'products.wait_list',
+                            'products.in_stock',
+                            'products.city_id',
+                            'products.qty',
+                            'products.created_at',
+                            'products.updated_at'
+                        )
+                        ->orderBy('raiting', 'DESC');
                 }
+            })
+            ->when($request->query('type'), function (Builder $query, $type){
+                $query->where('type', $type);
             });
 
             if($search != null) {

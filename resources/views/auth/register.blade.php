@@ -32,7 +32,7 @@
                     $('.login-form').html('<h3>На вашу почту отправлены доступы к аккаунту</h3>');
                 },
                 error: function (request, status, error) {
-                    alert(request.responseText)
+                    //alert(request.responseText)
                 }
             });
         }

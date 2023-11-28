@@ -29,7 +29,8 @@ class ProductController extends Controller
             //'in_stock' => $request->in_stock,
             'city_id' => City::where('name', $request->city)->pluck('id')->first(),
             'shop_id' => Auth()->user()->shop->id,
-            'qty' => $request->qty
+            'qty' => $request->qty,
+            'type' => $request->type
         ]);
 
         if($request->char_keys) {
