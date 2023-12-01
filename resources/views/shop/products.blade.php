@@ -23,7 +23,7 @@
                             </svg>
                         </div>
                         <div class="product-item-header">
-                            <img style="max-width: 150px" src="{{$product->photos->pluck('src')->first()}}" alt="">
+                            <img style="max-width: 100%" src="{{$product->photos->pluck('src')->first()}}" alt="">
                         </div>
                         <div class="product-item-content">
                             <h3 class="item-title">{{$product->name}}</h3>

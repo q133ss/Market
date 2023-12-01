@@ -31,4 +31,17 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'vkontakte' => [
+        'client_id' => env('VKONTAKTE_CLIENT_ID'),
+        'client_secret' => env('VKONTAKTE_CLIENT_SECRET'),
+        'redirect' => env('VKONTAKTE_REDIRECT_URI')
+    ],
+
+    'odnoklassniki' => [
+        'client_id' => env('ODNOKLASSNIKI_ID'),
+        'client_secret' => env('ODNOKLASSNIKI_SECRET'),
+        'client_public' => env('ODNOKLASSNIKI_PUBLIC'),
+        'redirect' => env('ODNOKLASSNIKI_REDIRECT'),
+    ],
+
 ];

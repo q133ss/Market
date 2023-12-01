@@ -13,12 +13,43 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/*
+1) Сделать ползунок в фильтрах в поиске и категориях +
+2) Ограничить высоту фото на главной и в категориях
+3) В настройках магазина изменить размер добавляемой фотографии (криво встает)
+4)  CRUD категорий у админа
+5) У продавца убрать кнопку "в наличии" из добавления товара
+6) Если войти через ОК или ВК поля с паролем не отображать
+7) Вход через ВК не работает
+8) При входе через почту вылетает ошибка
+9) Сделать эластичный поиск "тарелка" должен выдавать "тарелки" из названия, описания и тд
+10) В избранном
+11) main-products убрать jcsb и изменить margin
+12) Убрать кнопку "партнеры" из хедора
+ */
+
 Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('index');
+
+
+Route::get('/fff', function(){
+    \Artisan::call('storage:link');
+});
 
 Route::get('/logout', function (){
     Auth()->logout();
     return to_route('login');
 })->name('logout');
+
+Route::get('/vk/auth', [App\Http\Controllers\SocialController::class, 'index'])->name('vk.auth');
+Route::get('/vk/callback', [App\Http\Controllers\SocialController::class, 'callback']);
+
+Route::get('/ok/auth', [App\Http\Controllers\SocialController::class, 'okIndex'])->name('ok.auth');
+Route::get('/ok/callback', [App\Http\Controllers\SocialController::class, 'okCallback']);
+
+Route::view('/about', 'about')->name('about');
+Route::view('/contacts', 'contacts')->name('contacts');
+Route::view('/vacancies', 'vacancies')->name('vacancies');
+Route::view('/requisites', 'requisites')->name('requisites');
 
 Route::get('/register', [App\Http\Controllers\AuthController::class, 'register'])->name('register');
 Route::post('/register', [App\Http\Controllers\AuthController::class, 'sendMail']);

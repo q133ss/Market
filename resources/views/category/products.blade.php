@@ -289,6 +289,20 @@
         .city_item svg{
             margin-left: 51px;
         }
+
+        @media screen and (max-width: 1089px) {
+            .search-controls{
+                display: grid;
+            }
+
+            .filter_cats{
+                display: grid;
+            }
+
+            .filter_cats select{
+                width: 100% !important;
+            }
+        }
     </style>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>

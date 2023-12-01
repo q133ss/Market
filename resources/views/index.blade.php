@@ -62,4 +62,15 @@
             @endforeach
         </div>
     </div>
+    
+    <style>
+        .product-item-header{
+            max-height: 300px;
+        }
+        
+        .product-item-header img{
+            max-height: 300px;
+        }
+    </style>
+    
 @endsection

@@ -136,10 +136,10 @@
                 </div>
                 <div class="links-by-parts">
                     <p>Компания</p>
-                    <a href="#">О нас</a>
-                    <a href="#">Реквизиты</a>
-                    <a href="#">Контакты</a>
-                    <a href="#">Вакансии</a>
+                    <a href="{{route('about')}}">О нас</a>
+                    <a href="{{route('requisites')}}">Реквизиты</a>
+                    <a href="{{route('contacts')}}">Контакты</a>
+                    <a href="{{route('vacancies')}}">Вакансии</a>
                 </div>
             </div>
             <a href="templates/store-register.html" class="mobile-store-sale">Продавайте на Regionselect</a>

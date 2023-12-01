@@ -21,6 +21,7 @@
                                 <path d="M5.82227 6.3051H11.924H5.82227ZM5.82227 8.339H11.924H5.82227ZM5.82227 10.3729H11.924H5.82227Z" fill="white"/>
                                 <path d="M5.82227 6.3051H11.924M5.82227 8.339H11.924M5.82227 10.3729H11.924" stroke="#2D2D2D" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
+                                <option value="" selected disabled>Категория</option>
                                 @foreach($categories as $category)
                                 <option @if(\Request()->category_id == $category->id) selected @endif value="{{$category->id}}">{{$category->name}}</option>
                                 @endforeach
@@ -87,25 +88,25 @@
 {{--                        </svg>--}}
 {{--                    </div>--}}
 
-                    <select class="filter-item" name="price">
-                        <div id="first_filter_wrap">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="16" viewBox="0 0 18 16" fill="none">
-                                <rect x="0.398438" y="0.881363" width="16.9492" height="14.9153" rx="4" fill="white"/>
-                                <path d="M5.82227 6.3051H11.924H5.82227ZM5.82227 8.339H11.924H5.82227ZM5.82227 10.3729H11.924H5.82227Z" fill="white"/>
-                                <path d="M5.82227 6.3051H11.924M5.82227 8.339H11.924M5.82227 10.3729H11.924" stroke="#2D2D2D" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                                <option value="" selected disabled>Цена</option>
-                                <option value="1000" @if(\Request()->price == 1000) selected @endif >До 1000</option>
-                                <option value="2000" @if(\Request()->price == 2000) selected @endif >До 2000</option>
-                                <option value="3000" @if(\Request()->price == 3000) selected @endif >До 3000</option>
-                                <option value="5000" @if(\Request()->price == 5000) selected @endif >До 5000</option>
-                                <option value="10000" @if(\Request()->price == 10000) selected @endif >До 10000</option>
-                        </div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" viewBox="0 0 18 19" fill="none">
-                            <circle cx="9.04208" cy="9.33898" r="8.81356" fill="white"/>
-                            <path d="M9.04192 12.0508L13.1097 7.94393L12.4317 7.30508L9.04192 10.6819L5.65209 7.30508L4.97412 7.94393L9.04192 12.0508Z" fill="#2F2F2F"/>
-                        </svg>
-                    </select>
+{{--                    <select class="filter-item" name="price">--}}
+{{--                        <div id="first_filter_wrap">--}}
+{{--                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="16" viewBox="0 0 18 16" fill="none">--}}
+{{--                                <rect x="0.398438" y="0.881363" width="16.9492" height="14.9153" rx="4" fill="white"/>--}}
+{{--                                <path d="M5.82227 6.3051H11.924H5.82227ZM5.82227 8.339H11.924H5.82227ZM5.82227 10.3729H11.924H5.82227Z" fill="white"/>--}}
+{{--                                <path d="M5.82227 6.3051H11.924M5.82227 8.339H11.924M5.82227 10.3729H11.924" stroke="#2D2D2D" stroke-linecap="round" stroke-linejoin="round"/>--}}
+{{--                            </svg>--}}
+{{--                                <option value="" selected disabled>Цена</option>--}}
+{{--                                <option value="1000" @if(\Request()->price == 1000) selected @endif >До 1000</option>--}}
+{{--                                <option value="2000" @if(\Request()->price == 2000) selected @endif >До 2000</option>--}}
+{{--                                <option value="3000" @if(\Request()->price == 3000) selected @endif >До 3000</option>--}}
+{{--                                <option value="5000" @if(\Request()->price == 5000) selected @endif >До 5000</option>--}}
+{{--                                <option value="10000" @if(\Request()->price == 10000) selected @endif >До 10000</option>--}}
+{{--                        </div>--}}
+{{--                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" viewBox="0 0 18 19" fill="none">--}}
+{{--                            <circle cx="9.04208" cy="9.33898" r="8.81356" fill="white"/>--}}
+{{--                            <path d="M9.04192 12.0508L13.1097 7.94393L12.4317 7.30508L9.04192 10.6819L5.65209 7.30508L4.97412 7.94393L9.04192 12.0508Z" fill="#2F2F2F"/>--}}
+{{--                        </svg>--}}
+{{--                    </select>--}}
 
                     <select name="color" class="filter-item">
                         <div id="first_filter_wrap">
@@ -146,6 +147,11 @@
                         </svg>
                     </select>
 
+                    <div class="price_range filter-item">
+                        <span>{{$min}}</span>
+                        <input type="range" id="priceInp" name="price" @if(\Request()->has('price') == 3) value="{{\Request()->price}}" @endif min="{{$min}}" max="{{$max}}">
+                        <span>{{$max}}</span>
+                    </div>
                 </div>
 
                 <select name="city_id" class="filter-item city_item">
@@ -211,7 +217,6 @@
 @endsection
 @section('scripts')
     <style>
-
         .search-controls{
             display: flex;
             justify-content: space-between;
@@ -269,6 +274,20 @@
         .city_item svg{
             margin-left: 51px;
         }
+
+        @media screen and (max-width: 1089px) {
+            .search-controls{
+                display: grid;
+            }
+
+            .filter_cats{
+                display: grid;
+            }
+
+            .filter_cats select{
+                width: 100% !important;
+            }
+        }
     </style>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -281,6 +300,10 @@
             $('#filter_form').submit();
         }
         ));
+
+        $('#priceInp').change(function (){
+            $('#filter_form').submit();
+        });
         //$('#filter_form').submit();
     </script>
 @endsection
