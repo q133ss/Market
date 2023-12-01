@@ -21,6 +21,7 @@
                     <span class="" id="personal-adds">Реклама</span>
                     <span class="" id="personal-store-reviews">Отзывы магазинов</span>
                     <span class="" id="personal-city">Города</span>
+                    <span class="" id="personal-cats">Категории</span>
                 </div>
                 <div class="personal-mobile-btns">
                     <div class="search-select city-select">
@@ -351,6 +352,45 @@
                         </div>
                     </div>
 
+                    <div class="personal-account-content-item" id="personal-content-cats">
+                        <div class="add-product-content">
+                            <div class="add-header"></div>
+                            @foreach($categories as $category)
+                                <div class="personal-content-table-content-item banner-action">
+                                    <p class="">{{$category->name}}</p>
+                                </div>
+                            <div class="banner-hidden-item">
+                                <div>
+                                    <div style="display: flex;">
+                                        <form action="{{route('admin.cats.update', $category->id)}}">
+                                            <input style="background-color: #EDEDED;
+    padding: 6px 0px 6px 12px;
+    border-radius: 4px;" type="text" name="name" value="{{$category->name}}">
+                                            <button type="submit" style="background:none; padding: 0; color: #fd8002">Изменить</button>
+                                        </form>
+                                        <a href="{{route('admin.cats.delete', $category->id)}}" style="color: #FF0000; margin-left: 10px;" class="conf">Удалить</a>
+                                    </div>
+                                    <hr style="margin-top: 10px;">
+                                    @foreach($category->children as $cat)
+                                        <div style="display:flex; justify-content: space-between; margin-top: 20px;">
+                                            <div class="btns" style="display:flex;">
+                                                <form action="{{route('admin.cats.update', $cat->id)}}">
+                                                    <input style="background-color: #EDEDED;
+    padding: 6px 0px 6px 12px;
+    border-radius: 4px;
+    " type="text" name="name" value="{{$cat->name}}">
+                                                    <button type="submit" style="background:none; padding: 0; color: #fd8002">Изменить</button>
+                                                </form>
+                                                <a href="{{route('admin.cats.delete', $cat->id)}}" style="color: #FF0000; margin-left: 10px;" class="conf">Удалить</a>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+
                     <div class="personal-account-content-item" id="banner_add">
                         <div class="add-product-content">
                             <div class="add-header"></div>
@@ -458,5 +498,12 @@
             $('.personal-account-content-item').css('display', 'none');
             $('#city_add').css('display', 'block');
         }
+
+        $('.conf').click(function (){
+            let conf = confirm('Подтвердите');
+            if(!conf){
+                return false;
+            }
+        });
     </script>
 @endsection

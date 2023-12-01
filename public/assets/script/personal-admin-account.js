@@ -33,7 +33,6 @@ bannerAction.forEach((action) => {
 
 personalBtns.forEach((btn) => {
   btn.addEventListener("click", () => {
-    console.log(4444);
     const id = `personal-content${btn.id.split("personal")[1]}`;
     hideShowPersonaAdminlContent(id);
     btn.classList.toggle("active-personal-btn");

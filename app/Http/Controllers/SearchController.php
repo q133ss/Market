@@ -30,8 +30,8 @@ class SearchController extends Controller
         $colors = array_diff($getColors, array_diff_assoc($getColors, array_unique($getColors)));
 
         $priceProducts = Product::where('name', 'LIKE', '%'.$search.'%')->orderBy('price', 'ASC')->pluck('price')->all();
-        $min = $priceProducts[0];
-        $max = end($priceProducts);
+        $min = $priceProducts[0] ?? 0;
+        $max = end($priceProducts) ?? 0;
 
         return view('search', compact('products', 'categories', 'cities', 'colors', 'sizes', 'min', 'max'));
     }

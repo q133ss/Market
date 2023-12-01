@@ -57,6 +57,7 @@
                                     <img src="../images/edit-gray.svg" alt="">
                                 </div>
 
+                                @if($user->social_auth == 0)
                                 <label>Старый пароль:</label>
                                 <div class="personal-account-input">
                                     <div style="display: flex; align-items: center; width: 100%; gap: 3px;">
@@ -72,7 +73,7 @@
                                         <i class="fa fa-eye" id="showPwd2" aria-hidden="true"></i>
                                     </div>
                                 </div>
-
+                                @endif
 
 
                                 <button>Сохранить изменения</button>

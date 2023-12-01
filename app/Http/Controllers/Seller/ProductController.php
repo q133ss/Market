@@ -192,6 +192,8 @@ class ProductController extends Controller
                 'category' => 'shop'
             ]);
         }
+
+        return back()->withSuccess('Магазин успешно обновлен');
     }
 
     public function deleteFile(int $id)

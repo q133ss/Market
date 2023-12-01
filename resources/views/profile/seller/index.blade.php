@@ -613,6 +613,12 @@
     <script src="/assets/script/personal-seller-account.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
+    <style>
+        .product-imaage img{
+            max-height: 167px;
+        }
+    </style>
+
     <script>
         function selectStock(type){
             $('#in_stock').val(type)

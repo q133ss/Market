@@ -13,7 +13,7 @@
 <body>
 <div class="container">
     <div class="top-nav">
-        <a href="#">Партнёрам</a>
+{{--        <a href="#">Партнёрам</a>--}}
         <a href="{{route('register')}}">Покупателям</a>
         <a href="{{route('shop.register')}}" class="active" onclick="location.href = 'templates/store-register.html';">Продавайте на
             Regionselect</a>

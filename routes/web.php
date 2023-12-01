@@ -15,17 +15,17 @@ use Illuminate\Support\Facades\Route;
 
 /*
 1) Сделать ползунок в фильтрах в поиске и категориях +
-2) Ограничить высоту фото на главной и в категориях
-3) В настройках магазина изменить размер добавляемой фотографии (криво встает)
+2) Ограничить высоту фото на главной и в категориях +
+3) В настройках магазина изменить размер добавляемой фотографии (криво встает) +
 4)  CRUD категорий у админа
-5) У продавца убрать кнопку "в наличии" из добавления товара
-6) Если войти через ОК или ВК поля с паролем не отображать
-7) Вход через ВК не работает
-8) При входе через почту вылетает ошибка
-9) Сделать эластичный поиск "тарелка" должен выдавать "тарелки" из названия, описания и тд
-10) В избранном
-11) main-products убрать jcsb и изменить margin
-12) Убрать кнопку "партнеры" из хедора
+5) У продавца убрать кнопку "в наличии" из добавления товара (ее давно убрал, нужно очистить кеш) +
+6) Если войти через ОК или ВК поля с паролем не отображать #TODO тест!!!!!!
+7) Вход через ВК не работает +
+8) При входе через почту вылетает ошибка #TODO на локалке все нужен тест!
+9) Сделать эластичный поиск "тарелка" должен выдавать "тарелки" из названия, описания и тд +
+10) В избранном+
+11) main-products убрать jcsb и изменить margin +
+12) Убрать кнопку "партнеры" из хедора+
  */
 
 Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('index');
@@ -88,6 +88,9 @@ Route::middleware('auth')->group(function(){
 
             Route::post('/city/{id}', [App\Http\Controllers\Admin\CityController::class, 'update'])->name('city.update');
             Route::post('/city/', [App\Http\Controllers\Admin\CityController::class, 'store'])->name('city.store');
+
+            Route::get('/cats/{id}', [App\Http\Controllers\Admin\CatsController::class, 'update'])->name('cats.update');
+            Route::get('/cats/{id}/delete', [App\Http\Controllers\Admin\CatsController::class, 'delete'])->name('cats.delete');
         });
 
         Route::prefix('seller')->middleware('is.seller')->name('seller.')->group(function(){

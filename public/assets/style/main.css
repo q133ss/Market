@@ -395,7 +395,7 @@ textarea {
     display: flex;
     /* justify-content: space-between; */
     flex-wrap: wrap;
-    margin: 80px 20px;
+    margin: 80px 15px;
     gap: 14px;
     height: fit-content;
 }

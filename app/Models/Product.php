@@ -20,6 +20,29 @@ class Product extends Model
             ->join('users', 'users.id', 'shops.user_id')
             ->leftJoin('files', 'files.fileable_id', 'products.id')
             ->select('products.*')
+            ->groupBy(
+                'products.name',
+                'products.id',
+                'products.category_id',
+                'products.shop_id',
+                'products.compound',
+                'products.color',
+                'products.price',
+                'products.old_price',
+                'products.phone',
+                'products.description',
+                'products.type',
+                'products.shipping',
+                'products.views',
+                'products.favorites',
+                'products.buys',
+                'products.wait_list',
+                'products.in_stock',
+                'products.city_id',
+                'products.qty',
+                'products.created_at',
+                'products.updated_at'
+            )
             ->orderBy('users.rating', 'DESC')
             ->get();
     }
@@ -126,7 +149,9 @@ class Product extends Model
             });
 
             if($search != null) {
-                $query->where('name', 'LIKE', '%' . $search . '%');
+                $query->where('name', 'LIKE', '%' . $search . '%')
+                ->orWhere('description', 'LIKE', '%' . $search . '%')
+                ->orWhere('price', 'LIKE', '%' . $search . '%');
             }
 
             if($category_id != null){

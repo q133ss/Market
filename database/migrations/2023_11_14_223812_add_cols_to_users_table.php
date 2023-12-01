@@ -15,6 +15,7 @@ return new class extends Migration
             $table->foreignId('role_id');
             $table->tinyInteger('rating')->default(0);
             $table->boolean('status')->default(false);
+            $table->boolean('social_auth')->default(0);
         });
     }
 

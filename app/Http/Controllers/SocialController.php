@@ -23,6 +23,7 @@ class SocialController extends Controller
              'email' => $user->getEmail() != null ? $user->getEmail() : str_replace(" ", '', $user->getName()).'@vkauth.ru',
              'name' => $user->getName(),
              'password' => '1111',
+             'social_auth' => 1,
              'role_id' => '2'
          ];
 
@@ -53,6 +54,7 @@ class SocialController extends Controller
             'email' => $user->getEmail() != null ? $user->getEmail() : str_replace(" ", '', $user->getName()).'@okauth.ru',
             'name' => $user->getName(),
             'password' => '1111',
+            'social_auth' => 1,
             'role_id' => '2'
         ];
 

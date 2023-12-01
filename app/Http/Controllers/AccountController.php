@@ -33,7 +33,9 @@ class AccountController extends Controller
 
             $cities = City::get();
 
-            return view('profile.' . Auth()->user()->role->tech_name . '.index', compact('sellers', 'reviews', 'banners', 'allReviews', 'cities'));
+            $categories = Category::where('parent_id', null)->get();
+
+            return view('profile.' . Auth()->user()->role->tech_name . '.index', compact('sellers', 'reviews', 'banners', 'allReviews', 'cities', 'categories'));
         }elseif($user->role->tech_name == 'seller'){
             $products = $user->products();
             $categories = Category::where('parent_id', '!=', null)->get();
